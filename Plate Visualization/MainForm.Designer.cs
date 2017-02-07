@@ -42,19 +42,20 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.newStripButton = new System.Windows.Forms.ToolStripButton();
-            this.openStripButton = new System.Windows.Forms.ToolStripButton();
-            this.saveStripButton = new System.Windows.Forms.ToolStripButton();
-            this.saveAsStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.selectNodeStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.selectElementStripButton = new System.Windows.Forms.ToolStripButton();
-            this.elementPropertiesStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusText = new System.Windows.Forms.ToolStripStatusLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.newStripButton = new System.Windows.Forms.ToolStripButton();
+            this.openStripButton = new System.Windows.Forms.ToolStripButton();
+            this.saveStripButton = new System.Windows.Forms.ToolStripButton();
+            this.saveAsStripButton = new System.Windows.Forms.ToolStripButton();
+            this.selectNodeStripButton = new System.Windows.Forms.ToolStripButton();
+            this.bondStripButton = new System.Windows.Forms.ToolStripButton();
+            this.selectElementStripButton = new System.Windows.Forms.ToolStripButton();
+            this.elementPropertiesStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -68,7 +69,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1477, 24);
+            this.menuStrip.Size = new System.Drawing.Size(1070, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "MainMenu";
             // 
@@ -93,6 +94,7 @@
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.newToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.newToolStripMenuItem.Text = "Новый";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
@@ -165,14 +167,56 @@
             this.saveAsStripButton,
             this.toolStripSeparator1,
             this.selectNodeStripButton,
+            this.bondStripButton,
             this.toolStripSeparator2,
             this.selectElementStripButton,
             this.elementPropertiesStripButton1});
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(1477, 25);
+            this.toolStrip.Size = new System.Drawing.Size(1070, 25);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "toolStrip1";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.status,
+            this.statusText});
+            this.statusStrip.Location = new System.Drawing.Point(0, 647);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(1070, 22);
+            this.statusStrip.TabIndex = 2;
+            this.statusStrip.Text = "statusStrip";
+            // 
+            // status
+            // 
+            this.status.Name = "status";
+            this.status.Size = new System.Drawing.Size(0, 17);
+            // 
+            // statusText
+            // 
+            this.statusText.Name = "statusText";
+            this.statusText.Size = new System.Drawing.Size(0, 17);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 49);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1070, 598);
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
             // 
             // newStripButton
             // 
@@ -211,11 +255,6 @@
             this.saveAsStripButton.Text = "Сохранить как";
             this.saveAsStripButton.ToolTipText = "Сохранить как";
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
             // selectNodeStripButton
             // 
             this.selectNodeStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -225,10 +264,14 @@
             this.selectNodeStripButton.Size = new System.Drawing.Size(23, 22);
             this.selectNodeStripButton.Text = "Отметка узлов";
             // 
-            // toolStripSeparator2
+            // bondStripButton
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.bondStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bondStripButton.Image = ((System.Drawing.Image)(resources.GetObject("bondStripButton.Image")));
+            this.bondStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bondStripButton.Name = "bondStripButton";
+            this.bondStripButton.Size = new System.Drawing.Size(23, 22);
+            this.bondStripButton.Text = "Связи в узлах";
             // 
             // selectElementStripButton
             // 
@@ -248,42 +291,11 @@
             this.elementPropertiesStripButton1.Size = new System.Drawing.Size(23, 22);
             this.elementPropertiesStripButton1.Text = "Жесткость";
             // 
-            // statusStrip
-            // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.status,
-            this.statusText});
-            this.statusStrip.Location = new System.Drawing.Point(0, 647);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1477, 22);
-            this.statusStrip.TabIndex = 2;
-            this.statusStrip.Text = "statusStrip";
-            // 
-            // status
-            // 
-            this.status.Name = "status";
-            this.status.Size = new System.Drawing.Size(0, 17);
-            // 
-            // statusText
-            // 
-            this.statusText.Name = "statusText";
-            this.statusText.Size = new System.Drawing.Size(0, 17);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.Control;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 49);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1477, 598);
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1477, 669);
+            this.ClientSize = new System.Drawing.Size(1070, 669);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);
@@ -331,6 +343,7 @@
         private System.Windows.Forms.ToolStripStatusLabel status;
         private System.Windows.Forms.ToolStripStatusLabel statusText;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripButton bondStripButton;
     }
 }
 

@@ -17,5 +17,17 @@ namespace Plate_Visualization
             InitializeComponent();
         }
 
+        public void getPlateData(List<Tuple<int, float>> inputHeight, List<Tuple<int, float>> inputWidth)
+        {
+
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (NewPlateForm newForm = new NewPlateForm())
+            {
+                newForm.ShowDialog(this);
+            }
+        }
     }
 }
