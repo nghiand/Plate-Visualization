@@ -60,6 +60,7 @@
       <DependentUpon>NewPlateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Node.cs" />
+    <Compile Include="Plate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">

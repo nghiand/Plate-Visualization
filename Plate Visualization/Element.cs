@@ -63,7 +63,7 @@ namespace Plate_Visualization
             }
         }
 
-        public Element(int id, double length, double width)
+        public Element(int id, double width, double length)
         {
             this.id = id;
             this.state = State.Normal;
@@ -71,7 +71,7 @@ namespace Plate_Visualization
             this.width = width;
         }
 
-        public Element(int id, double length, double width, Node n0, Node n1, Node n2, Node n3)
+        public Element(int id, double width, double length, Node n0, Node n1, Node n2, Node n3)
         {
             this.id = id;
             nodes.Add(n0);
