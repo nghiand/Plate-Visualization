@@ -28,8 +28,20 @@ namespace Plate_Visualization
 
             for (int rows = 0; rows < widthData.Rows.Count - 1; rows++)
             {
-                float length = float.Parse(widthData.Rows[rows].Cells[0].Value.ToString());
-                int cnt = int.Parse(widthData.Rows[rows].Cells[1].Value.ToString());
+                float length = 0;
+                if (widthData.Rows[rows].Cells[0].Value == null ||
+                    !float.TryParse(widthData.Rows[rows].Cells[0].Value.ToString(),  out length))
+                {
+                    // TODO: Add dialog to show error message
+                    return;
+                }
+                int cnt = 0;
+                if (widthData.Rows[rows].Cells[1].Value == null ||
+                    !int.TryParse(widthData.Rows[rows].Cells[1].Value.ToString(), out cnt))
+                {
+                    // TODO: Add dialog to show error message
+                    return;
+                }
                 inputWidth.Add(new Tuple<int, float>(cnt, length));
             }
 
@@ -37,8 +49,20 @@ namespace Plate_Visualization
 
             for (int rows = 0; rows < lengthData.Rows.Count - 1; rows++)
             {
-                float length = float.Parse(lengthData.Rows[rows].Cells[0].Value.ToString());
-                int cnt = int.Parse(lengthData.Rows[rows].Cells[1].Value.ToString());
+                float length = 0;
+                if (lengthData.Rows[rows].Cells[0].Value == null ||
+                    !float.TryParse(lengthData.Rows[rows].Cells[0].Value.ToString(), out length))
+                {
+                    // TODO: Add dialog to show error message
+                    return;
+                }
+                int cnt = 0;
+                if (lengthData.Rows[rows].Cells[1].Value == null ||
+                    !int.TryParse(lengthData.Rows[rows].Cells[1].Value.ToString(), out cnt))
+                {
+                    // TODO: Add dialog to show error message
+                    return;
+                }
                 inputLength.Add(new Tuple<int, float>(cnt, length));
             }
 
