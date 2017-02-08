@@ -24,15 +24,6 @@ namespace Plate_Visualization
 
         private void createOkButton_Click(object sender, EventArgs e)
         {
-            List<Tuple<int, float>> inputHeight = new List<Tuple<int, float>>();
-
-            for (int rows = 0; rows < heightData.Rows.Count - 1; rows++)
-            {
-                float length = float.Parse(heightData.Rows[rows].Cells[0].Value.ToString());
-                int cnt = int.Parse(heightData.Rows[rows].Cells[1].Value.ToString());
-                inputHeight.Add(new Tuple<int, float>(cnt, length));
-            }
-
             List<Tuple<int, float>> inputWidth = new List<Tuple<int, float>>();
 
             for (int rows = 0; rows < widthData.Rows.Count - 1; rows++)
@@ -42,8 +33,17 @@ namespace Plate_Visualization
                 inputWidth.Add(new Tuple<int, float>(cnt, length));
             }
 
+            List<Tuple<int, float>> inputLength = new List<Tuple<int, float>>();
+
+            for (int rows = 0; rows < lengthData.Rows.Count - 1; rows++)
+            {
+                float length = float.Parse(lengthData.Rows[rows].Cells[0].Value.ToString());
+                int cnt = int.Parse(lengthData.Rows[rows].Cells[1].Value.ToString());
+                inputLength.Add(new Tuple<int, float>(cnt, length));
+            }
+
             MainForm parent = (MainForm)this.Owner;
-            parent.getPlateData(inputHeight, inputWidth);
+            parent.getPlateData(inputWidth, inputLength);
             this.Close();
         }
     }

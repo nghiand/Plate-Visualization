@@ -30,23 +30,23 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.heightData = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.widthData = new System.Windows.Forms.DataGridView();
-            this.LengthWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NumberWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LengthHeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NumberHeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.lengthData = new System.Windows.Forms.DataGridView();
+            this.LengthWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NumberWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.createCancelButton = new System.Windows.Forms.Button();
             this.createOkButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.heightData)).BeginInit();
-            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.widthData)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.lengthData)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -62,33 +62,13 @@
             // 
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.heightData);
+            this.groupBox1.Controls.Add(this.widthData);
             this.groupBox1.Location = new System.Drawing.Point(13, 26);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(173, 234);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Шаг вдоль первой оси";
-            // 
-            // heightData
-            // 
-            this.heightData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.heightData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.LengthHeight,
-            this.NumberHeight});
-            this.heightData.Location = new System.Drawing.Point(7, 32);
-            this.heightData.Name = "heightData";
-            this.heightData.Size = new System.Drawing.Size(159, 195);
-            this.heightData.TabIndex = 0;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(44, 16);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Значение";
             // 
             // label3
             // 
@@ -99,40 +79,25 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "Количество";
             // 
-            // groupBox2
+            // label2
             // 
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.widthData);
-            this.groupBox2.Location = new System.Drawing.Point(194, 26);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(177, 234);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Шаг вдоль второй оси";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(44, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(55, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Значение";
             // 
             // widthData
             // 
             this.widthData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.widthData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.LengthWidth,
-            this.NumberWidth});
+            this.LengthHeight,
+            this.NumberHeight});
             this.widthData.Location = new System.Drawing.Point(7, 32);
             this.widthData.Name = "widthData";
-            this.widthData.Size = new System.Drawing.Size(163, 195);
+            this.widthData.Size = new System.Drawing.Size(159, 195);
             this.widthData.TabIndex = 0;
-            // 
-            // LengthWidth
-            // 
-            this.LengthWidth.HeaderText = "L(м)";
-            this.LengthWidth.Name = "LengthWidth";
-            this.LengthWidth.Width = 60;
-            // 
-            // NumberWidth
-            // 
-            this.NumberWidth.HeaderText = "N";
-            this.NumberWidth.Name = "NumberWidth";
-            this.NumberWidth.Width = 60;
             // 
             // LengthHeight
             // 
@@ -147,6 +112,18 @@
             this.NumberHeight.HeaderText = "N";
             this.NumberHeight.Name = "NumberHeight";
             this.NumberHeight.Width = 60;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.lengthData);
+            this.groupBox2.Location = new System.Drawing.Point(194, 26);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(177, 234);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Шаг вдоль второй оси";
             // 
             // label4
             // 
@@ -165,6 +142,29 @@
             this.label5.Size = new System.Drawing.Size(55, 13);
             this.label5.TabIndex = 3;
             this.label5.Text = "Значение";
+            // 
+            // lengthData
+            // 
+            this.lengthData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.lengthData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.LengthWidth,
+            this.NumberWidth});
+            this.lengthData.Location = new System.Drawing.Point(7, 32);
+            this.lengthData.Name = "lengthData";
+            this.lengthData.Size = new System.Drawing.Size(163, 195);
+            this.lengthData.TabIndex = 0;
+            // 
+            // LengthWidth
+            // 
+            this.LengthWidth.HeaderText = "L(м)";
+            this.LengthWidth.Name = "LengthWidth";
+            this.LengthWidth.Width = 60;
+            // 
+            // NumberWidth
+            // 
+            this.NumberWidth.HeaderText = "N";
+            this.NumberWidth.Name = "NumberWidth";
+            this.NumberWidth.Width = 60;
             // 
             // createCancelButton
             // 
@@ -203,10 +203,10 @@
             this.Text = "Создание плиты";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.heightData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.widthData)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.widthData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lengthData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -216,11 +216,11 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView heightData;
+        private System.Windows.Forms.DataGridView widthData;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.DataGridView widthData;
+        private System.Windows.Forms.DataGridView lengthData;
         private System.Windows.Forms.DataGridViewTextBoxColumn LengthHeight;
         private System.Windows.Forms.DataGridViewTextBoxColumn NumberHeight;
         private System.Windows.Forms.DataGridViewTextBoxColumn LengthWidth;

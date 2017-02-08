@@ -110,12 +110,24 @@ namespace Plate_Visualization
             }
 
             int nodeId = 0;
+            int currentWidth = 0, currentLength = 0;
+            int maxWidth = widths[0].Item1, maxLength = lengths[0].Item1;
             for (int i = 0; i < this.length; i++)
             {
+                if (i >= maxLength)
+                {
+                    currentLength++;
+                    maxLength += lengths[currentLength].Item1;
+                }
                 for (int j = 0; j < this.width; j++)
                 {
+                    if (j >= maxWidth)
+                    {
+                        currentWidth++;
+                        maxWidth += widths[currentWidth].Item1;
+                    }
                     elements.Add(new Element(i * this.length + j,
-                        widths[j].Item1, lengths[i].Item1,
+                        widths[currentWidth].Item1, lengths[currentLength].Item1,
                         nodes[nodeId],
                         nodes[nodeId + 1],
                         nodes[nodeId + this.width + 1],
@@ -124,6 +136,8 @@ namespace Plate_Visualization
                 }
                 nodeId++;
             }
+
+            Console.WriteLine("OK");
         }
     }
 }

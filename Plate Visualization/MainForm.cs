@@ -12,14 +12,23 @@ namespace Plate_Visualization
 {
     public partial class MainForm : Form
     {
+        private Plate plate;
+        private Graphics graphic;
+
         public MainForm()
         {
             InitializeComponent();
         }
 
-        public void getPlateData(List<Tuple<int, float>> inputHeight, List<Tuple<int, float>> inputWidth)
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            graphic = graph.CreateGraphics();
+        }
+
+        public void getPlateData(List<Tuple<int, float>> inputWidth, List<Tuple<int, float>> inputLength)
         {
 
+            plate = new Plate(inputWidth, inputLength, graph.Width, graph.Height);
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
@@ -42,7 +51,5 @@ namespace Plate_Visualization
         {
             this.Close();
         }
-
-
     }
 }
