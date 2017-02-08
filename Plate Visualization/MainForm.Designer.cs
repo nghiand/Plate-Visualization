@@ -143,6 +143,7 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.exitToolStripMenuItem.Text = "Выход";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -226,6 +227,7 @@
             this.newStripButton.Name = "newStripButton";
             this.newStripButton.Size = new System.Drawing.Size(23, 22);
             this.newStripButton.Text = "Новый";
+            this.newStripButton.Click += new System.EventHandler(this.newStripButton_Click);
             // 
             // openStripButton
             // 

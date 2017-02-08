@@ -29,5 +29,20 @@ namespace Plate_Visualization
                 newForm.ShowDialog(this);
             }
         }
+
+        private void newStripButton_Click(object sender, EventArgs e)
+        {
+            using (NewPlateForm newForm = new NewPlateForm())
+            {
+                newForm.ShowDialog(this);
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+
     }
 }
