@@ -290,9 +290,13 @@
             this.graph.Location = new System.Drawing.Point(0, 49);
             this.graph.Name = "graph";
             this.graph.Size = new System.Drawing.Size(1070, 598);
+            this.graph.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.graph.TabIndex = 3;
             this.graph.TabStop = false;
+            this.graph.SizeChanged += new System.EventHandler(this.graph_SizeChanged);
             this.graph.MouseDown += new System.Windows.Forms.MouseEventHandler(this.graph_MouseDown);
+            this.graph.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graph_MouseMove);
+            this.graph.MouseUp += new System.Windows.Forms.MouseEventHandler(this.graph_MouseUp);
             // 
             // MainForm
             // 

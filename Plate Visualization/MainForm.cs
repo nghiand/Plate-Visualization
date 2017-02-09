@@ -19,6 +19,7 @@ namespace Plate_Visualization
         {
             graphic = new Graphic(graph.CreateGraphics());
             status.Text = "Started";
+            plate = null;
         }
 
         public void getPlateData(List<Tuple<int, float>> inputWidth, List<Tuple<int, float>> inputLength)
@@ -70,7 +71,41 @@ namespace Plate_Visualization
 
         private void graph_MouseDown(object sender, MouseEventArgs e)
         {
+            if (ModifierKeys == Keys.Control && e.Button == MouseButtons.Left)
+            {
+                panning = true;
+                startingPoint = new Point(e.Location.X, e.Location.Y);
+            }
+        }
 
+        private void graph_MouseUp(object sender, MouseEventArgs e)
+        {
+            panning = false;
+        }
+
+        private void graph_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (panning)
+            {
+                Point movingPoint = new Point(e.Location.X - startingPoint.X, e.Location.Y - startingPoint.Y);
+                for (int i = 0; i < plate.Nodes.Count; i++)
+                {
+                    plate.Nodes[i].Point = new Point(
+                        plate.Nodes[i].X + movingPoint.X, 
+                        plate.Nodes[i].Y + movingPoint.Y);
+                }
+                startingPoint = new Point(e.Location.X, e.Location.Y);
+                graphic.DrawPlate(plate);
+            }
+        }
+
+        private void graph_SizeChanged(object sender, EventArgs e)
+        {
+            if (plate != null)
+            {
+                graphic = new Graphic(graph.CreateGraphics());
+                graphic.DrawPlate(plate);
+            }
         }
     }
 }
