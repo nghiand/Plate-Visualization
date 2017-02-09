@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Plate_Visualization.Helpers;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -119,6 +121,8 @@ namespace Plate_Visualization
                     currentLength++;
                     maxLength += lengths[currentLength].Item1;
                 }
+                currentWidth = 0;
+                maxWidth = widths[0].Item1;
                 for (int j = 0; j < this.width; j++)
                 {
                     if (j >= maxWidth)
@@ -126,7 +130,7 @@ namespace Plate_Visualization
                         currentWidth++;
                         maxWidth += widths[currentWidth].Item1;
                     }
-                    elements.Add(new Element(i * this.length + j,
+                    elements.Add(new Element(i * this.width + j,
                         widths[currentWidth].Item1, lengths[currentLength].Item1,
                         nodes[nodeId],
                         nodes[nodeId + 1],
@@ -136,8 +140,28 @@ namespace Plate_Visualization
                 }
                 nodeId++;
             }
+        }
 
-            Console.WriteLine("OK");
+        public void Zoom(Point location, bool zoomIn)
+        {
+            float factor = 1.0f;
+            if (zoomIn)
+            {
+                factor += MathHelper.SCALE_FACTOR;
+            }
+            else
+            {
+                factor -= MathHelper.SCALE_FACTOR;
+            }
+            float x0 = location.X;
+            float y0 = location.Y;
+
+            for (int i = 0; i < this.nodes.Count; i++)
+            {
+                this.nodes[i].Point = new Point(
+                    (int)Math.Ceiling(factor * (this.nodes[i].X - x0) + x0), 
+                    (int)Math.Ceiling(factor * (this.nodes[i].Y - y0) + y0));
+            }
         }
     }
 }

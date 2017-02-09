@@ -292,6 +292,7 @@
             this.graph.Size = new System.Drawing.Size(1070, 598);
             this.graph.TabIndex = 3;
             this.graph.TabStop = false;
+            this.graph.MouseDown += new System.Windows.Forms.MouseEventHandler(this.graph_MouseDown);
             // 
             // MainForm
             // 
