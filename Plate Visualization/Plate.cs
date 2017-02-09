@@ -163,5 +163,15 @@ namespace Plate_Visualization
                     (int)Math.Ceiling(factor * (this.nodes[i].Y - y0) + y0));
             }
         }
+
+        public void Move(Point movingVector)
+        {
+            for (int i = 0; i < this.nodes.Count; i++)
+            {
+                this.nodes[i].Point = new Point(
+                    this.nodes[i].X + movingVector.X,
+                    this.nodes[i].Y + movingVector.Y);
+            }
+        }
     }
 }

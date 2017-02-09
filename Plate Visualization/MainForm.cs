@@ -87,13 +87,8 @@ namespace Plate_Visualization
         {
             if (panning)
             {
-                Point movingPoint = new Point(e.Location.X - startingPoint.X, e.Location.Y - startingPoint.Y);
-                for (int i = 0; i < plate.Nodes.Count; i++)
-                {
-                    plate.Nodes[i].Point = new Point(
-                        plate.Nodes[i].X + movingPoint.X, 
-                        plate.Nodes[i].Y + movingPoint.Y);
-                }
+                Point movingVector = new Point(e.Location.X - startingPoint.X, e.Location.Y - startingPoint.Y);
+                plate.Move(movingVector);
                 startingPoint = new Point(e.Location.X, e.Location.Y);
                 graphic.DrawPlate(plate);
             }
