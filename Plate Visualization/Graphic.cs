@@ -20,7 +20,7 @@ namespace Plate_Visualization
             this.g = graphic;
         }
 
-        private void DrawNode(Node node)
+        private void DrawNode(Node node, bool OnHover = false)
         {
             Pen pen = new Pen(Brushes.Blue);
             g.DrawEllipse(
@@ -30,7 +30,10 @@ namespace Plate_Visualization
                 NODE_SIZE, NODE_SIZE);
 
             SolidBrush brush;
-            brush = new SolidBrush(FillColor[(int)node.State]);
+            if (OnHover)
+                brush = new SolidBrush(Color.Lime);
+            else
+                brush = new SolidBrush(FillColor[(int)node.State]);
             g.FillEllipse(
                 brush,
                 node.X - NODE_SIZE / 2,
@@ -41,6 +44,28 @@ namespace Plate_Visualization
         private void DrawNodeIndex(Node node)
         {
             g.DrawString((node.Id + 1).ToString(), new Font("Consolas", FONT_SIZE, FontStyle.Regular), Brushes.Blue, node.X + 1, node.Y + 1);
+        }
+
+        private void DrawElement(Element element, bool OnHover = false)
+        {
+            SolidBrush brush;
+            if (OnHover)
+                brush = new SolidBrush(Color.Lime);
+            else
+                brush = new SolidBrush(FillColor[(int)element.State]);
+            g.FillRectangle(
+                brush,
+                element.Nodes[0].X + 1,
+                element.Nodes[0].Y + 1,
+                element.Nodes[3].X - element.Nodes[0].X - 1,
+                element.Nodes[3].Y - element.Nodes[0].Y - 1
+            );
+            for (int i = 0; i < 4; i++)
+            {
+                DrawNode(element.Nodes[i]);
+            }
+            DrawNodeIndex(element.Nodes[0]);
+            DrawElementIndex(element);
         }
 
         private void DrawElementIndex(Element element)
@@ -79,14 +104,7 @@ namespace Plate_Visualization
             // draw elements
             for (int i = 0; i < plate.Elements.Count; i++)
             {
-                SolidBrush brush = new SolidBrush(FillColor[(int)plate.Elements[i].State]);
-                g.FillRectangle(
-                    brush,
-                    plate.Elements[i].Nodes[0].X + 1,
-                    plate.Elements[i].Nodes[0].Y + 1,
-                    plate.Elements[i].Nodes[3].X - plate.Elements[i].Nodes[0].X - 1,
-                    plate.Elements[i].Nodes[3].Y - plate.Elements[i].Nodes[0].Y - 1
-                );
+                DrawElement(plate.Elements[i]);
             }
             // draw nodes
             for (int i = 0; i < plate.Nodes.Count; i++)
@@ -104,6 +122,34 @@ namespace Plate_Visualization
             for (int i = 0; i < plate.Elements.Count; i++)
             {
                 DrawElementIndex(plate.Elements[i]);
+            }
+        }
+
+        public void MouseHover(object sender)
+        {
+            if (sender is Node)
+            {
+                Node n = sender as Node;
+                DrawNode(n, true);
+            }
+            else if (sender is Element)
+            {
+                Element e = sender as Element;
+                DrawElement(e, true);
+            }
+        }
+
+        public void MouseLeave(object sender)
+        {
+            if (sender is Node)
+            {
+                Node n = sender as Node;
+                DrawNode(n, false);
+            }
+            else if (sender is Element)
+            {
+                Element e = sender as Element;
+                DrawElement(e, false);
             }
         }
     }

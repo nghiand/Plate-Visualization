@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Plate_Visualization.Helpers;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Plate_Visualization
 {
-    public enum State { Normal, Selecting, Selected }
-
     class Node
     {
         private int id;
@@ -86,5 +86,34 @@ namespace Plate_Visualization
             bonds = new List<int>(3) { 0, 0, 0 };
             this.state = State.Normal;
         }
+
+        public bool Hovered
+        {
+            get; set;
+        }
+
+
+        public void MouseMove(Point location)
+        {
+            double dis = MathHelper.distance(location, Point);
+            if (dis <= Graphic.NODE_SIZE / 2)
+            {
+                if (Hovered == false)
+                {
+                    Hovered = true;
+                    MouseHover?.Invoke(this);
+                }
+            }
+            else
+            {
+                if (Hovered == true) {
+                    Hovered = false;
+                    MouseLeave?.Invoke(this);
+                }
+            }
+        }
+
+        public event MouseHoverHandler MouseHover;
+        public event MouseLeaveHandler MouseLeave;
     }
 }

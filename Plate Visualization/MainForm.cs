@@ -40,7 +40,7 @@ namespace Plate_Visualization
                 // TODO: Add dialog to show message
                 return;
             }
-            plate = new Plate(inputWidth, inputLength, graph.Width, graph.Height);
+            plate = new Plate(inputWidth, inputLength, graph.Width, graph.Height, graphic);
 
             selectElementStripButton.Enabled = true;
             selectNodeStripButton.Enabled = true;
@@ -108,6 +108,10 @@ namespace Plate_Visualization
                 plate.Move(movingVector);
                 startingPoint = new Point(e.Location.X, e.Location.Y);
                 graphic.DrawPlate(plate);
+            }
+            else if (plate != null)
+            {
+                plate.MouseMove(e.Location);
             }
         }
 

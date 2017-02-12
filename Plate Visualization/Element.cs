@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,44 @@ namespace Plate_Visualization
                 return this.id;
             }
         }
+
+        double e;
+        public double E
+        {
+            get
+            {
+                return e;
+            }
+            set
+            {
+                e = value;
+            }
+        }
+        double v;
+        public double V
+        {
+            get
+            {
+                return v;
+            }
+            set
+            {
+                v = value;
+            }
+        }
+        double h;
+        public double H
+        {
+            get
+            {
+                return h;
+            }
+            set
+            {
+                h = value;
+            }
+        }
+
         private List<Node> nodes = new List<Node>();
         public List<Node> Nodes
         {
@@ -82,5 +121,35 @@ namespace Plate_Visualization
             this.length = length;
             this.width = width;
         }
+
+        public bool Hovered
+        {
+            get; set;
+        }
+
+
+        public void MouseMove(Point location)
+        {
+            if (nodes[0].X + Graphic.NODE_SIZE / 2 < location.X && location.X < nodes[3].X - Graphic.NODE_SIZE / 2
+                                && nodes[0].Y + Graphic.NODE_SIZE / 2 < location.Y && location.Y < nodes[3].Y - Graphic.NODE_SIZE / 2)
+            {
+                if (Hovered == false)
+                {
+                    Hovered = true;
+                    MouseHover?.Invoke(this);
+                }
+            }
+            else
+            {
+                if (Hovered == true)
+                {
+                    Hovered = false;
+                    MouseLeave?.Invoke(this);
+                }
+            }
+        }
+
+        public event MouseHoverHandler MouseHover;
+        public event MouseLeaveHandler MouseLeave;
     }
 }

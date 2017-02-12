@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace Plate_Visualization
 {
+    public enum State { Normal, Selecting, Selected }
+
+    public delegate void MouseHoverHandler(object sender);
+    public delegate void MouseLeaveHandler(object sender);
+
     class Plate
     {
         private List<Element> elements;
@@ -51,7 +56,7 @@ namespace Plate_Visualization
             }
         }
 
-        public Plate(List<Tuple<int, float>> widths, List<Tuple<int, float>> lengths, int graphicWidth, int graphicLength, bool modified = true)
+        public Plate(List<Tuple<int, float>> widths, List<Tuple<int, float>> lengths, int graphicWidth, int graphicLength, Graphic graphic, bool modified = true)
         {
             nodes = new List<Node>();
             elements = new List<Element>();
@@ -141,6 +146,22 @@ namespace Plate_Visualization
                 nodeId++;
             }
             this.modified = modified;
+
+            Subscribe(graphic);
+        }
+
+        private void Subscribe(Graphic graphic)
+        {
+            foreach (Node n in nodes)
+            {
+                n.MouseHover += graphic.MouseHover;
+                n.MouseLeave += graphic.MouseLeave;
+            }
+            foreach (Element e in elements)
+            {
+                e.MouseHover += graphic.MouseHover;
+                e.MouseLeave += graphic.MouseLeave;
+            }
         }
 
         public void Zoom(Point location, bool zoomIn)
@@ -185,6 +206,18 @@ namespace Plate_Visualization
             set
             {
                 modified = value;
+            }
+        }
+
+        public void MouseMove(Point location)
+        {
+            foreach (Node n in nodes)
+            {
+                n.MouseMove(location);
+            }
+            foreach (Element e in elements)
+            {
+                e.MouseMove(location);
             }
         }
     }
