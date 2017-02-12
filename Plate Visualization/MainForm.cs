@@ -20,9 +20,20 @@ namespace Plate_Visualization
             graphic = new Graphic(graph.CreateGraphics());
             status.Text = "Started";
             plate = null;
+            SetToolItemsAvailability(false);
         }
 
-        public void getPlateData(List<Tuple<int, float>> inputWidth, List<Tuple<int, float>> inputLength)
+        private void SetToolItemsAvailability(bool enabled)
+        {
+            selectNodeStripButton.Enabled = enabled;
+            bondStripButton.Enabled = enabled;
+            selectElementStripButton.Enabled = enabled;
+            elementPropertiesStripButton.Enabled = enabled;
+            saveStripButton.Enabled = enabled;
+            saveAsStripButton.Enabled = enabled;
+        }
+
+        public void CreatePlate(List<Tuple<int, float>> inputWidth, List<Tuple<int, float>> inputLength)
         {
             if (inputWidth.Count == 0 || inputLength.Count == 0)
             {
@@ -30,6 +41,12 @@ namespace Plate_Visualization
                 return;
             }
             plate = new Plate(inputWidth, inputLength, graph.Width, graph.Height);
+
+            selectElementStripButton.Enabled = true;
+            selectNodeStripButton.Enabled = true;
+            saveStripButton.Enabled = true;
+            saveAsStripButton.Enabled = true;
+
             graphic.DrawPlate(plate);
         }
 
@@ -100,6 +117,36 @@ namespace Plate_Visualization
             {
                 graphic = new Graphic(graph.CreateGraphics());
                 graphic.DrawPlate(plate);
+            }
+        }
+
+        private void selectNodeStripButton_Click(object sender, EventArgs e)
+        {
+            if (selectNodeStripButton.Checked)
+            {
+                selectNodeStripButton.Checked = false;
+                bondStripButton.Enabled = false;
+            }
+            else
+            {
+                selectNodeStripButton.Checked = true;
+                selectElementStripButton.Checked = false;
+                elementPropertiesStripButton.Enabled = false;
+            }
+        }
+
+        private void selectElementStripButton_Click(object sender, EventArgs e)
+        {
+            if (selectElementStripButton.Checked)
+            {
+                selectElementStripButton.Checked = false;
+                elementPropertiesStripButton.Enabled = false;
+            }
+            else
+            {
+                selectElementStripButton.Checked = true;
+                selectNodeStripButton.Checked = false;
+                bondStripButton.Enabled = false;
             }
         }
     }

@@ -51,7 +51,7 @@
             this.bondStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.selectElementStripButton = new System.Windows.Forms.ToolStripButton();
-            this.elementPropertiesStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.elementPropertiesStripButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusText = new System.Windows.Forms.ToolStripStatusLabel();
@@ -171,7 +171,7 @@
             this.bondStripButton,
             this.toolStripSeparator2,
             this.selectElementStripButton,
-            this.elementPropertiesStripButton1});
+            this.elementPropertiesStripButton});
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(1070, 25);
@@ -229,6 +229,7 @@
             this.selectNodeStripButton.Name = "selectNodeStripButton";
             this.selectNodeStripButton.Size = new System.Drawing.Size(23, 22);
             this.selectNodeStripButton.Text = "Отметка узлов";
+            this.selectNodeStripButton.Click += new System.EventHandler(this.selectNodeStripButton_Click);
             // 
             // bondStripButton
             // 
@@ -252,15 +253,16 @@
             this.selectElementStripButton.Name = "selectElementStripButton";
             this.selectElementStripButton.Size = new System.Drawing.Size(23, 22);
             this.selectElementStripButton.Text = "Отметка элементов";
+            this.selectElementStripButton.Click += new System.EventHandler(this.selectElementStripButton_Click);
             // 
-            // elementPropertiesStripButton1
+            // elementPropertiesStripButton
             // 
-            this.elementPropertiesStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.elementPropertiesStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("elementPropertiesStripButton1.Image")));
-            this.elementPropertiesStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.elementPropertiesStripButton1.Name = "elementPropertiesStripButton1";
-            this.elementPropertiesStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.elementPropertiesStripButton1.Text = "Жесткость";
+            this.elementPropertiesStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.elementPropertiesStripButton.Image = ((System.Drawing.Image)(resources.GetObject("elementPropertiesStripButton.Image")));
+            this.elementPropertiesStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.elementPropertiesStripButton.Name = "elementPropertiesStripButton";
+            this.elementPropertiesStripButton.Size = new System.Drawing.Size(23, 22);
+            this.elementPropertiesStripButton.Text = "Жесткость";
             // 
             // statusStrip
             // 
@@ -346,7 +348,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton selectElementStripButton;
         private System.Windows.Forms.ToolStripButton openStripButton;
-        private System.Windows.Forms.ToolStripButton elementPropertiesStripButton1;
+        private System.Windows.Forms.ToolStripButton elementPropertiesStripButton;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel status;
         private System.Windows.Forms.ToolStripStatusLabel statusText;

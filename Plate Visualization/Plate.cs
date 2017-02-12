@@ -51,7 +51,7 @@ namespace Plate_Visualization
             }
         }
 
-        public Plate(List<Tuple<int, float>> widths, List<Tuple<int, float>> lengths, int graphicWidth, int graphicLength)
+        public Plate(List<Tuple<int, float>> widths, List<Tuple<int, float>> lengths, int graphicWidth, int graphicLength, bool modified = true)
         {
             nodes = new List<Node>();
             elements = new List<Element>();
@@ -140,6 +140,7 @@ namespace Plate_Visualization
                 }
                 nodeId++;
             }
+            this.modified = modified;
         }
 
         public void Zoom(Point location, bool zoomIn)
@@ -171,6 +172,19 @@ namespace Plate_Visualization
                 this.nodes[i].Point = new Point(
                     this.nodes[i].X + movingVector.X,
                     this.nodes[i].Y + movingVector.Y);
+            }
+        }
+
+        private bool modified;
+        public bool Modified
+        {
+            get
+            {
+                return this.modified;
+            }
+            set
+            {
+                modified = value;
             }
         }
     }

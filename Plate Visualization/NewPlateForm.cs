@@ -67,7 +67,7 @@ namespace Plate_Visualization
             }
 
             MainForm parent = (MainForm)this.Owner;
-            parent.getPlateData(inputWidth, inputLength);
+            parent.CreatePlate(inputWidth, inputLength);
             this.Close();
         }
     }

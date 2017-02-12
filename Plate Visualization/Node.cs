@@ -44,8 +44,6 @@ namespace Plate_Visualization
             }
         }
 
-        public static int NodeSize = 10;
-
         // bonds with Z, axis Ox, axis Oy
         private List<int> bonds = null;
 
