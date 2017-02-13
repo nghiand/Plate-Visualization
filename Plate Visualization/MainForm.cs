@@ -153,5 +153,21 @@ namespace Plate_Visualization
                 bondStripButton.Enabled = false;
             }
         }
+
+        private void graph_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (selectElementStripButton.Checked)
+                {
+                    
+                }
+                else if (selectNodeStripButton.Checked)
+                {
+                    plate.MouseClickOnNode();
+                    bondStripButton.Enabled = true;
+                }
+            }
+        }
     }
 }

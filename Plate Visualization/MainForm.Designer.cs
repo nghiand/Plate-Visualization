@@ -296,6 +296,7 @@
             this.graph.TabIndex = 3;
             this.graph.TabStop = false;
             this.graph.SizeChanged += new System.EventHandler(this.graph_SizeChanged);
+            this.graph.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graph_MouseClick);
             this.graph.MouseDown += new System.Windows.Forms.MouseEventHandler(this.graph_MouseDown);
             this.graph.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graph_MouseMove);
             this.graph.MouseUp += new System.Windows.Forms.MouseEventHandler(this.graph_MouseUp);

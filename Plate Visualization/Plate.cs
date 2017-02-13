@@ -12,6 +12,7 @@ namespace Plate_Visualization
 
     public delegate void MouseHoverHandler(object sender);
     public delegate void MouseLeaveHandler(object sender);
+    public delegate void MouseClickHandler(object sender);
 
     class Plate
     {
@@ -156,6 +157,7 @@ namespace Plate_Visualization
             {
                 n.MouseHover += graphic.MouseHover;
                 n.MouseLeave += graphic.MouseLeave;
+                n.MouseClick += graphic.MouseClick;
             }
             foreach (Element e in elements)
             {
@@ -218,6 +220,18 @@ namespace Plate_Visualization
             foreach (Element e in elements)
             {
                 e.MouseMove(location);
+            }
+        }
+
+        public void MouseClickOnNode()
+        {
+            foreach (Node n in nodes)
+            {
+                if (n.Hovered)
+                {
+                    n.Selecting();
+                    break;
+                }
             }
         }
     }

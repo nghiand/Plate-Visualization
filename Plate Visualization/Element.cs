@@ -127,7 +127,6 @@ namespace Plate_Visualization
             get; set;
         }
 
-
         public void MouseMove(Point location)
         {
             if (nodes[0].X + Graphic.NODE_SIZE / 2 < location.X && location.X < nodes[3].X - Graphic.NODE_SIZE / 2

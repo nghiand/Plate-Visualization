@@ -106,14 +106,42 @@ namespace Plate_Visualization
             }
             else
             {
-                if (Hovered == true) {
+                if (Hovered == true)
+                {
                     Hovered = false;
                     MouseLeave?.Invoke(this);
                 }
             }
         }
 
+        private bool IsSelected()
+        {
+            foreach (int k in bonds)
+            {
+                if (k != 0)
+                    return true;
+            }
+            return false;
+        }
+
+        public void Selecting()
+        {
+            if (state == State.Selecting)
+            {
+                if (IsSelected())
+                    state = State.Selected;
+                else
+                    state = State.Normal;
+            }
+            else
+            {
+                state = State.Selecting;
+            }
+            MouseClick?.Invoke(this);
+        }
+
         public event MouseHoverHandler MouseHover;
         public event MouseLeaveHandler MouseLeave;
+        public event MouseClickHandler MouseClick;
     }
 }

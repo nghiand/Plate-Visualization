@@ -152,5 +152,19 @@ namespace Plate_Visualization
                 DrawElement(e, false);
             }
         }
+
+        public void MouseClick(object sender)
+        {
+            if (sender is Node)
+            {
+                Node n = sender as Node;
+                DrawNode(n, false);
+            }
+            else if (sender is Element)
+            {
+                Element e = sender as Element;
+                DrawElement(e, false);
+            }
+        }
     }
 }
