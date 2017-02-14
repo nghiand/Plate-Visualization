@@ -128,15 +128,26 @@ namespace Plate_Visualization
         {
             if (state == State.Selecting)
             {
-                if (IsSelected())
-                    state = State.Selected;
-                else
-                    state = State.Normal;
+                Deselected();
             }
             else
             {
-                state = State.Selecting;
+                Selected();
             }
+        }
+
+        public void Deselected()
+        {
+            if (IsSelected())
+                state = State.Selected;
+            else
+                state = State.Normal;
+            MouseClick?.Invoke(this);
+        }
+
+        public void Selected()
+        {
+            state = State.Selecting;
             MouseClick?.Invoke(this);
         }
 

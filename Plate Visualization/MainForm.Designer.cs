@@ -229,6 +229,7 @@
             this.selectNodeStripButton.Name = "selectNodeStripButton";
             this.selectNodeStripButton.Size = new System.Drawing.Size(23, 22);
             this.selectNodeStripButton.Text = "Отметка узлов";
+            this.selectNodeStripButton.CheckedChanged += new System.EventHandler(this.selectNodeStripButton_CheckedChanged);
             this.selectNodeStripButton.Click += new System.EventHandler(this.selectNodeStripButton_Click);
             // 
             // bondStripButton
@@ -239,6 +240,7 @@
             this.bondStripButton.Name = "bondStripButton";
             this.bondStripButton.Size = new System.Drawing.Size(23, 22);
             this.bondStripButton.Text = "Связи в узлах";
+            this.bondStripButton.Click += new System.EventHandler(this.bondStripButton_Click);
             // 
             // toolStripSeparator2
             // 

@@ -151,7 +151,7 @@ namespace Plate_Visualization
             Subscribe(graphic);
         }
 
-        private void Subscribe(Graphic graphic)
+        public void Subscribe(Graphic graphic)
         {
             foreach (Node n in nodes)
             {
@@ -232,6 +232,37 @@ namespace Plate_Visualization
                     n.Selecting();
                     break;
                 }
+            }
+        }
+
+        public List<Node> SelectingNodes()
+        {
+            List<Node> list = new List<Node>();
+            foreach (Node n in nodes)
+            {
+                if (n.State == State.Selecting)
+                {
+                    list.Add(n);
+                }
+            }
+            return list;
+        }
+
+        public void SetBonds(List<int> bonds)
+        {
+            List<Node> selectingNodes = SelectingNodes();
+            foreach (Node n in selectingNodes)
+            {
+                n.Bonds = bonds;
+            }
+        }
+
+        public void DeselectNodes()
+        {
+            List<Node> selectingNodes = SelectingNodes();
+            foreach (Node n in selectingNodes)
+            {
+                n.Deselected();
             }
         }
     }

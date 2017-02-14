@@ -76,6 +76,8 @@ namespace Plate_Visualization
         {
             base.OnMouseWheel(e);
             graph.Focus();
+            if (plate == null)
+                return;
             if (graph.Focused == true && e.Delta != 0)
             {
                 plate.Zoom(e.Location, e.Delta > 0);
@@ -120,6 +122,7 @@ namespace Plate_Visualization
             if (plate != null)
             {
                 graphic = new Graphic(graph.CreateGraphics());
+                plate.Subscribe(graphic);
                 graphic.DrawPlate(plate);
             }
         }
@@ -167,6 +170,44 @@ namespace Plate_Visualization
                     plate.MouseClickOnNode();
                     bondStripButton.Enabled = true;
                 }
+            }
+        }
+
+        private void bondStripButton_Click(object sender, EventArgs e)
+        {
+            List<Node> selectingNodes = plate.SelectingNodes();
+            List<int> bonds = new List<int>(3) { 0, 0, 0 };
+            if (selectingNodes.Count > 0)
+            {
+                bonds = selectingNodes[0].Bonds;
+            }
+            for (int i = 1; i < selectingNodes.Count; i++)
+            {
+                if (!selectingNodes[i].Bonds.Equals(selectingNodes[i - 1].Bonds))
+                {
+                    bonds = new List<int>(3) { 0, 0, 0 };
+                    break;
+                }
+            }
+            using (NodeBondsForm bondsForm = new NodeBondsForm(bonds))
+            {
+                bondsForm.ShowDialog(this);
+            }
+        }
+
+        public void SetBonds(List<int> bonds)
+        {
+            plate.SetBonds(bonds);
+        }
+
+        private void selectNodeStripButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (selectNodeStripButton.Checked)
+            {
+            }
+            else
+            {
+                plate.DeselectNodes();
             }
         }
     }

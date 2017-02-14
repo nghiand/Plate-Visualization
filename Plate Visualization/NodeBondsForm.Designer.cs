@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.bondWithZ = new System.Windows.Forms.CheckBox();
-            this.bondWithOx = new System.Windows.Forms.CheckBox();
             this.bondWithOy = new System.Windows.Forms.CheckBox();
+            this.bondWithOx = new System.Windows.Forms.CheckBox();
+            this.bondWithZ = new System.Windows.Forms.CheckBox();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -49,15 +49,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Назначить связи";
             // 
-            // bondWithZ
+            // bondWithOy
             // 
-            this.bondWithZ.AutoSize = true;
-            this.bondWithZ.Location = new System.Drawing.Point(58, 27);
-            this.bondWithZ.Name = "bondWithZ";
-            this.bondWithZ.Size = new System.Drawing.Size(33, 17);
-            this.bondWithZ.TabIndex = 0;
-            this.bondWithZ.Text = "Z";
-            this.bondWithZ.UseVisualStyleBackColor = true;
+            this.bondWithOy.AutoSize = true;
+            this.bondWithOy.Location = new System.Drawing.Point(58, 73);
+            this.bondWithOy.Name = "bondWithOy";
+            this.bondWithOy.Size = new System.Drawing.Size(41, 17);
+            this.bondWithOy.TabIndex = 2;
+            this.bondWithOy.Text = "OY";
+            this.bondWithOy.UseVisualStyleBackColor = true;
             // 
             // bondWithOx
             // 
@@ -69,15 +69,15 @@
             this.bondWithOx.Text = "OX";
             this.bondWithOx.UseVisualStyleBackColor = true;
             // 
-            // bondWithOy
+            // bondWithZ
             // 
-            this.bondWithOy.AutoSize = true;
-            this.bondWithOy.Location = new System.Drawing.Point(58, 73);
-            this.bondWithOy.Name = "bondWithOy";
-            this.bondWithOy.Size = new System.Drawing.Size(41, 17);
-            this.bondWithOy.TabIndex = 2;
-            this.bondWithOy.Text = "OY";
-            this.bondWithOy.UseVisualStyleBackColor = true;
+            this.bondWithZ.AutoSize = true;
+            this.bondWithZ.Location = new System.Drawing.Point(58, 27);
+            this.bondWithZ.Name = "bondWithZ";
+            this.bondWithZ.Size = new System.Drawing.Size(33, 17);
+            this.bondWithZ.TabIndex = 0;
+            this.bondWithZ.Text = "Z";
+            this.bondWithZ.UseVisualStyleBackColor = true;
             // 
             // okButton
             // 
@@ -87,6 +87,7 @@
             this.okButton.TabIndex = 1;
             this.okButton.Text = "OK";
             this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
             // cancelButton
             // 
@@ -96,18 +97,22 @@
             this.cancelButton.TabIndex = 2;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // NodeBondsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(182, 162);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.groupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "NodeBondsForm";
+            this.ShowIcon = false;
             this.Text = "Связи в узлах";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
