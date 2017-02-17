@@ -13,7 +13,7 @@ namespace Plate_Visualization
         public const int NODE_SIZE = 8;
         private const int FONT_SIZE = 10;
 
-        private static Color[] FillColor = new Color[] { Color.White, Color.Red, Color.Blue };
+        private static Color[] FillColor = new Color[] { Color.White, Color.Red, Color.Lime };
 
         public Graphic(System.Drawing.Graphics graphic)
         {

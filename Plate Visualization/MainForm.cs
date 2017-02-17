@@ -25,10 +25,10 @@ namespace Plate_Visualization
 
         private void SetToolItemsAvailability(bool enabled)
         {
-            selectNodeStripButton.Enabled = enabled;
-            bondStripButton.Enabled = enabled;
-            selectElementStripButton.Enabled = enabled;
-            elementPropertiesStripButton.Enabled = enabled;
+            selectNodeButton.Enabled = enabled;
+            bondButton.Enabled = enabled;
+            selectElementButton.Enabled = enabled;
+            stiffnessButton.Enabled = enabled;
             saveStripButton.Enabled = enabled;
             saveAsStripButton.Enabled = enabled;
         }
@@ -42,8 +42,8 @@ namespace Plate_Visualization
             }
             plate = new Plate(inputWidth, inputLength, graph.Width, graph.Height, graphic);
 
-            selectElementStripButton.Enabled = true;
-            selectNodeStripButton.Enabled = true;
+            selectElementButton.Enabled = true;
+            selectNodeButton.Enabled = true;
             saveStripButton.Enabled = true;
             saveAsStripButton.Enabled = true;
 
@@ -117,6 +117,23 @@ namespace Plate_Visualization
             }
         }
 
+        private void graph_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (selectElementButton.Checked)
+                {
+                    plate.MouseClickOnElement();
+                    stiffnessButton.Enabled = true;
+                }
+                else if (selectNodeButton.Checked)
+                {
+                    plate.MouseClickOnNode();
+                    bondButton.Enabled = true;
+                }
+            }
+        }
+
         private void graph_SizeChanged(object sender, EventArgs e)
         {
             if (plate != null)
@@ -127,53 +144,70 @@ namespace Plate_Visualization
             }
         }
 
-        private void selectNodeStripButton_Click(object sender, EventArgs e)
+        private void selectElementButton_Click(object sender, EventArgs e)
         {
-            if (selectNodeStripButton.Checked)
+            if (selectElementButton.Checked)
             {
-                selectNodeStripButton.Checked = false;
-                bondStripButton.Enabled = false;
+                selectElementButton.Checked = false;
+                stiffnessButton.Enabled = false;
             }
             else
             {
-                selectNodeStripButton.Checked = true;
-                selectElementStripButton.Checked = false;
-                elementPropertiesStripButton.Enabled = false;
+                selectElementButton.Checked = true;
+                selectNodeButton.Checked = false;
+                bondButton.Enabled = false;
             }
         }
 
-        private void selectElementStripButton_Click(object sender, EventArgs e)
+        private void stiffnessButton_Click(object sender, EventArgs e)
         {
-            if (selectElementStripButton.Checked)
+            List<Element> selectingElements = plate.SelectingElements();
+            Stiffness stiffness = new Stiffness();
+            if (selectingElements.Count > 0)
             {
-                selectElementStripButton.Checked = false;
-                elementPropertiesStripButton.Enabled = false;
+                stiffness = selectingElements[0].Stiffness;
+            }
+            for (int i = 1; i < selectingElements.Count; i++)
+            {
+                if (!selectingElements[i].Stiffness.Equals(selectingElements[i - 1].Stiffness))
+                {
+                    stiffness = new Stiffness();
+                    break;
+                }
+            }
+            using (StiffnessForm stiffnessForm = new StiffnessForm(stiffness))
+            {
+                stiffnessForm.ShowDialog(this);
+            }
+        }
+
+        private void selectNodeButton_Click(object sender, EventArgs e)
+        {
+            if (selectNodeButton.Checked)
+            {
+                selectNodeButton.Checked = false;
+                bondButton.Enabled = false;
             }
             else
             {
-                selectElementStripButton.Checked = true;
-                selectNodeStripButton.Checked = false;
-                bondStripButton.Enabled = false;
+                selectNodeButton.Checked = true;
+                selectElementButton.Checked = false;
+                stiffnessButton.Enabled = false;
             }
         }
 
-        private void graph_MouseClick(object sender, MouseEventArgs e)
+        private void selectNodeButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (selectNodeButton.Checked)
             {
-                if (selectElementStripButton.Checked)
-                {
-                    
-                }
-                else if (selectNodeStripButton.Checked)
-                {
-                    plate.MouseClickOnNode();
-                    bondStripButton.Enabled = true;
-                }
+            }
+            else
+            {
+                plate.DeselectNodes();
             }
         }
 
-        private void bondStripButton_Click(object sender, EventArgs e)
+        private void bondButton_Click(object sender, EventArgs e)
         {
             List<Node> selectingNodes = plate.SelectingNodes();
             List<int> bonds = new List<int>(3) { 0, 0, 0 };
@@ -200,14 +234,19 @@ namespace Plate_Visualization
             plate.SetBonds(bonds);
         }
 
-        private void selectNodeStripButton_CheckedChanged(object sender, EventArgs e)
+        public void SetStiffness(Stiffness s)
         {
-            if (selectNodeStripButton.Checked)
+            plate.SetStiffness(s);
+        }
+
+        private void selectElementButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (selectElementButton.Checked)
             {
             }
             else
             {
-                plate.DeselectNodes();
+                plate.DeselectElements();
             }
         }
     }

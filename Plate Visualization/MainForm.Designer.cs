@@ -47,11 +47,11 @@
             this.saveStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveAsStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.selectNodeStripButton = new System.Windows.Forms.ToolStripButton();
-            this.bondStripButton = new System.Windows.Forms.ToolStripButton();
+            this.selectNodeButton = new System.Windows.Forms.ToolStripButton();
+            this.bondButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.selectElementStripButton = new System.Windows.Forms.ToolStripButton();
-            this.elementPropertiesStripButton = new System.Windows.Forms.ToolStripButton();
+            this.selectElementButton = new System.Windows.Forms.ToolStripButton();
+            this.stiffnessButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusText = new System.Windows.Forms.ToolStripStatusLabel();
@@ -167,11 +167,11 @@
             this.saveStripButton,
             this.saveAsStripButton,
             this.toolStripSeparator1,
-            this.selectNodeStripButton,
-            this.bondStripButton,
+            this.selectNodeButton,
+            this.bondButton,
             this.toolStripSeparator2,
-            this.selectElementStripButton,
-            this.elementPropertiesStripButton});
+            this.selectElementButton,
+            this.stiffnessButton});
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(1070, 25);
@@ -221,50 +221,52 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // selectNodeStripButton
+            // selectNodeButton
             // 
-            this.selectNodeStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.selectNodeStripButton.Image = ((System.Drawing.Image)(resources.GetObject("selectNodeStripButton.Image")));
-            this.selectNodeStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.selectNodeStripButton.Name = "selectNodeStripButton";
-            this.selectNodeStripButton.Size = new System.Drawing.Size(23, 22);
-            this.selectNodeStripButton.Text = "Отметка узлов";
-            this.selectNodeStripButton.CheckedChanged += new System.EventHandler(this.selectNodeStripButton_CheckedChanged);
-            this.selectNodeStripButton.Click += new System.EventHandler(this.selectNodeStripButton_Click);
+            this.selectNodeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.selectNodeButton.Image = ((System.Drawing.Image)(resources.GetObject("selectNodeButton.Image")));
+            this.selectNodeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.selectNodeButton.Name = "selectNodeButton";
+            this.selectNodeButton.Size = new System.Drawing.Size(23, 22);
+            this.selectNodeButton.Text = "Отметка узлов";
+            this.selectNodeButton.CheckedChanged += new System.EventHandler(this.selectNodeButton_CheckedChanged);
+            this.selectNodeButton.Click += new System.EventHandler(this.selectNodeButton_Click);
             // 
-            // bondStripButton
+            // bondButton
             // 
-            this.bondStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bondStripButton.Image = ((System.Drawing.Image)(resources.GetObject("bondStripButton.Image")));
-            this.bondStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bondStripButton.Name = "bondStripButton";
-            this.bondStripButton.Size = new System.Drawing.Size(23, 22);
-            this.bondStripButton.Text = "Связи в узлах";
-            this.bondStripButton.Click += new System.EventHandler(this.bondStripButton_Click);
+            this.bondButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.bondButton.Image = ((System.Drawing.Image)(resources.GetObject("bondButton.Image")));
+            this.bondButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.bondButton.Name = "bondButton";
+            this.bondButton.Size = new System.Drawing.Size(23, 22);
+            this.bondButton.Text = "Связи в узлах";
+            this.bondButton.Click += new System.EventHandler(this.bondButton_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // selectElementStripButton
+            // selectElementButton
             // 
-            this.selectElementStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.selectElementStripButton.Image = ((System.Drawing.Image)(resources.GetObject("selectElementStripButton.Image")));
-            this.selectElementStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.selectElementStripButton.Name = "selectElementStripButton";
-            this.selectElementStripButton.Size = new System.Drawing.Size(23, 22);
-            this.selectElementStripButton.Text = "Отметка элементов";
-            this.selectElementStripButton.Click += new System.EventHandler(this.selectElementStripButton_Click);
+            this.selectElementButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.selectElementButton.Image = ((System.Drawing.Image)(resources.GetObject("selectElementButton.Image")));
+            this.selectElementButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.selectElementButton.Name = "selectElementButton";
+            this.selectElementButton.Size = new System.Drawing.Size(23, 22);
+            this.selectElementButton.Text = "Отметка элементов";
+            this.selectElementButton.CheckedChanged += new System.EventHandler(this.selectElementButton_CheckedChanged);
+            this.selectElementButton.Click += new System.EventHandler(this.selectElementButton_Click);
             // 
-            // elementPropertiesStripButton
+            // stiffnessButton
             // 
-            this.elementPropertiesStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.elementPropertiesStripButton.Image = ((System.Drawing.Image)(resources.GetObject("elementPropertiesStripButton.Image")));
-            this.elementPropertiesStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.elementPropertiesStripButton.Name = "elementPropertiesStripButton";
-            this.elementPropertiesStripButton.Size = new System.Drawing.Size(23, 22);
-            this.elementPropertiesStripButton.Text = "Жесткость";
+            this.stiffnessButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.stiffnessButton.Image = ((System.Drawing.Image)(resources.GetObject("stiffnessButton.Image")));
+            this.stiffnessButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.stiffnessButton.Name = "stiffnessButton";
+            this.stiffnessButton.Size = new System.Drawing.Size(23, 22);
+            this.stiffnessButton.Text = "Жесткость";
+            this.stiffnessButton.Click += new System.EventHandler(this.stiffnessButton_Click);
             // 
             // statusStrip
             // 
@@ -347,16 +349,16 @@
         private System.Windows.Forms.ToolStripButton saveStripButton;
         private System.Windows.Forms.ToolStripButton saveAsStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton selectNodeStripButton;
+        private System.Windows.Forms.ToolStripButton selectNodeButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton selectElementStripButton;
+        private System.Windows.Forms.ToolStripButton selectElementButton;
         private System.Windows.Forms.ToolStripButton openStripButton;
-        private System.Windows.Forms.ToolStripButton elementPropertiesStripButton;
+        private System.Windows.Forms.ToolStripButton stiffnessButton;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel status;
         private System.Windows.Forms.ToolStripStatusLabel statusText;
         private System.Windows.Forms.PictureBox graph;
-        private System.Windows.Forms.ToolStripButton bondStripButton;
+        private System.Windows.Forms.ToolStripButton bondButton;
     }
 }
 

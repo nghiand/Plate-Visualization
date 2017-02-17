@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Element.cs" />
+    <Compile Include="Stiffness.cs" />
     <Compile Include="Graphic.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
     <Compile Include="MainForm.cs">

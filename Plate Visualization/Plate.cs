@@ -163,6 +163,7 @@ namespace Plate_Visualization
             {
                 e.MouseHover += graphic.MouseHover;
                 e.MouseLeave += graphic.MouseLeave;
+                e.MouseClick += graphic.MouseClick;
             }
         }
 
@@ -235,6 +236,18 @@ namespace Plate_Visualization
             }
         }
 
+        public void MouseClickOnElement()
+        {
+            foreach (Element e in elements)
+            {
+                if (e.Hovered)
+                {
+                    e.Selecting();
+                    break;
+                }
+            }
+        }
+
         public List<Node> SelectingNodes()
         {
             List<Node> list = new List<Node>();
@@ -263,6 +276,37 @@ namespace Plate_Visualization
             foreach (Node n in selectingNodes)
             {
                 n.Deselected();
+            }
+        }
+
+        public List<Element> SelectingElements()
+        {
+            List<Element> list = new List<Element>();
+            foreach (Element e in elements)
+            {
+                if (e.State == State.Selecting)
+                {
+                    list.Add(e);
+                }
+            }
+            return list;
+        }
+
+        public void DeselectElements()
+        {
+            List<Element> selectingElements = SelectingElements();
+            foreach (Element e in selectingElements)
+            {
+                e.Deselected();
+            }
+        }
+
+        public void SetStiffness(Stiffness s)
+        {
+            List<Element> selectingElements = SelectingElements();
+            foreach (Element e in selectingElements)
+            {
+                e.Stiffness = s;
             }
         }
     }

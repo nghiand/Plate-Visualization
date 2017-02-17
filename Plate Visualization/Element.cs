@@ -18,42 +18,19 @@ namespace Plate_Visualization
             }
         }
 
-        double e;
-        public double E
+        private Stiffness stiffness;
+        public Stiffness Stiffness
         {
             get
             {
-                return e;
+                return stiffness;
             }
             set
             {
-                e = value;
+                stiffness = value;
             }
         }
-        double v;
-        public double V
-        {
-            get
-            {
-                return v;
-            }
-            set
-            {
-                v = value;
-            }
-        }
-        double h;
-        public double H
-        {
-            get
-            {
-                return h;
-            }
-            set
-            {
-                h = value;
-            }
-        }
+
 
         private List<Node> nodes = new List<Node>();
         public List<Node> Nodes
@@ -108,6 +85,7 @@ namespace Plate_Visualization
             this.state = State.Normal;
             this.length = length;
             this.width = width;
+            this.stiffness = new Stiffness();
         }
 
         public Element(int id, double width, double length, Node n0, Node n1, Node n2, Node n3)
@@ -120,6 +98,7 @@ namespace Plate_Visualization
             this.state = State.Normal;
             this.length = length;
             this.width = width;
+            this.stiffness = new Stiffness();
         }
 
         public bool Hovered
@@ -148,7 +127,45 @@ namespace Plate_Visualization
             }
         }
 
+        private bool IsSelected()
+        {
+            if (stiffness.E != 0 || stiffness.H != 0 || stiffness.V != 0)
+                return true;
+            return false;
+            //return state == State.Selected;
+        }
+
+        public void Selecting()
+        {
+            if (state == State.Selecting)
+            {
+                Deselected();
+            }
+            else
+            {
+                Selected();
+            }
+        }
+
+        public void Deselected()
+        {
+            if (IsSelected())
+                state = State.Selected;
+            else
+                state = State.Normal;
+            MouseClick?.Invoke(this);
+        }
+
+        public void Selected()
+        {
+            state = State.Selecting;
+            MouseClick?.Invoke(this);
+        }
+
+
+
         public event MouseHoverHandler MouseHover;
         public event MouseLeaveHandler MouseLeave;
+        public event MouseClickHandler MouseClick;
     }
 }
