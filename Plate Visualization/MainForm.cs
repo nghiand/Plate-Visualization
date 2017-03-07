@@ -137,7 +137,14 @@ namespace Plate_Visualization
 
         public void plateObject_MouseClick(object sender)
         {
-            Console.WriteLine("Clicked");
+            if (selectNodeButton.Checked && sender is Node)
+            {
+                ((PlateObject)sender).Toggle();
+            }
+            else if (selectElementButton.Checked && sender is Element)
+            {
+                ((PlateObject)sender).Toggle();
+            }
         }
 
         public void plateObject_MouseHover(object sender)
@@ -156,6 +163,22 @@ namespace Plate_Visualization
                 graphic.DrawElement((Element)sender);
         }
 
+        public void plateObject_Selected(object sender)
+        {
+            if (sender is Node)
+                graphic.DrawNode((Node)sender);
+            else if (sender is Element)
+                graphic.DrawElement((Element)sender);
+        }
+
+        public void plateObject_Deselected(object sender)
+        {
+            if (sender is Node)
+                graphic.DrawNode((Node)sender);
+            else if (sender is Element)
+                graphic.DrawElement((Element)sender);
+        }
+
         private void selectElementButton_Click(object sender, EventArgs e)
         {
             if (selectElementButton.Checked)
@@ -166,6 +189,7 @@ namespace Plate_Visualization
             else
             {
                 selectElementButton.Checked = true;
+                stiffnessButton.Enabled = true;
                 selectNodeButton.Checked = false;
                 bondButton.Enabled = false;
             }
@@ -203,6 +227,7 @@ namespace Plate_Visualization
             else
             {
                 selectNodeButton.Checked = true;
+                bondButton.Enabled = true;
                 selectElementButton.Checked = false;
                 stiffnessButton.Enabled = false;
             }

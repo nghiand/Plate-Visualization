@@ -267,6 +267,8 @@ namespace Plate_Visualization
                 obj.MouseClick += form.plateObject_MouseClick;
                 obj.MouseHover += form.plateObject_MouseHover;
                 obj.MouseLeave += form.plateObject_MouseLeave;
+                obj.Selected += form.plateObject_Selected;
+                obj.Deselected += form.plateObject_Deselected;
             }
         }
     }

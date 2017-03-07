@@ -7,6 +7,8 @@ namespace Plate_Visualization
     public delegate void MouseHoverHandler(object sender);
     public delegate void MouseLeaveHandler(object sender);
     public delegate void MouseClickHandler(object sender);
+    public delegate void SelectedHandler(object sender);
+    public delegate void DeselectedHandler(object sender);
 
     abstract class PlateObject
     {
@@ -21,6 +23,8 @@ namespace Plate_Visualization
         public event MouseHoverHandler MouseHover;
         public event MouseLeaveHandler MouseLeave;
         public event MouseClickHandler MouseClick;
+        public event SelectedHandler Selected;
+        public event DeselectedHandler Deselected;
 
         abstract public bool IsOnHover(MouseEventArgs e);
         abstract public bool IsSelected();
@@ -48,9 +52,18 @@ namespace Plate_Visualization
             }
         }
 
+        public void Toggle()
+        {
+            if (State == State.Selecting)
+                Deselect();
+            else
+                Select();
+        }
+
         public void Select()
         {
             State = State.Selecting;
+            Selected?.Invoke(this);
         }
 
         public void Deselect()
@@ -59,6 +72,7 @@ namespace Plate_Visualization
                 State = State.Selected;
             else
                 State = State.Normal;
+            Deselected?.Invoke(this);
         }
     }
 }
