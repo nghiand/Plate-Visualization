@@ -1,171 +1,72 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Plate_Visualization
 {
-    class Element
+    class Element : PlateObject
     {
-        private int id;
         public int Id
-        {
-            get
-            {
-                return this.id;
-            }
-        }
-
-        private Stiffness stiffness;
-        public Stiffness Stiffness
-        {
-            get
-            {
-                return stiffness;
-            }
-            set
-            {
-                stiffness = value;
-            }
-        }
-
-
-        private List<Node> nodes = new List<Node>();
-        public List<Node> Nodes
-        {
-            get
-            {
-                return this.nodes;
-            }
-        }
-
-        private double width, length;
-        public double Width
-        {
-            get
-            {
-                return this.width;
-            }
-            set
-            {
-                this.width = value;
-            }
-        }
-
-        public double Length
-        {
-            get
-            {
-                return this.length;
-            }
-            set
-            {
-                this.length = value;
-            }
-        }
-
-        private State state;
-        public State State
-        {
-            get
-            {
-                return this.state;
-            }
-            set
-            {
-                this.state = value;
-            }
-        }
-
-        public Element(int id, double width, double length)
-        {
-            this.id = id;
-            this.state = State.Normal;
-            this.length = length;
-            this.width = width;
-            this.stiffness = new Stiffness();
-        }
-
-        public Element(int id, double width, double length, Node n0, Node n1, Node n2, Node n3)
-        {
-            this.id = id;
-            nodes.Add(n0);
-            nodes.Add(n1);
-            nodes.Add(n2);
-            nodes.Add(n3);
-            this.state = State.Normal;
-            this.length = length;
-            this.width = width;
-            this.stiffness = new Stiffness();
-        }
-
-        public bool Hovered
         {
             get; set;
         }
 
-        public void MouseMove(Point location)
+        public Stiffness Stiffness
         {
-            if (nodes[0].X + Graphic.NODE_SIZE / 2 < location.X && location.X < nodes[3].X - Graphic.NODE_SIZE / 2
-                                && nodes[0].Y + Graphic.NODE_SIZE / 2 < location.Y && location.Y < nodes[3].Y - Graphic.NODE_SIZE / 2)
-            {
-                if (Hovered == false)
-                {
-                    Hovered = true;
-                    MouseHover?.Invoke(this);
-                }
-            }
-            else
-            {
-                if (Hovered == true)
-                {
-                    Hovered = false;
-                    MouseLeave?.Invoke(this);
-                }
-            }
+            get; set;
         }
 
-        private bool IsSelected()
+        public List<Node> Nodes
         {
-            if (stiffness.E != 0 || stiffness.H != 0 || stiffness.V != 0)
+            get; set;
+        }
+
+        public double Width
+        {
+            get; set;
+        }
+
+        public double Length
+        {
+            get; set;
+        }
+
+        public Element(int id, double width, double length)
+        {
+            Id = id;
+            State = State.Normal;
+            Length = length;
+            Width = width;
+            Stiffness = new Stiffness();
+            Nodes = new List<Node>();
+        }
+
+        public Element(int id, double width, double length, Node n0, Node n1, Node n2, Node n3)
+        {
+            Id = id;
+            Nodes = new List<Node>();
+            Nodes.Add(n0);
+            Nodes.Add(n1);
+            Nodes.Add(n2);
+            Nodes.Add(n3);
+            State = State.Normal;
+            Length = length;
+            Width = width;
+            Stiffness = new Stiffness();
+        }
+
+        public override bool IsOnHover(MouseEventArgs e)
+        {
+            if (Nodes[0].X + Graphic.NODE_SIZE / 2 < e.Location.X && e.Location.X < Nodes[3].X - Graphic.NODE_SIZE / 2
+                && Nodes[0].Y + Graphic.NODE_SIZE / 2 < e.Location.Y && e.Location.Y < Nodes[3].Y - Graphic.NODE_SIZE / 2)
                 return true;
             return false;
-            //return state == State.Selected;
         }
 
-        public void Selecting()
+        public override bool IsSelected()
         {
-            if (state == State.Selecting)
-            {
-                Deselected();
-            }
-            else
-            {
-                Selected();
-            }
+            if (Stiffness.E != 0 || Stiffness.H != 0 || Stiffness.V != 0)
+                return true;
+            return false;
         }
-
-        public void Deselected()
-        {
-            if (IsSelected())
-                state = State.Selected;
-            else
-                state = State.Normal;
-            MouseClick?.Invoke(this);
-        }
-
-        public void Selected()
-        {
-            state = State.Selecting;
-            MouseClick?.Invoke(this);
-        }
-
-
-
-        public event MouseHoverHandler MouseHover;
-        public event MouseLeaveHandler MouseLeave;
-        public event MouseClickHandler MouseClick;
     }
 }

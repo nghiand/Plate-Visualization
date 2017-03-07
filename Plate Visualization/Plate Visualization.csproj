@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Element.cs" />
+    <Compile Include="PlateObject.cs" />
     <Compile Include="Stiffness.cs" />
     <Compile Include="Graphic.cs" />
     <Compile Include="Helpers\MathHelper.cs" />
@@ -100,6 +101,7 @@
     <EmbeddedResource Include="StiffnessForm.resx">
       <DependentUpon>StiffnessForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

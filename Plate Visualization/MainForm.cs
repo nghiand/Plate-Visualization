@@ -40,8 +40,8 @@ namespace Plate_Visualization
                 // TODO: Add dialog to show message
                 return;
             }
-            plate = new Plate(inputWidth, inputLength, graph.Width, graph.Height, graphic);
-
+            plate = new Plate(inputWidth, inputLength, graph.Width, graph.Height);
+            plate.Subscribe(this);
             selectElementButton.Enabled = true;
             selectNodeButton.Enabled = true;
             saveStripButton.Enabled = true;
@@ -95,6 +95,7 @@ namespace Plate_Visualization
                 panning = true;
                 startingPoint = new Point(e.Location.X, e.Location.Y);
             }
+
         }
 
         private void graph_MouseUp(object sender, MouseEventArgs e)
@@ -113,24 +114,15 @@ namespace Plate_Visualization
             }
             else if (plate != null)
             {
-                plate.MouseMove(e.Location);
+                plate.OnMouseMove(e);
             }
         }
 
         private void graph_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (plate != null && e.Button == MouseButtons.Left)
             {
-                if (selectElementButton.Checked)
-                {
-                    plate.MouseClickOnElement();
-                    stiffnessButton.Enabled = true;
-                }
-                else if (selectNodeButton.Checked)
-                {
-                    plate.MouseClickOnNode();
-                    bondButton.Enabled = true;
-                }
+                plate.OnMouseClick(e);
             }
         }
 
@@ -139,9 +131,29 @@ namespace Plate_Visualization
             if (plate != null)
             {
                 graphic = new Graphic(graph.CreateGraphics());
-                plate.Subscribe(graphic);
                 graphic.DrawPlate(plate);
             }
+        }
+
+        public void plateObject_MouseClick(object sender)
+        {
+            Console.WriteLine("Clicked");
+        }
+
+        public void plateObject_MouseHover(object sender)
+        {
+            if (sender is Node)
+                graphic.DrawNode((Node)sender, true);
+            else if (sender is Element)
+                graphic.DrawElement((Element)sender, true);
+        }
+
+        public void plateObject_MouseLeave(object sender)
+        {
+            if (sender is Node)
+                graphic.DrawNode((Node)sender);
+            else if (sender is Element)
+                graphic.DrawElement((Element)sender);
         }
 
         private void selectElementButton_Click(object sender, EventArgs e)

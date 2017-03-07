@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Plate_Visualization
 {
@@ -28,6 +23,8 @@ namespace Plate_Visualization
         public event MouseClickHandler MouseClick;
 
         abstract public bool IsOnHover(MouseEventArgs e);
+        abstract public bool IsSelected();
+
         public void OnMouseClick(MouseEventArgs e)
         {
             MouseClick?.Invoke(this);
@@ -49,6 +46,19 @@ namespace Plate_Visualization
                 Hovered = false;
                 MouseLeave?.Invoke(this);
             }
+        }
+
+        public void Select()
+        {
+            State = State.Selecting;
+        }
+
+        public void Deselect()
+        {
+            if (IsSelected())
+                State = State.Selected;
+            else
+                State = State.Normal;
         }
     }
 }

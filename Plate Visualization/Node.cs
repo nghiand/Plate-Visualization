@@ -2,121 +2,61 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Plate_Visualization
 {
-    class Node
+    class Node : PlateObject
     {
-        private int id;
         public int Id
         {
-            get
-            {
-                return this.id;
-            }
+            get; set;
         }
 
-        private Point coordinate;
         public int X
         {
             get
             {
-                return this.coordinate.X;
+                return this.Position.X;
             }
         }
         public int Y
         {
             get
             {
-                return this.coordinate.Y;
+                return this.Position.Y;
             }
         }
 
-        public Point Point
-        {
-            get
-            {
-                return this.coordinate;
-            }
-            set
-            {
-                this.coordinate = value;
-            }
-        }
-
-        // bonds with Z, axis Ox, axis Oy
-        private List<int> bonds = null;
-
-        public List<int> Bonds
-        {
-            get
-            {
-                return this.bonds;
-            }
-            set
-            {
-                this.bonds = value;
-            }
-        }
-
-        private State state;
-        public State State
-        {
-            get
-            {
-                return this.state;
-            }
-            set
-            {
-                this.state = value;
-            }
-        }
-
-        public Node(int id)
-        {
-            this.id = id;
-            bonds = new List<int>(3) { 0, 0, 0 };
-            this.state = State.Normal;
-        }
-
-        public Node(int id, int x, int y)
-        {
-            this.id = id;
-            this.coordinate = new Point(x, y);
-            bonds = new List<int>(3) { 0, 0, 0 };
-            this.state = State.Normal;
-        }
-
-        public bool Hovered
+        public Point Position
         {
             get; set;
         }
 
-
-        public void MouseMove(Point location)
+        // bonds with Z, axis Ox, axis Oy
+        public List<int> Bonds
         {
-            double dis = MathHelper.distance(location, Point);
-            if (dis <= Graphic.NODE_SIZE / 2)
-            {
-                if (Hovered == false)
-                {
-                    Hovered = true;
-                    MouseHover?.Invoke(this);
-                }
-            }
-            else
-            {
-                if (Hovered == true)
-                {
-                    Hovered = false;
-                    MouseLeave?.Invoke(this);
-                }
-            }
+            get; set;
         }
 
-        private bool IsSelected()
+        public Node(int id)
         {
-            foreach (int k in bonds)
+            Id = id;
+            Bonds = new List<int>(3) { 0, 0, 0 };
+            State = State.Normal;
+        }
+
+        public Node(int id, int x, int y)
+        {
+            Id = id;
+            Position = new Point(x, y);
+            Bonds = new List<int>(3) { 0, 0, 0 };
+            State = State.Normal;
+        }
+
+        public override bool IsSelected()
+        {
+            foreach (int k in Bonds)
             {
                 if (k != 0)
                     return true;
@@ -124,35 +64,10 @@ namespace Plate_Visualization
             return false;
         }
 
-        public void Selecting()
+        public override bool IsOnHover(MouseEventArgs e)
         {
-            if (state == State.Selecting)
-            {
-                Deselected();
-            }
-            else
-            {
-                Selected();
-            }
+            double dis = MathHelper.Distance(e.Location, Position);
+            return dis <= Graphic.NODE_SIZE / 2;
         }
-
-        public void Deselected()
-        {
-            if (IsSelected())
-                state = State.Selected;
-            else
-                state = State.Normal;
-            MouseClick?.Invoke(this);
-        }
-
-        public void Selected()
-        {
-            state = State.Selecting;
-            MouseClick?.Invoke(this);
-        }
-
-        public event MouseHoverHandler MouseHover;
-        public event MouseLeaveHandler MouseLeave;
-        public event MouseClickHandler MouseClick;
     }
 }

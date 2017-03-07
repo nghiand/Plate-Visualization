@@ -20,7 +20,7 @@ namespace Plate_Visualization
             this.g = graphic;
         }
 
-        private void DrawNode(Node node, bool OnHover = false)
+        public void DrawNode(Node node, bool OnHover = false)
         {
             Pen pen = new Pen(Brushes.Blue);
             g.DrawEllipse(
@@ -46,7 +46,7 @@ namespace Plate_Visualization
             g.DrawString((node.Id + 1).ToString(), new Font("Consolas", FONT_SIZE, FontStyle.Regular), Brushes.Blue, node.X + 1, node.Y + 1);
         }
 
-        private void DrawElement(Element element, bool OnHover = false)
+        public void DrawElement(Element element, bool OnHover = false)
         {
             SolidBrush brush;
             if (OnHover)
@@ -73,8 +73,8 @@ namespace Plate_Visualization
             StringFormat sf = new StringFormat();
             sf.LineAlignment = StringAlignment.Center;
             sf.Alignment = StringAlignment.Center;
-            Point top = element.Nodes[0].Point;
-            Point bot = element.Nodes[3].Point;
+            Point top = element.Nodes[0].Position;
+            Point bot = element.Nodes[3].Position;
 
             Point center = new Point((top.X + bot.X) / 2, (top.Y + bot.Y) / 2);
 
@@ -91,14 +91,14 @@ namespace Plate_Visualization
             // draw vertical lines
             for (int i = 0; i < plate.Nodes.Count - plate.Width - 1; i++)
             {
-                g.DrawLine(pen, plate.Nodes[i].Point, plate.Nodes[i + plate.Width + 1].Point);
+                g.DrawLine(pen, plate.Nodes[i].Position, plate.Nodes[i + plate.Width + 1].Position);
             }
             // draw horizontal lines
             for (int i = 0; i <= plate.Length; i++)
             {
                 for (int j = i * (plate.Width + 1); j < i * (plate.Width + 1) + plate.Width; j++)
                 {
-                    g.DrawLine(pen, plate.Nodes[j].Point, plate.Nodes[j + 1].Point);
+                    g.DrawLine(pen, plate.Nodes[j].Position, plate.Nodes[j + 1].Position);
                 }
             }
             // draw elements
