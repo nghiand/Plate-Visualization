@@ -42,21 +42,21 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.status = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusText = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.graph = new System.Windows.Forms.PictureBox();
             this.newStripButton = new System.Windows.Forms.ToolStripButton();
             this.openStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveAsStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.selectNodeButton = new System.Windows.Forms.ToolStripButton();
             this.bondButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.selectElementButton = new System.Windows.Forms.ToolStripButton();
             this.stiffnessButton = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.status = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusText = new System.Windows.Forms.ToolStripStatusLabel();
-            this.graph = new System.Windows.Forms.PictureBox();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.view2D = new System.Windows.Forms.ToolStripButton();
             this.view3D = new System.Windows.Forms.ToolStripButton();
             this.menuStrip.SuspendLayout();
@@ -184,6 +184,58 @@
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "toolStrip1";
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.status,
+            this.statusText});
+            this.statusStrip.Location = new System.Drawing.Point(0, 647);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(1070, 22);
+            this.statusStrip.TabIndex = 2;
+            this.statusStrip.Text = "statusStrip";
+            // 
+            // status
+            // 
+            this.status.Name = "status";
+            this.status.Size = new System.Drawing.Size(0, 17);
+            // 
+            // statusText
+            // 
+            this.statusText.Name = "statusText";
+            this.statusText.Size = new System.Drawing.Size(0, 17);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // graph
+            // 
+            this.graph.BackColor = System.Drawing.SystemColors.Control;
+            this.graph.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.graph.Location = new System.Drawing.Point(0, 49);
+            this.graph.Name = "graph";
+            this.graph.Size = new System.Drawing.Size(1070, 598);
+            this.graph.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.graph.TabIndex = 3;
+            this.graph.TabStop = false;
+            this.graph.SizeChanged += new System.EventHandler(this.graph_SizeChanged);
+            this.graph.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graph_MouseClick);
+            this.graph.MouseDown += new System.Windows.Forms.MouseEventHandler(this.graph_MouseDown);
+            this.graph.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graph_MouseMove);
+            this.graph.MouseUp += new System.Windows.Forms.MouseEventHandler(this.graph_MouseUp);
+            // 
             // newStripButton
             // 
             this.newStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -222,15 +274,10 @@
             this.saveAsStripButton.Text = "Сохранить как";
             this.saveAsStripButton.ToolTipText = "Сохранить как";
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
             // selectNodeButton
             // 
             this.selectNodeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.selectNodeButton.Image = ((System.Drawing.Image)(resources.GetObject("selectNodeButton.Image")));
+            this.selectNodeButton.Image = global::Plate_Visualization.Properties.Resources.node;
             this.selectNodeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.selectNodeButton.Name = "selectNodeButton";
             this.selectNodeButton.Size = new System.Drawing.Size(23, 22);
@@ -248,15 +295,10 @@
             this.bondButton.Text = "Связи в узлах";
             this.bondButton.Click += new System.EventHandler(this.bondButton_Click);
             // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
             // selectElementButton
             // 
             this.selectElementButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.selectElementButton.Image = ((System.Drawing.Image)(resources.GetObject("selectElementButton.Image")));
+            this.selectElementButton.Image = global::Plate_Visualization.Properties.Resources.element;
             this.selectElementButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.selectElementButton.Name = "selectElementButton";
             this.selectElementButton.Size = new System.Drawing.Size(23, 22);
@@ -274,52 +316,10 @@
             this.stiffnessButton.Text = "Жесткость";
             this.stiffnessButton.Click += new System.EventHandler(this.stiffnessButton_Click);
             // 
-            // statusStrip
-            // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.status,
-            this.statusText});
-            this.statusStrip.Location = new System.Drawing.Point(0, 647);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1070, 22);
-            this.statusStrip.TabIndex = 2;
-            this.statusStrip.Text = "statusStrip";
-            // 
-            // status
-            // 
-            this.status.Name = "status";
-            this.status.Size = new System.Drawing.Size(0, 17);
-            // 
-            // statusText
-            // 
-            this.statusText.Name = "statusText";
-            this.statusText.Size = new System.Drawing.Size(0, 17);
-            // 
-            // graph
-            // 
-            this.graph.BackColor = System.Drawing.SystemColors.Control;
-            this.graph.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.graph.Location = new System.Drawing.Point(0, 49);
-            this.graph.Name = "graph";
-            this.graph.Size = new System.Drawing.Size(1070, 598);
-            this.graph.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.graph.TabIndex = 3;
-            this.graph.TabStop = false;
-            this.graph.SizeChanged += new System.EventHandler(this.graph_SizeChanged);
-            this.graph.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graph_MouseClick);
-            this.graph.MouseDown += new System.Windows.Forms.MouseEventHandler(this.graph_MouseDown);
-            this.graph.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graph_MouseMove);
-            this.graph.MouseUp += new System.Windows.Forms.MouseEventHandler(this.graph_MouseUp);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
             // view2D
             // 
             this.view2D.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.view2D.Image = ((System.Drawing.Image)(resources.GetObject("view2D.Image")));
+            this.view2D.Image = global::Plate_Visualization.Properties.Resources._2d;
             this.view2D.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.view2D.Name = "view2D";
             this.view2D.Size = new System.Drawing.Size(23, 22);
@@ -329,7 +329,7 @@
             // view3D
             // 
             this.view3D.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.view3D.Image = ((System.Drawing.Image)(resources.GetObject("view3D.Image")));
+            this.view3D.Image = global::Plate_Visualization.Properties.Resources._3d;
             this.view3D.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.view3D.Name = "view3D";
             this.view3D.Size = new System.Drawing.Size(23, 22);

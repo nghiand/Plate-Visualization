@@ -217,16 +217,46 @@ namespace Plate_Visualization
 
         public void TranslateTo3D(int graphicWidth, int graphicLength)
         {
+            List<PlateObject> temp = Objects;
             Objects = new List<PlateObject>();
             GenerateNodeIn3D(graphicWidth, graphicLength);
             GenerateElement();
+            for (int i = 0; i < Objects.Count; i++)
+            {
+                if (Objects[i] is Node)
+                {
+                    ((Node)Objects[i]).Bonds = ((Node)temp[i]).Bonds;
+                    ((Node)Objects[i]).State = ((Node)temp[i]).State;
+                }
+                else
+                {
+                    ((Element)Objects[i]).Stiffness = ((Element)temp[i]).Stiffness;
+                    ((Element)Objects[i]).State = ((Element)temp[i]).State;
+                }
+            }
+            temp.Clear();
         }
 
         public void TranslateTo2D(int graphicWidth, int graphicLength)
         {
+            List<PlateObject> temp = Objects;
             Objects = new List<PlateObject>();
             GenerateNodeIn2D(graphicWidth, graphicLength);
             GenerateElement();
+            for (int i = 0; i < Objects.Count; i++)
+            {
+                if (Objects[i] is Node)
+                {
+                    ((Node)Objects[i]).Bonds = ((Node)temp[i]).Bonds;
+                    ((Node)Objects[i]).State = ((Node)temp[i]).State;
+                }
+                else
+                {
+                    ((Element)Objects[i]).Stiffness = ((Element)temp[i]).Stiffness;
+                    ((Element)Objects[i]).State = ((Element)temp[i]).State;
+                }
+            }
+            temp.Clear();
         }
 
         public void Zoom(PointF location, bool zoomIn)

@@ -299,6 +299,7 @@ namespace Plate_Visualization
                 view2D.Checked = true;
                 view3D.Checked = false;
                 plate.TranslateTo2D(graph.Width, graph.Height);
+                plate.Subscribe(this);
                 graphic.DrawPlate(plate);
             }
         }
@@ -310,6 +311,7 @@ namespace Plate_Visualization
                 view3D.Checked = true;
                 view2D.Checked = false;
                 plate.TranslateTo3D(graph.Width, graph.Height);
+                plate.Subscribe(this);
                 graphic.DrawPlate(plate);
             }
         }
