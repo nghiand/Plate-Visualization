@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace Plate_Visualization
 {
@@ -53,6 +48,13 @@ namespace Plate_Visualization
                 brush = new SolidBrush(Color.Lime);
             else
                 brush = new SolidBrush(FillColor[(int)element.State]);
+            Point[] points = new Point[4];
+            points[0] = new Point(element.Nodes[0].X + 1, element.Nodes[0].Y + 1);
+            points[1] = new Point(element.Nodes[1].X - 1, element.Nodes[1].Y + 1);
+            points[2] = new Point(element.Nodes[3].X - 1, element.Nodes[3].Y - 1);
+            points[3] = new Point(element.Nodes[2].X + 1, element.Nodes[2].Y - 1);
+            g.FillPolygon(brush, points);
+            /*
             g.FillRectangle(
                 brush,
                 element.Nodes[0].X + 1,
@@ -60,6 +62,7 @@ namespace Plate_Visualization
                 element.Nodes[3].X - element.Nodes[0].X - 1,
                 element.Nodes[3].Y - element.Nodes[0].Y - 1
             );
+            */
             for (int i = 0; i < 4; i++)
             {
                 DrawNode(element.Nodes[i]);

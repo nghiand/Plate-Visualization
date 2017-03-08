@@ -54,6 +54,14 @@ namespace Plate_Visualization
             State = State.Normal;
         }
 
+        public Node(int id, Point position)
+        {
+            Id = id;
+            Position = position;
+            Bonds = new List<int>(3) { 0, 0, 0 };
+            State = State.Normal;
+        }
+
         public override bool IsSelected()
         {
             foreach (int k in Bonds)

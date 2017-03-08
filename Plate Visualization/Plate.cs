@@ -32,6 +32,45 @@ namespace Plate_Visualization
         public Plate(List<Tuple<int, float>> widths, List<Tuple<int, float>> lengths, int graphicWidth, int graphicLength, bool modified = true)
         {
             Objects = new List<PlateObject>();
+            Elements = new List<Element>();
+            GenerateNodeIn3D(widths, lengths, graphicWidth, graphicLength);
+
+            int nodeId = 0;
+            int currentWidth = 0, currentLength = 0;
+            int maxWidth = widths[0].Item1, maxLength = lengths[0].Item1;
+            for (int i = 0; i < Length; i++)
+            {
+                if (i >= maxLength)
+                {
+                    currentLength++;
+                    maxLength += lengths[currentLength].Item1;
+                }
+                currentWidth = 0;
+                maxWidth = widths[0].Item1;
+                for (int j = 0; j < Width; j++)
+                {
+                    if (j >= maxWidth)
+                    {
+                        currentWidth++;
+                        maxWidth += widths[currentWidth].Item1;
+                    }
+                    Element element = new Element(i * Width + j,
+                        widths[currentWidth].Item1, lengths[currentLength].Item1,
+                        Nodes[nodeId],
+                        Nodes[nodeId + 1],
+                        Nodes[nodeId + Width + 1],
+                        Nodes[nodeId + Width + 2]);
+                    Elements.Add(element);
+                    Objects.Add(element);
+                    nodeId++;
+                }
+                nodeId++;
+            }
+            Modified = modified;
+        }
+
+        private void GenerateNodeIn2D(List<Tuple<int, float>> widths, List<Tuple<int, float>> lengths, int graphicWidth, int graphicLength)
+        {
             Nodes = new List<Node>();
             Elements = new List<Element>();
             float lengthX = 0.8f * graphicWidth;
@@ -97,39 +136,79 @@ namespace Plate_Visualization
                     }
                 }
             }
+        }
 
-            int nodeId = 0;
-            int currentWidth = 0, currentLength = 0;
-            int maxWidth = widths[0].Item1, maxLength = lengths[0].Item1;
-            for (int i = 0; i < Length; i++)
+        private void GenerateNodeIn3D(List<Tuple<int, float>> widths, List<Tuple<int, float>> lengths, int graphicWidth, int graphicLength)
+        {
+            Nodes = new List<Node>();
+            Objects = new List<PlateObject>();
+            Elements = new List<Element>();
+            float lengthX = 0.8f * graphicWidth;
+            float lengthY = 0.8f * graphicLength;
+
+            float sumX = 0;
+            Width = 0;
+            foreach (Tuple<int, float> elementX in widths)
             {
-                if (i >= maxLength)
-                {
-                    currentLength++;
-                    maxLength += lengths[currentLength].Item1;
-                }
-                currentWidth = 0;
-                maxWidth = widths[0].Item1;
-                for (int j = 0; j < Width; j++)
-                {
-                    if (j >= maxWidth)
-                    {
-                        currentWidth++;
-                        maxWidth += widths[currentWidth].Item1;
-                    }
-                    Element element = new Element(i * Width + j,
-                        widths[currentWidth].Item1, lengths[currentLength].Item1,
-                        Nodes[nodeId],
-                        Nodes[nodeId + 1],
-                        Nodes[nodeId + Width + 1],
-                        Nodes[nodeId + Width + 2]);
-                    Elements.Add(element);
-                    Objects.Add(element);
-                    nodeId++;
-                }
-                nodeId++;
+                sumX += elementX.Item2 * elementX.Item1;
+                Width += elementX.Item1;
             }
-            Modified = modified;
+            float sumY = 0;
+            Length = 0;
+            foreach (Tuple<int, float> elementY in lengths)
+            {
+                sumY += elementY.Item2 * elementY.Item1;
+                Length += elementY.Item1;
+            }
+
+            float unit = Math.Min(lengthX / (sumX + sumY / 2), lengthY / (sumY * (float)Math.Sqrt(3) / 2));
+
+            lengthX = (sumX + sumY / 2) * unit;
+            lengthY = (sumY * (float)Math.Sqrt(3) / 2) * unit;
+
+            float paddingX = (1.0f * graphicWidth - lengthX) / 2;
+            float paddingY = (1.0f * graphicLength - lengthY) / 2;
+
+            float x = paddingX + sumY / 2 * unit;
+            float y = paddingY;
+            float tempX = x;
+            Node node = new Node(Nodes.Count, (int)Math.Ceiling(x), (int)Math.Ceiling(y));
+            Nodes.Add(node);
+            Objects.Add(node);
+            foreach (Tuple<int, float> elementX in widths)
+            {
+                for (int i = 0; i < elementX.Item1; i++)
+                {
+                    x += elementX.Item2 * unit;
+                    node = new Node(Nodes.Count, (int)Math.Ceiling(x), (int)Math.Ceiling(y));
+                    Nodes.Add(node);
+                    Objects.Add(node);
+                }
+            }
+
+
+            foreach (Tuple<int, float> elementY in lengths)
+            {
+                for (int j = 0; j < elementY.Item1; j++)
+                {
+                    tempX -= elementY.Item2 * unit / 2;
+                    x = tempX;
+                    y += elementY.Item2 * unit * (float)Math.Sqrt(3) / 2;
+                    node = new Node(Nodes.Count, (int)Math.Ceiling(x), (int)Math.Ceiling(y));
+                    Nodes.Add(node);
+                    Objects.Add(node);
+                    foreach (Tuple<int, float> elementX in widths)
+                    {
+                        for (int i = 0; i < elementX.Item1; i++)
+                        {
+                            x += elementX.Item2 * unit;
+                            node = new Node(Nodes.Count, (int)Math.Ceiling(x), (int)Math.Ceiling(y));
+                            Nodes.Add(node);
+                            Objects.Add(node);
+                        }
+                    }
+                }
+            }
         }
 
         public void Zoom(Point location, bool zoomIn)
