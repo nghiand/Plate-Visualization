@@ -28,64 +28,34 @@ namespace Plate_Visualization
         {
             get; set;
         }
+        private List<Tuple<int, float>> Widths, Lengths;
 
         public Plate(List<Tuple<int, float>> widths, List<Tuple<int, float>> lengths, int graphicWidth, int graphicLength, bool modified = true)
         {
+            Widths = widths;
+            Lengths = lengths;
             Objects = new List<PlateObject>();
-            Elements = new List<Element>();
-            GenerateNodeIn3D(widths, lengths, graphicWidth, graphicLength);
-
-            int nodeId = 0;
-            int currentWidth = 0, currentLength = 0;
-            int maxWidth = widths[0].Item1, maxLength = lengths[0].Item1;
-            for (int i = 0; i < Length; i++)
-            {
-                if (i >= maxLength)
-                {
-                    currentLength++;
-                    maxLength += lengths[currentLength].Item1;
-                }
-                currentWidth = 0;
-                maxWidth = widths[0].Item1;
-                for (int j = 0; j < Width; j++)
-                {
-                    if (j >= maxWidth)
-                    {
-                        currentWidth++;
-                        maxWidth += widths[currentWidth].Item1;
-                    }
-                    Element element = new Element(i * Width + j,
-                        widths[currentWidth].Item1, lengths[currentLength].Item1,
-                        Nodes[nodeId],
-                        Nodes[nodeId + 1],
-                        Nodes[nodeId + Width + 1],
-                        Nodes[nodeId + Width + 2]);
-                    Elements.Add(element);
-                    Objects.Add(element);
-                    nodeId++;
-                }
-                nodeId++;
-            }
+            GenerateNodeIn2D(graphicWidth, graphicLength);
+            GenerateElement();
             Modified = modified;
         }
 
-        private void GenerateNodeIn2D(List<Tuple<int, float>> widths, List<Tuple<int, float>> lengths, int graphicWidth, int graphicLength)
+        private void GenerateNodeIn2D(int graphicWidth, int graphicLength)
         {
             Nodes = new List<Node>();
-            Elements = new List<Element>();
             float lengthX = 0.8f * graphicWidth;
             float lengthY = 0.8f * graphicLength;
 
             float sumX = 0;
             Width = 0;
-            foreach (Tuple<int, float> elementX in widths)
+            foreach (Tuple<int, float> elementX in Widths)
             {
                 sumX += elementX.Item2 * elementX.Item1;
                 Width += elementX.Item1;
             }
             float sumY = 0;
             Length = 0;
-            foreach (Tuple<int, float> elementY in lengths)
+            foreach (Tuple<int, float> elementY in Lengths)
             {
                 sumY += elementY.Item2 * elementY.Item1;
                 Length += elementY.Item1;
@@ -101,35 +71,35 @@ namespace Plate_Visualization
 
             float x = paddingX;
             float y = paddingY;
-            Node node = new Node(Nodes.Count, (int)Math.Ceiling(x), (int)Math.Ceiling(y));
+            Node node = new Node(Nodes.Count, x, y);
             Nodes.Add(node);
             Objects.Add(node);
-            foreach (Tuple<int, float> elementX in widths)
+            foreach (Tuple<int, float> elementX in Widths)
             {
                 for (int i = 0; i < elementX.Item1; i++)
                 {
                     x += elementX.Item2 * unit;
-                    node = new Node(Nodes.Count, (int)Math.Ceiling(x), (int)Math.Ceiling(y));
+                    node = new Node(Nodes.Count, x, y);
                     Nodes.Add(node);
                     Objects.Add(node);
                 }
             }
 
-            foreach (Tuple<int, float> elementY in lengths)
+            foreach (Tuple<int, float> elementY in Lengths)
             {
                 for (int j = 0; j < elementY.Item1; j++)
                 {
                     x = paddingX;
                     y += elementY.Item2 * unit;
-                    node = new Node(Nodes.Count, (int)Math.Ceiling(x), (int)Math.Ceiling(y));
+                    node = new Node(Nodes.Count, x, y);
                     Nodes.Add(node);
                     Objects.Add(node);
-                    foreach (Tuple<int, float> elementX in widths)
+                    foreach (Tuple<int, float> elementX in Widths)
                     {
                         for (int i = 0; i < elementX.Item1; i++)
                         {
                             x += elementX.Item2 * unit;
-                            node = new Node(Nodes.Count, (int)Math.Ceiling(x), (int)Math.Ceiling(y));
+                            node = new Node(Nodes.Count, x, y);
                             Nodes.Add(node);
                             Objects.Add(node);
                         }
@@ -138,24 +108,22 @@ namespace Plate_Visualization
             }
         }
 
-        private void GenerateNodeIn3D(List<Tuple<int, float>> widths, List<Tuple<int, float>> lengths, int graphicWidth, int graphicLength)
+        private void GenerateNodeIn3D(int graphicWidth, int graphicLength)
         {
             Nodes = new List<Node>();
-            Objects = new List<PlateObject>();
-            Elements = new List<Element>();
             float lengthX = 0.8f * graphicWidth;
             float lengthY = 0.8f * graphicLength;
 
             float sumX = 0;
             Width = 0;
-            foreach (Tuple<int, float> elementX in widths)
+            foreach (Tuple<int, float> elementX in Widths)
             {
                 sumX += elementX.Item2 * elementX.Item1;
                 Width += elementX.Item1;
             }
             float sumY = 0;
             Length = 0;
-            foreach (Tuple<int, float> elementY in lengths)
+            foreach (Tuple<int, float> elementY in Lengths)
             {
                 sumY += elementY.Item2 * elementY.Item1;
                 Length += elementY.Item1;
@@ -172,37 +140,37 @@ namespace Plate_Visualization
             float x = paddingX + sumY / 2 * unit;
             float y = paddingY;
             float tempX = x;
-            Node node = new Node(Nodes.Count, (int)Math.Ceiling(x), (int)Math.Ceiling(y));
+            Node node = new Node(Nodes.Count, x, y);
             Nodes.Add(node);
             Objects.Add(node);
-            foreach (Tuple<int, float> elementX in widths)
+            foreach (Tuple<int, float> elementX in Widths)
             {
                 for (int i = 0; i < elementX.Item1; i++)
                 {
                     x += elementX.Item2 * unit;
-                    node = new Node(Nodes.Count, (int)Math.Ceiling(x), (int)Math.Ceiling(y));
+                    node = new Node(Nodes.Count, x, y);
                     Nodes.Add(node);
                     Objects.Add(node);
                 }
             }
 
 
-            foreach (Tuple<int, float> elementY in lengths)
+            foreach (Tuple<int, float> elementY in Lengths)
             {
                 for (int j = 0; j < elementY.Item1; j++)
                 {
                     tempX -= elementY.Item2 * unit / 2;
                     x = tempX;
                     y += elementY.Item2 * unit * (float)Math.Sqrt(3) / 2;
-                    node = new Node(Nodes.Count, (int)Math.Ceiling(x), (int)Math.Ceiling(y));
+                    node = new Node(Nodes.Count, x, y);
                     Nodes.Add(node);
                     Objects.Add(node);
-                    foreach (Tuple<int, float> elementX in widths)
+                    foreach (Tuple<int, float> elementX in Widths)
                     {
                         for (int i = 0; i < elementX.Item1; i++)
                         {
                             x += elementX.Item2 * unit;
-                            node = new Node(Nodes.Count, (int)Math.Ceiling(x), (int)Math.Ceiling(y));
+                            node = new Node(Nodes.Count, x, y);
                             Nodes.Add(node);
                             Objects.Add(node);
                         }
@@ -211,7 +179,57 @@ namespace Plate_Visualization
             }
         }
 
-        public void Zoom(Point location, bool zoomIn)
+        private void GenerateElement()
+        {
+            Elements = new List<Element>();
+            int nodeId = 0;
+            int currentWidth = 0, currentLength = 0;
+            int maxWidth = Widths[0].Item1, maxLength = Lengths[0].Item1;
+            for (int i = 0; i < Length; i++)
+            {
+                if (i >= maxLength)
+                {
+                    currentLength++;
+                    maxLength += Lengths[currentLength].Item1;
+                }
+                currentWidth = 0;
+                maxWidth = Widths[0].Item1;
+                for (int j = 0; j < Width; j++)
+                {
+                    if (j >= maxWidth)
+                    {
+                        currentWidth++;
+                        maxWidth += Widths[currentWidth].Item1;
+                    }
+                    Element element = new Element(i * Width + j,
+                        Widths[currentWidth].Item1, Lengths[currentLength].Item1,
+                        Nodes[nodeId],
+                        Nodes[nodeId + 1],
+                        Nodes[nodeId + Width + 1],
+                        Nodes[nodeId + Width + 2]);
+                    Elements.Add(element);
+                    Objects.Add(element);
+                    nodeId++;
+                }
+                nodeId++;
+            }
+        }
+
+        public void TranslateTo3D(int graphicWidth, int graphicLength)
+        {
+            Objects = new List<PlateObject>();
+            GenerateNodeIn3D(graphicWidth, graphicLength);
+            GenerateElement();
+        }
+
+        public void TranslateTo2D(int graphicWidth, int graphicLength)
+        {
+            Objects = new List<PlateObject>();
+            GenerateNodeIn2D(graphicWidth, graphicLength);
+            GenerateElement();
+        }
+
+        public void Zoom(PointF location, bool zoomIn)
         {
             float factor = 1.0f;
             if (zoomIn)
@@ -227,17 +245,17 @@ namespace Plate_Visualization
 
             for (int i = 0; i < Nodes.Count; i++)
             {
-                Nodes[i].Position = new Point(
-                    (int)Math.Ceiling(factor * (Nodes[i].X - x0) + x0), 
-                    (int)Math.Ceiling(factor * (Nodes[i].Y - y0) + y0));
+                Nodes[i].Position = new PointF(
+                    factor * (Nodes[i].X - x0) + x0, 
+                    factor * (Nodes[i].Y - y0) + y0);
             }
         }
 
-        public void Move(Point movingVector)
+        public void Move(PointF movingVector)
         {
             for (int i = 0; i < Nodes.Count; i++)
             {
-                Nodes[i].Position = new Point(
+                Nodes[i].Position = new PointF(
                     Nodes[i].X + movingVector.X,
                     Nodes[i].Y + movingVector.Y);
             }

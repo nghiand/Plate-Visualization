@@ -56,6 +56,9 @@
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusText = new System.Windows.Forms.ToolStripStatusLabel();
             this.graph = new System.Windows.Forms.PictureBox();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.view2D = new System.Windows.Forms.ToolStripButton();
+            this.view3D = new System.Windows.Forms.ToolStripButton();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -171,7 +174,10 @@
             this.bondButton,
             this.toolStripSeparator2,
             this.selectElementButton,
-            this.stiffnessButton});
+            this.stiffnessButton,
+            this.toolStripSeparator3,
+            this.view2D,
+            this.view3D});
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(1070, 25);
@@ -305,6 +311,31 @@
             this.graph.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graph_MouseMove);
             this.graph.MouseUp += new System.Windows.Forms.MouseEventHandler(this.graph_MouseUp);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // view2D
+            // 
+            this.view2D.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.view2D.Image = ((System.Drawing.Image)(resources.GetObject("view2D.Image")));
+            this.view2D.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.view2D.Name = "view2D";
+            this.view2D.Size = new System.Drawing.Size(23, 22);
+            this.view2D.Text = "2D";
+            this.view2D.Click += new System.EventHandler(this.view2D_Click);
+            // 
+            // view3D
+            // 
+            this.view3D.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.view3D.Image = ((System.Drawing.Image)(resources.GetObject("view3D.Image")));
+            this.view3D.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.view3D.Name = "view3D";
+            this.view3D.Size = new System.Drawing.Size(23, 22);
+            this.view3D.Text = "3D";
+            this.view3D.Click += new System.EventHandler(this.view3D_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -359,6 +390,9 @@
         private System.Windows.Forms.ToolStripStatusLabel statusText;
         private System.Windows.Forms.PictureBox graph;
         private System.Windows.Forms.ToolStripButton bondButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton view2D;
+        private System.Windows.Forms.ToolStripButton view3D;
     }
 }
 

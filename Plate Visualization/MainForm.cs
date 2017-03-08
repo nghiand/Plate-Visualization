@@ -31,6 +31,8 @@ namespace Plate_Visualization
             stiffnessButton.Enabled = enabled;
             saveStripButton.Enabled = enabled;
             saveAsStripButton.Enabled = enabled;
+            view2D.Enabled = enabled;
+            view3D.Enabled = enabled;
         }
 
         public void CreatePlate(List<Tuple<int, float>> inputWidth, List<Tuple<int, float>> inputLength)
@@ -46,6 +48,9 @@ namespace Plate_Visualization
             selectNodeButton.Enabled = true;
             saveStripButton.Enabled = true;
             saveAsStripButton.Enabled = true;
+            view2D.Enabled = true;
+            view3D.Enabled = true;
+            view2D.Checked = true;
 
             graphic.DrawPlate(plate);
         }
@@ -68,7 +73,7 @@ namespace Plate_Visualization
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         // Zoom in/out
@@ -85,7 +90,7 @@ namespace Plate_Visualization
             }
         }
 
-        private Point startingPoint = Point.Empty;
+        private PointF startingPoint = PointF.Empty;
         private bool panning = false;
 
         private void graph_MouseDown(object sender, MouseEventArgs e)
@@ -93,7 +98,7 @@ namespace Plate_Visualization
             if (ModifierKeys == Keys.Control && e.Button == MouseButtons.Left)
             {
                 panning = true;
-                startingPoint = new Point(e.Location.X, e.Location.Y);
+                startingPoint = new PointF(e.Location.X, e.Location.Y);
             }
 
         }
@@ -107,9 +112,9 @@ namespace Plate_Visualization
         {
             if (panning)
             {
-                Point movingVector = new Point(e.Location.X - startingPoint.X, e.Location.Y - startingPoint.Y);
+                PointF movingVector = new PointF(e.Location.X - startingPoint.X, e.Location.Y - startingPoint.Y);
                 plate.Move(movingVector);
-                startingPoint = new Point(e.Location.X, e.Location.Y);
+                startingPoint = new PointF(e.Location.X, e.Location.Y);
                 graphic.DrawPlate(plate);
             }
             else if (plate != null)
@@ -284,6 +289,28 @@ namespace Plate_Visualization
             else
             {
                 plate.DeselectElements();
+            }
+        }
+
+        private void view2D_Click(object sender, EventArgs e)
+        {
+            if (view2D.Checked == false)
+            {
+                view2D.Checked = true;
+                view3D.Checked = false;
+                plate.TranslateTo2D(graph.Width, graph.Height);
+                graphic.DrawPlate(plate);
+            }
+        }
+
+        private void view3D_Click(object sender, EventArgs e)
+        {
+            if (view3D.Checked == false)
+            {
+                view3D.Checked = true;
+                view2D.Checked = false;
+                plate.TranslateTo3D(graph.Width, graph.Height);
+                graphic.DrawPlate(plate);
             }
         }
     }

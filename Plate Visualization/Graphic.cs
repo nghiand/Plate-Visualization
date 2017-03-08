@@ -4,20 +4,20 @@ namespace Plate_Visualization
 {
     class Graphic
     {
-        private System.Drawing.Graphics g;
+        private Graphics g;
         public const int NODE_SIZE = 8;
         private const int FONT_SIZE = 10;
 
         private static Color[] FillColor = new Color[] { Color.White, Color.Red, Color.Lime };
 
-        public Graphic(System.Drawing.Graphics graphic)
+        public Graphic(Graphics graphic)
         {
-            this.g = graphic;
+            g = graphic;
         }
 
         public void DrawNode(Node node, bool OnHover = false)
         {
-            Pen pen = new Pen(Brushes.Blue);
+            Pen pen = new Pen(Brushes.Blue, 2);
             g.DrawEllipse(
                 pen,
                 node.X - NODE_SIZE / 2,
@@ -48,12 +48,12 @@ namespace Plate_Visualization
                 brush = new SolidBrush(Color.Lime);
             else
                 brush = new SolidBrush(FillColor[(int)element.State]);
-            Point[] points = new Point[4];
-            points[0] = new Point(element.Nodes[0].X + 1, element.Nodes[0].Y + 1);
-            points[1] = new Point(element.Nodes[1].X - 1, element.Nodes[1].Y + 1);
-            points[2] = new Point(element.Nodes[3].X - 1, element.Nodes[3].Y - 1);
-            points[3] = new Point(element.Nodes[2].X + 1, element.Nodes[2].Y - 1);
-            g.FillPolygon(brush, points);
+            PointF[] PointFs = new PointF[4];
+            PointFs[0] = new PointF(element.Nodes[0].X + 1, element.Nodes[0].Y + 1);
+            PointFs[1] = new PointF(element.Nodes[1].X - 1, element.Nodes[1].Y + 1);
+            PointFs[2] = new PointF(element.Nodes[3].X - 1, element.Nodes[3].Y - 1);
+            PointFs[3] = new PointF(element.Nodes[2].X + 1, element.Nodes[2].Y - 1);
+            g.FillPolygon(brush, PointFs);
             /*
             g.FillRectangle(
                 brush,
@@ -76,10 +76,10 @@ namespace Plate_Visualization
             StringFormat sf = new StringFormat();
             sf.LineAlignment = StringAlignment.Center;
             sf.Alignment = StringAlignment.Center;
-            Point top = element.Nodes[0].Position;
-            Point bot = element.Nodes[3].Position;
+            PointF top = element.Nodes[0].Position;
+            PointF bot = element.Nodes[3].Position;
 
-            Point center = new Point((top.X + bot.X) / 2, (top.Y + bot.Y) / 2);
+            PointF center = new PointF((top.X + bot.X) / 2, (top.Y + bot.Y) / 2);
 
             int id = element.Id + 1;
 

@@ -1,5 +1,4 @@
 ﻿using Plate_Visualization.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -13,22 +12,22 @@ namespace Plate_Visualization
             get; set;
         }
 
-        public int X
+        public float X
         {
             get
             {
-                return this.Position.X;
+                return Position.X;
             }
         }
-        public int Y
+        public float Y
         {
             get
             {
-                return this.Position.Y;
+                return Position.Y;
             }
         }
 
-        public Point Position
+        public PointF Position
         {
             get; set;
         }
@@ -46,15 +45,15 @@ namespace Plate_Visualization
             State = State.Normal;
         }
 
-        public Node(int id, int x, int y)
+        public Node(int id, float x, float y)
         {
             Id = id;
-            Position = new Point(x, y);
+            Position = new PointF(x, y);
             Bonds = new List<int>(3) { 0, 0, 0 };
             State = State.Normal;
         }
 
-        public Node(int id, Point position)
+        public Node(int id, PointF position)
         {
             Id = id;
             Position = position;
