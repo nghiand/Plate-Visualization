@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Plate_Visualization.Helpers;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Plate_Visualization
@@ -56,10 +58,18 @@ namespace Plate_Visualization
 
         public override bool IsOnHover(MouseEventArgs e)
         {
+            List<PointF> polygon = new List<PointF>();
+            polygon.Add(Nodes[0].Position);
+            polygon.Add(Nodes[1].Position);
+            polygon.Add(Nodes[3].Position);
+            polygon.Add(Nodes[2].Position);
+            return MathHelper.IsPointInPolygon(e.Location, polygon);
+            /*
             if (Nodes[0].X + Graphic.NODE_SIZE / 2 < e.Location.X && e.Location.X < Nodes[3].X - Graphic.NODE_SIZE / 2
                 && Nodes[0].Y + Graphic.NODE_SIZE / 2 < e.Location.Y && e.Location.Y < Nodes[3].Y - Graphic.NODE_SIZE / 2)
                 return true;
             return false;
+            */
         }
 
         public override bool IsSelected()
