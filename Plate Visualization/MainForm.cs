@@ -155,9 +155,21 @@ namespace Plate_Visualization
         public void plateObject_MouseHover(object sender)
         {
             if (sender is Node)
-                graphic.DrawNode((Node)sender, true);
+            {
+                Node node = (Node)sender;
+                graphic.DrawNode(node, true);
+                status.Text = "Связи: (" + node.Bonds[0].ToString()
+                    + ", " + node.Bonds[0].ToString()
+                    + ", " + node.Bonds[0].ToString() + ")";
+            }
             else if (sender is Element)
-                graphic.DrawElement((Element)sender, true);
+            {
+                Element element = (Element)sender;
+                graphic.DrawElement(element, true);
+                status.Text = "E = " + element.Stiffness.E
+                    + ", H = " + element.Stiffness.H.ToString()
+                    + ", V = " + element.Stiffness.V.ToString();
+            }
         }
 
         public void plateObject_MouseLeave(object sender)
@@ -166,6 +178,7 @@ namespace Plate_Visualization
                 graphic.DrawNode((Node)sender);
             else if (sender is Element)
                 graphic.DrawElement((Element)sender);
+            status.Text = "";
         }
 
         public void plateObject_Selected(object sender)

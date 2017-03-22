@@ -59,10 +59,10 @@ namespace Plate_Visualization
         public override bool IsOnHover(MouseEventArgs e)
         {
             List<PointF> polygon = new List<PointF>();
-            polygon.Add(Nodes[0].Position);
-            polygon.Add(Nodes[1].Position);
-            polygon.Add(Nodes[3].Position);
-            polygon.Add(Nodes[2].Position);
+            polygon.Add(new PointF(Nodes[0].Position.X + Graphic.NODE_SIZE / 2, Nodes[0].Position.Y + Graphic.NODE_SIZE / 2));
+            polygon.Add(new PointF(Nodes[1].Position.X - Graphic.NODE_SIZE / 2, Nodes[1].Position.Y + Graphic.NODE_SIZE / 2));
+            polygon.Add(new PointF(Nodes[3].Position.X - Graphic.NODE_SIZE / 2, Nodes[3].Position.Y - Graphic.NODE_SIZE / 2));
+            polygon.Add(new PointF(Nodes[2].Position.X + Graphic.NODE_SIZE / 2, Nodes[2].Position.Y - Graphic.NODE_SIZE / 2));
             return MathHelper.IsPointInPolygon(e.Location, polygon);
             /*
             if (Nodes[0].X + Graphic.NODE_SIZE / 2 < e.Location.X && e.Location.X < Nodes[3].X - Graphic.NODE_SIZE / 2
