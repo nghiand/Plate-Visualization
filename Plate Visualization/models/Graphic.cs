@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace Plate_Visualization
 {
@@ -8,7 +9,8 @@ namespace Plate_Visualization
         public const int NODE_SIZE = 8;
         private const int FONT_SIZE = 10;
 
-        private static Color[] FillColor = new Color[] { Color.White, Color.Red, Color.Lime };
+        private static Color[] FillColor = new Color[] { Color.White, Color.Gray, Color.LightGray };
+        private static Color HoveredColor = Color.LightBlue;
 
         public Graphic(Graphics graphic)
         {
@@ -26,7 +28,7 @@ namespace Plate_Visualization
 
             SolidBrush brush;
             if (OnHover)
-                brush = new SolidBrush(Color.Lime);
+                brush = new SolidBrush(HoveredColor);
             else
                 brush = new SolidBrush(FillColor[(int)node.State]);
             g.FillEllipse(
@@ -45,24 +47,16 @@ namespace Plate_Visualization
         {
             SolidBrush brush;
             if (OnHover)
-                brush = new SolidBrush(Color.Lime);
+                brush = new SolidBrush(HoveredColor);
             else
                 brush = new SolidBrush(FillColor[(int)element.State]);
             PointF[] PointFs = new PointF[4];
-            PointFs[0] = new PointF(element.Nodes[0].X + 1, element.Nodes[0].Y + 1);
-            PointFs[1] = new PointF(element.Nodes[1].X - 1, element.Nodes[1].Y + 1);
-            PointFs[2] = new PointF(element.Nodes[3].X - 1, element.Nodes[3].Y - 1);
-            PointFs[3] = new PointF(element.Nodes[2].X + 1, element.Nodes[2].Y - 1);
+            PointFs[0] = element.Nodes[0].Position;
+            PointFs[1] = element.Nodes[1].Position;
+            PointFs[2] = element.Nodes[3].Position;
+            PointFs[3] = element.Nodes[2].Position;
             g.FillPolygon(brush, PointFs);
-            /*
-            g.FillRectangle(
-                brush,
-                element.Nodes[0].X + 1,
-                element.Nodes[0].Y + 1,
-                element.Nodes[3].X - element.Nodes[0].X - 1,
-                element.Nodes[3].Y - element.Nodes[0].Y - 1
-            );
-            */
+            g.DrawPolygon(new Pen(Color.Blue), PointFs);
             for (int i = 0; i < 4; i++)
             {
                 DrawNode(element.Nodes[i]);
@@ -126,6 +120,24 @@ namespace Plate_Visualization
             {
                 DrawElementIndex(plate.Elements[i]);
             }
+        }
+
+        public void DrawLoad(Load load)
+        {
+            PointF pos = ((Node)load.Position).Position;
+            using (Pen p = new Pen(Brushes.Green, 4f))
+            {
+                p.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+
+                g.DrawLine(p, pos.X, pos.Y - 50, pos.X, pos.Y);
+            }
+        }
+
+        public void DrawScheme(Scheme scheme)
+        {
+            DrawPlate(scheme.Plate);
+            foreach (Load l in scheme.Loads)
+                DrawLoad(l);
         }
 
         public void MouseHover(object sender)

@@ -42,23 +42,25 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.status = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusText = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.graph = new System.Windows.Forms.PictureBox();
             this.newStripButton = new System.Windows.Forms.ToolStripButton();
             this.openStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveAsStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.selectNodeButton = new System.Windows.Forms.ToolStripButton();
             this.bondButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.selectElementButton = new System.Windows.Forms.ToolStripButton();
             this.stiffnessButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.loadButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.view2D = new System.Windows.Forms.ToolStripButton();
             this.view3D = new System.Windows.Forms.ToolStripButton();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.status = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusText = new System.Windows.Forms.ToolStripStatusLabel();
+            this.graph = new System.Windows.Forms.PictureBox();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -172,9 +174,11 @@
             this.toolStripSeparator1,
             this.selectNodeButton,
             this.bondButton,
+            this.loadButton,
             this.toolStripSeparator2,
             this.selectElementButton,
             this.stiffnessButton,
+            this.toolStripSeparator4,
             this.toolStripSeparator3,
             this.view2D,
             this.view3D});
@@ -183,58 +187,6 @@
             this.toolStrip.Size = new System.Drawing.Size(1070, 25);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "toolStrip1";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // statusStrip
-            // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.status,
-            this.statusText});
-            this.statusStrip.Location = new System.Drawing.Point(0, 647);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1070, 22);
-            this.statusStrip.TabIndex = 2;
-            this.statusStrip.Text = "statusStrip";
-            // 
-            // status
-            // 
-            this.status.Name = "status";
-            this.status.Size = new System.Drawing.Size(0, 17);
-            // 
-            // statusText
-            // 
-            this.statusText.Name = "statusText";
-            this.statusText.Size = new System.Drawing.Size(0, 17);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
-            // graph
-            // 
-            this.graph.BackColor = System.Drawing.SystemColors.Control;
-            this.graph.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.graph.Location = new System.Drawing.Point(0, 49);
-            this.graph.Name = "graph";
-            this.graph.Size = new System.Drawing.Size(1070, 598);
-            this.graph.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.graph.TabIndex = 3;
-            this.graph.TabStop = false;
-            this.graph.SizeChanged += new System.EventHandler(this.graph_SizeChanged);
-            this.graph.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graph_MouseClick);
-            this.graph.MouseDown += new System.Windows.Forms.MouseEventHandler(this.graph_MouseDown);
-            this.graph.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graph_MouseMove);
-            this.graph.MouseUp += new System.Windows.Forms.MouseEventHandler(this.graph_MouseUp);
             // 
             // newStripButton
             // 
@@ -274,6 +226,11 @@
             this.saveAsStripButton.Text = "Сохранить как";
             this.saveAsStripButton.ToolTipText = "Сохранить как";
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // selectNodeButton
             // 
             this.selectNodeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -281,7 +238,7 @@
             this.selectNodeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.selectNodeButton.Name = "selectNodeButton";
             this.selectNodeButton.Size = new System.Drawing.Size(23, 22);
-            this.selectNodeButton.Text = "Отметка узлов";
+            this.selectNodeButton.Text = "Выбор узлов";
             this.selectNodeButton.CheckedChanged += new System.EventHandler(this.selectNodeButton_CheckedChanged);
             this.selectNodeButton.Click += new System.EventHandler(this.selectNodeButton_Click);
             // 
@@ -295,6 +252,11 @@
             this.bondButton.Text = "Связи в узлах";
             this.bondButton.Click += new System.EventHandler(this.bondButton_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
             // selectElementButton
             // 
             this.selectElementButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -302,7 +264,7 @@
             this.selectElementButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.selectElementButton.Name = "selectElementButton";
             this.selectElementButton.Size = new System.Drawing.Size(23, 22);
-            this.selectElementButton.Text = "Отметка элементов";
+            this.selectElementButton.Text = "Выбор элементов";
             this.selectElementButton.CheckedChanged += new System.EventHandler(this.selectElementButton_CheckedChanged);
             this.selectElementButton.Click += new System.EventHandler(this.selectElementButton_Click);
             // 
@@ -315,6 +277,26 @@
             this.stiffnessButton.Size = new System.Drawing.Size(23, 22);
             this.stiffnessButton.Text = "Жесткость";
             this.stiffnessButton.Click += new System.EventHandler(this.stiffnessButton_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // loadButton
+            // 
+            this.loadButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.loadButton.Image = ((System.Drawing.Image)(resources.GetObject("loadButton.Image")));
+            this.loadButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(23, 22);
+            this.loadButton.Text = "Добавление нагрузок";
+            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
             // view2D
             // 
@@ -335,6 +317,43 @@
             this.view3D.Size = new System.Drawing.Size(23, 22);
             this.view3D.Text = "3D";
             this.view3D.Click += new System.EventHandler(this.view3D_Click);
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.status,
+            this.statusText});
+            this.statusStrip.Location = new System.Drawing.Point(0, 647);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(1070, 22);
+            this.statusStrip.TabIndex = 2;
+            this.statusStrip.Text = "statusStrip";
+            // 
+            // status
+            // 
+            this.status.Name = "status";
+            this.status.Size = new System.Drawing.Size(0, 17);
+            // 
+            // statusText
+            // 
+            this.statusText.Name = "statusText";
+            this.statusText.Size = new System.Drawing.Size(0, 17);
+            // 
+            // graph
+            // 
+            this.graph.BackColor = System.Drawing.SystemColors.Control;
+            this.graph.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.graph.Location = new System.Drawing.Point(0, 49);
+            this.graph.Name = "graph";
+            this.graph.Size = new System.Drawing.Size(1070, 598);
+            this.graph.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.graph.TabIndex = 3;
+            this.graph.TabStop = false;
+            this.graph.SizeChanged += new System.EventHandler(this.graph_SizeChanged);
+            this.graph.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graph_MouseClick);
+            this.graph.MouseDown += new System.Windows.Forms.MouseEventHandler(this.graph_MouseDown);
+            this.graph.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graph_MouseMove);
+            this.graph.MouseUp += new System.Windows.Forms.MouseEventHandler(this.graph_MouseUp);
             // 
             // MainForm
             // 
@@ -393,6 +412,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton view2D;
         private System.Windows.Forms.ToolStripButton view3D;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton loadButton;
     }
 }
 

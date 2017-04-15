@@ -7,8 +7,8 @@ namespace Plate_Visualization
 {
     public partial class MainForm : Form
     {
-        private Plate plate;
         private Graphic graphic;
+        private Scheme scheme;
 
         public MainForm()
         {
@@ -18,8 +18,8 @@ namespace Plate_Visualization
         private void MainForm_Load(object sender, EventArgs e)
         {
             graphic = new Graphic(graph.CreateGraphics());
-            status.Text = "Started";
-            plate = null;
+            status.Text = "";
+            scheme = new Scheme();
             SetToolItemsAvailability(false);
         }
 
@@ -42,8 +42,10 @@ namespace Plate_Visualization
                 // TODO: Add dialog to show message
                 return;
             }
-            plate = new Plate(inputWidth, inputLength, graph.Width, graph.Height);
-            plate.Subscribe(this);
+            scheme.Plate = new Plate(inputWidth, inputLength, graph.Width, graph.Height);
+            scheme.Loads = new List<Load>();
+            scheme.Plate.Subscribe(this);
+
             selectElementButton.Enabled = true;
             selectNodeButton.Enabled = true;
             saveStripButton.Enabled = true;
@@ -52,7 +54,7 @@ namespace Plate_Visualization
             view3D.Enabled = true;
             view2D.Checked = true;
 
-            graphic.DrawPlate(plate);
+            graphic.DrawScheme(scheme);
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
@@ -81,12 +83,14 @@ namespace Plate_Visualization
         {
             base.OnMouseWheel(e);
             graph.Focus();
-            if (plate == null)
+            if (scheme.Plate == null)
                 return;
             if (graph.Focused == true && e.Delta != 0)
             {
-                plate.Zoom(e.Location, e.Delta > 0);
-                graphic.DrawPlate(plate);
+                scheme.Plate.Zoom(e.Location, e.Delta > 0);
+                graphic.DrawPlate(scheme.Plate);
+                foreach (Load l in scheme.Loads)
+                    graphic.DrawLoad(l);
             }
         }
 
@@ -113,30 +117,30 @@ namespace Plate_Visualization
             if (panning)
             {
                 PointF movingVector = new PointF(e.Location.X - startingPoint.X, e.Location.Y - startingPoint.Y);
-                plate.Move(movingVector);
+                scheme.Plate.Move(movingVector);
                 startingPoint = new PointF(e.Location.X, e.Location.Y);
-                graphic.DrawPlate(plate);
+                graphic.DrawScheme(scheme);
             }
-            else if (plate != null)
+            else if (scheme.Plate != null)
             {
-                plate.OnMouseMove(e);
+                scheme.Plate.OnMouseMove(e);
             }
         }
 
         private void graph_MouseClick(object sender, MouseEventArgs e)
         {
-            if (plate != null && e.Button == MouseButtons.Left)
+            if (scheme.Plate != null && e.Button == MouseButtons.Left)
             {
-                plate.OnMouseClick(e);
+                scheme.Plate.OnMouseClick(e);
             }
         }
 
         private void graph_SizeChanged(object sender, EventArgs e)
         {
-            if (plate != null)
+            if (scheme.Plate != null)
             {
                 graphic = new Graphic(graph.CreateGraphics());
-                graphic.DrawPlate(plate);
+                graphic.DrawScheme(scheme);
             }
         }
 
@@ -215,7 +219,7 @@ namespace Plate_Visualization
 
         private void stiffnessButton_Click(object sender, EventArgs e)
         {
-            List<Element> selectingElements = plate.SelectingElements();
+            List<Element> selectingElements = scheme.Plate.SelectingElements();
             Stiffness stiffness = new Stiffness();
             if (selectingElements.Count > 0)
             {
@@ -258,13 +262,13 @@ namespace Plate_Visualization
             }
             else
             {
-                plate.DeselectNodes();
+                scheme.Plate.DeselectNodes();
             }
         }
 
         private void bondButton_Click(object sender, EventArgs e)
         {
-            List<Node> selectingNodes = plate.SelectingNodes();
+            List<Node> selectingNodes = scheme.Plate.SelectingNodes();
             List<int> bonds = new List<int>(3) { 0, 0, 0 };
             if (selectingNodes.Count > 0)
             {
@@ -286,12 +290,12 @@ namespace Plate_Visualization
 
         public void SetBonds(List<int> bonds)
         {
-            plate.SetBonds(bonds);
+            scheme.Plate.SetBonds(bonds);
         }
 
         public void SetStiffness(Stiffness s)
         {
-            plate.SetStiffness(s);
+            scheme.Plate.SetStiffness(s);
         }
 
         private void selectElementButton_CheckedChanged(object sender, EventArgs e)
@@ -301,7 +305,7 @@ namespace Plate_Visualization
             }
             else
             {
-                plate.DeselectElements();
+                scheme.Plate.DeselectElements();
             }
         }
 
@@ -311,9 +315,9 @@ namespace Plate_Visualization
             {
                 view2D.Checked = true;
                 view3D.Checked = false;
-                plate.TranslateTo2D(graph.Width, graph.Height);
-                plate.Subscribe(this);
-                graphic.DrawPlate(plate);
+                scheme.Plate.TranslateTo2D(graph.Width, graph.Height);
+                scheme.Plate.Subscribe(this);
+                graphic.DrawScheme(scheme);
             }
         }
 
@@ -323,9 +327,39 @@ namespace Plate_Visualization
             {
                 view3D.Checked = true;
                 view2D.Checked = false;
-                plate.TranslateTo3D(graph.Width, graph.Height);
-                plate.Subscribe(this);
-                graphic.DrawPlate(plate);
+                scheme.Plate.TranslateTo3D(graph.Width, graph.Height);
+                scheme.Plate.Subscribe(this);
+                graphic.DrawScheme(scheme);
+            }
+        }
+
+        private void loadButton_Click(object sender, EventArgs e)
+        {
+            List<Node> selectingNodes = scheme.Plate.SelectingNodes();
+            /*
+            List<int> bonds = new List<int>(3) { 0, 0, 0 };
+            if (selectingNodes.Count > 0)
+            {
+                bonds = selectingNodes[0].Bonds;
+            }
+            for (int i = 1; i < selectingNodes.Count; i++)
+            {
+                if (!selectingNodes[i].Bonds.Equals(selectingNodes[i - 1].Bonds))
+                {
+                    bonds = new List<int>(3) { 0, 0, 0 };
+                    break;
+                }
+            }
+            using (NodeBondsForm bondsForm = new NodeBondsForm(bonds))
+            {
+                bondsForm.ShowDialog(this);
+            }
+            */
+            foreach (Node n in selectingNodes)
+            {
+                Load l = new Load(10, n);
+                scheme.Loads.Add(l);
+                graphic.DrawLoad(l);
             }
         }
     }

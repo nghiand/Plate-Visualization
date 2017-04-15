@@ -298,19 +298,27 @@ namespace Plate_Visualization
 
         public void OnMouseMove(MouseEventArgs e)
         {
+            PlateObject hoveredObj = null;
+
             foreach (PlateObject obj in Objects)
             {
                 if (obj.IsOnHover(e))
                 {
-                    if (!obj.Hovered)
-                        obj.OnMouseHover(e);
-                }
-                else
-                {
-                    if (obj.Hovered)
-                        obj.OnMouseLeave(e);
+                    hoveredObj = obj;
+                    break;
                 }
             }
+
+            foreach (PlateObject obj in Objects)
+            {
+                if (obj.Hovered && obj != hoveredObj)
+                {
+                    obj.OnMouseLeave(e);
+                }
+            }
+
+            if (hoveredObj != null && !hoveredObj.Hovered)
+                hoveredObj.OnMouseHover(e);
         }
 
         public void OnMouseClick(MouseEventArgs e)

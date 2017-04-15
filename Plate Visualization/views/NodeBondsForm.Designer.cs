@@ -56,7 +56,7 @@
             this.bondWithOy.Name = "bondWithOy";
             this.bondWithOy.Size = new System.Drawing.Size(41, 17);
             this.bondWithOy.TabIndex = 2;
-            this.bondWithOy.Text = "OY";
+            this.bondWithOy.Text = "UY";
             this.bondWithOy.UseVisualStyleBackColor = true;
             // 
             // bondWithOx
@@ -66,7 +66,7 @@
             this.bondWithOx.Name = "bondWithOx";
             this.bondWithOx.Size = new System.Drawing.Size(41, 17);
             this.bondWithOx.TabIndex = 1;
-            this.bondWithOx.Text = "OX";
+            this.bondWithOx.Text = "UX";
             this.bondWithOx.UseVisualStyleBackColor = true;
             // 
             // bondWithZ
@@ -91,6 +91,7 @@
             // 
             // cancelButton
             // 
+            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelButton.Location = new System.Drawing.Point(95, 125);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);

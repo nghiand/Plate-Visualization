@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,46 +47,48 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Element.cs" />
-    <Compile Include="PlateObject.cs" />
-    <Compile Include="Stiffness.cs" />
-    <Compile Include="Graphic.cs" />
-    <Compile Include="Helpers\MathHelper.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="models\Element.cs" />
+    <Compile Include="models\Load.cs" />
+    <Compile Include="models\PlateObject.cs" />
+    <Compile Include="models\Scheme.cs" />
+    <Compile Include="models\Stiffness.cs" />
+    <Compile Include="models\Graphic.cs" />
+    <Compile Include="helpers\MathHelper.cs" />
+    <Compile Include="views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="views\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewPlateForm.cs">
+    <Compile Include="views\NewPlateForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewPlateForm.Designer.cs">
+    <Compile Include="views\NewPlateForm.Designer.cs">
       <DependentUpon>NewPlateForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Node.cs" />
-    <Compile Include="NodeBondsForm.cs">
+    <Compile Include="models\Node.cs" />
+    <Compile Include="views\NodeBondsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NodeBondsForm.Designer.cs">
+    <Compile Include="views\NodeBondsForm.Designer.cs">
       <DependentUpon>NodeBondsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Plate.cs" />
+    <Compile Include="models\Plate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StiffnessForm.cs">
+    <Compile Include="views\StiffnessForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StiffnessForm.Designer.cs">
+    <Compile Include="views\StiffnessForm.Designer.cs">
       <DependentUpon>StiffnessForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewPlateForm.resx">
+    <EmbeddedResource Include="views\NewPlateForm.resx">
       <DependentUpon>NewPlateForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NodeBondsForm.resx">
+    <EmbeddedResource Include="views\NodeBondsForm.resx">
       <DependentUpon>NodeBondsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -98,7 +101,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="StiffnessForm.resx">
+    <EmbeddedResource Include="views\StiffnessForm.resx">
       <DependentUpon>StiffnessForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
@@ -128,7 +131,7 @@
     <None Include="resources\open.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Events\" />
+    <Folder Include="events\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\node.png" />
