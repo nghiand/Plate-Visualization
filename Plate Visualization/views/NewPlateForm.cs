@@ -18,6 +18,13 @@ namespace Plate_Visualization
 
         private void createOkButton_Click(object sender, EventArgs e)
         {
+            string name = problemName.Text;
+            if (name == "")
+            {
+                // TODO: Add dialog to show error message
+                return;
+            }
+
             List<Tuple<int, float>> inputWidth = new List<Tuple<int, float>>();
 
             for (int rows = 0; rows < widthData.Rows.Count - 1; rows++)
@@ -61,8 +68,8 @@ namespace Plate_Visualization
             }
 
             MainForm parent = (MainForm)this.Owner;
-            parent.CreatePlate(inputWidth, inputLength);
-            this.Close();
+            parent.CreatePlate(name, inputWidth, inputLength);
+            Close();
         }
     }
 }

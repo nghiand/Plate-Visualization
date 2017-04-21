@@ -43,6 +43,8 @@
             this.NumberWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.createCancelButton = new System.Windows.Forms.Button();
             this.createOkButton = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.problemName = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.widthData)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -52,7 +54,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(12, 45);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(95, 13);
             this.label1.TabIndex = 0;
@@ -63,7 +65,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.widthData);
-            this.groupBox1.Location = new System.Drawing.Point(13, 26);
+            this.groupBox1.Location = new System.Drawing.Point(13, 62);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(173, 234);
             this.groupBox1.TabIndex = 1;
@@ -118,7 +120,7 @@
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.lengthData);
-            this.groupBox2.Location = new System.Drawing.Point(194, 26);
+            this.groupBox2.Location = new System.Drawing.Point(194, 62);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(177, 234);
             this.groupBox2.TabIndex = 2;
@@ -168,7 +170,7 @@
             // 
             // createCancelButton
             // 
-            this.createCancelButton.Location = new System.Drawing.Point(296, 273);
+            this.createCancelButton.Location = new System.Drawing.Point(296, 309);
             this.createCancelButton.Name = "createCancelButton";
             this.createCancelButton.Size = new System.Drawing.Size(75, 23);
             this.createCancelButton.TabIndex = 3;
@@ -178,7 +180,7 @@
             // 
             // createOkButton
             // 
-            this.createOkButton.Location = new System.Drawing.Point(201, 273);
+            this.createOkButton.Location = new System.Drawing.Point(201, 309);
             this.createOkButton.Name = "createOkButton";
             this.createOkButton.Size = new System.Drawing.Size(75, 23);
             this.createOkButton.TabIndex = 4;
@@ -186,11 +188,29 @@
             this.createOkButton.UseVisualStyleBackColor = true;
             this.createOkButton.Click += new System.EventHandler(this.createOkButton_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(13, 16);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(67, 13);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Имя задачи";
+            // 
+            // problemName
+            // 
+            this.problemName.Location = new System.Drawing.Point(86, 13);
+            this.problemName.Name = "problemName";
+            this.problemName.Size = new System.Drawing.Size(285, 20);
+            this.problemName.TabIndex = 6;
+            // 
             // NewPlateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(385, 312);
+            this.ClientSize = new System.Drawing.Size(382, 345);
+            this.Controls.Add(this.problemName);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.createOkButton);
             this.Controls.Add(this.createCancelButton);
             this.Controls.Add(this.groupBox2);
@@ -230,5 +250,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button createCancelButton;
         private System.Windows.Forms.Button createOkButton;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox problemName;
     }
 }

@@ -35,13 +35,14 @@ namespace Plate_Visualization
             view3D.Enabled = enabled;
         }
 
-        public void CreatePlate(List<Tuple<int, float>> inputWidth, List<Tuple<int, float>> inputLength)
+        public void CreatePlate(string name, List<Tuple<int, float>> inputWidth, List<Tuple<int, float>> inputLength)
         {
-            if (inputWidth.Count == 0 || inputLength.Count == 0)
+            if (inputWidth.Count == 0 || inputLength.Count == 0 || name == "")
             {
                 // TODO: Add dialog to show message
                 return;
             }
+            scheme.Name = name;
             scheme.Plate = new Plate(inputWidth, inputLength, graph.Width, graph.Height);
             scheme.Loads = new List<Load>();
             scheme.Plate.Subscribe(this);

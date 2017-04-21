@@ -4,9 +4,15 @@ namespace Plate_Visualization
 {
     class Scheme
     {
+        public string Name
+        {
+            get; set;
+        }
+
         public Plate Plate {
             get; set;
         }
+
         public List<Load> Loads {
             get; set;
         }
