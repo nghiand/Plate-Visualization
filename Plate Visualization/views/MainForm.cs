@@ -54,6 +54,7 @@ namespace Plate_Visualization
             view2D.Enabled = true;
             view3D.Enabled = true;
             view2D.Checked = true;
+            view3D.Checked = false;
 
             graphic.DrawScheme(scheme);
         }
@@ -89,9 +90,7 @@ namespace Plate_Visualization
             if (graph.Focused == true && e.Delta != 0)
             {
                 scheme.Plate.Zoom(e.Location, e.Delta > 0);
-                graphic.DrawPlate(scheme.Plate);
-                foreach (Load l in scheme.Loads)
-                    graphic.DrawLoad(l);
+                graphic.DrawScheme(scheme);
             }
         }
 
@@ -334,34 +333,25 @@ namespace Plate_Visualization
             }
         }
 
+        public void SetLoads(float P)
+        {
+            List<Node> selectingNodes = scheme.Plate.SelectingNodes();
+            foreach (Node n in selectingNodes)
+            {
+                Load l = new Load(P, n);
+                scheme.Loads.Add(l);
+                graphic.DrawScheme(scheme);
+            }
+        }
+
         private void loadButton_Click(object sender, EventArgs e)
         {
             List<Node> selectingNodes = scheme.Plate.SelectingNodes();
-            /*
-            List<int> bonds = new List<int>(3) { 0, 0, 0 };
-            if (selectingNodes.Count > 0)
+            using (views.NewLoadForm loadForm = new views.NewLoadForm())
             {
-                bonds = selectingNodes[0].Bonds;
+                loadForm.ShowDialog(this);
             }
-            for (int i = 1; i < selectingNodes.Count; i++)
-            {
-                if (!selectingNodes[i].Bonds.Equals(selectingNodes[i - 1].Bonds))
-                {
-                    bonds = new List<int>(3) { 0, 0, 0 };
-                    break;
-                }
-            }
-            using (NodeBondsForm bondsForm = new NodeBondsForm(bonds))
-            {
-                bondsForm.ShowDialog(this);
-            }
-            */
-            foreach (Node n in selectingNodes)
-            {
-                Load l = new Load(10, n);
-                scheme.Loads.Add(l);
-                graphic.DrawLoad(l);
-            }
+
         }
     }
 }

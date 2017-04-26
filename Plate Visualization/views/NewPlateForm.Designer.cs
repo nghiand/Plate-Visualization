@@ -99,7 +99,7 @@
             this.widthData.Location = new System.Drawing.Point(7, 32);
             this.widthData.Name = "widthData";
             this.widthData.Size = new System.Drawing.Size(159, 195);
-            this.widthData.TabIndex = 0;
+            this.widthData.TabIndex = 1;
             // 
             // LengthHeight
             // 
@@ -154,7 +154,7 @@
             this.lengthData.Location = new System.Drawing.Point(7, 32);
             this.lengthData.Name = "lengthData";
             this.lengthData.Size = new System.Drawing.Size(163, 195);
-            this.lengthData.TabIndex = 0;
+            this.lengthData.TabIndex = 2;
             // 
             // LengthWidth
             // 
@@ -173,8 +173,8 @@
             this.createCancelButton.Location = new System.Drawing.Point(296, 309);
             this.createCancelButton.Name = "createCancelButton";
             this.createCancelButton.Size = new System.Drawing.Size(75, 23);
-            this.createCancelButton.TabIndex = 3;
-            this.createCancelButton.Text = "Cancel";
+            this.createCancelButton.TabIndex = 4;
+            this.createCancelButton.Text = "Отмена";
             this.createCancelButton.UseVisualStyleBackColor = true;
             this.createCancelButton.Click += new System.EventHandler(this.createCancelButton_Click);
             // 
@@ -183,8 +183,8 @@
             this.createOkButton.Location = new System.Drawing.Point(201, 309);
             this.createOkButton.Name = "createOkButton";
             this.createOkButton.Size = new System.Drawing.Size(75, 23);
-            this.createOkButton.TabIndex = 4;
-            this.createOkButton.Text = "OK";
+            this.createOkButton.TabIndex = 3;
+            this.createOkButton.Text = "ОК";
             this.createOkButton.UseVisualStyleBackColor = true;
             this.createOkButton.Click += new System.EventHandler(this.createOkButton_Click);
             // 
@@ -202,7 +202,7 @@
             this.problemName.Location = new System.Drawing.Point(86, 13);
             this.problemName.Name = "problemName";
             this.problemName.Size = new System.Drawing.Size(285, 20);
-            this.problemName.TabIndex = 6;
+            this.problemName.TabIndex = 0;
             // 
             // NewPlateForm
             // 

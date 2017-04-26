@@ -64,6 +64,7 @@ namespace Plate_Visualization
         {
             State = State.Selecting;
             Selected?.Invoke(this);
+            System.Console.WriteLine("Selected");
         }
 
         public void Deselect()
@@ -73,6 +74,7 @@ namespace Plate_Visualization
             else
                 State = State.Normal;
             Deselected?.Invoke(this);
+            System.Console.WriteLine("Deselected");
         }
     }
 }

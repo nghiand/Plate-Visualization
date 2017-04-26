@@ -83,7 +83,6 @@ namespace Plate_Visualization
         public void DrawPlate(Plate plate)
         {
             // draw plate
-            g.Clear(Color.White);
             Pen pen = new Pen(Brushes.Blue);
             // draw vertical lines
             for (int i = 0; i < plate.Nodes.Count - plate.Width - 1; i++)
@@ -135,6 +134,7 @@ namespace Plate_Visualization
 
         public void DrawScheme(Scheme scheme)
         {
+            g.Clear(Color.White);
             DrawPlate(scheme.Plate);
             foreach (Load l in scheme.Loads)
                 DrawLoad(l);

@@ -14,9 +14,9 @@ namespace Plate_Visualization
         public NodeBondsForm(List<int> bonds)
         {
             InitializeComponent();
-            this.bondWithZ.Checked = (bonds[0] == 1);
-            this.bondWithOx.Checked = (bonds[1] == 1);
-            this.bondWithOy.Checked = (bonds[2] == 1);
+            bondWithZ.Checked = (bonds[0] == 1);
+            bondWithOx.Checked = (bonds[1] == 1);
+            bondWithOy.Checked = (bonds[2] == 1);
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -33,7 +33,7 @@ namespace Plate_Visualization
                 bondWithOy.Checked ? 1 : 0
             };
             parent.SetBonds(bonds);
-            this.Close();
+            Close();
         }
     }
 }
