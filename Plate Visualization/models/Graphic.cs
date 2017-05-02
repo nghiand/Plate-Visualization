@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Plate_Visualization
 {
@@ -127,17 +128,21 @@ namespace Plate_Visualization
             using (Pen p = new Pen(Brushes.Green, 4f))
             {
                 p.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
-
                 g.DrawLine(p, pos.X, pos.Y - 50, pos.X, pos.Y);
             }
+        }
+
+        public void DrawLoads(List<Load> loads)
+        {
+            foreach (Load l in loads)
+                DrawLoad(l);
         }
 
         public void DrawScheme(Scheme scheme)
         {
             g.Clear(Color.White);
             DrawPlate(scheme.Plate);
-            foreach (Load l in scheme.Loads)
-                DrawLoad(l);
+            DrawLoads(scheme.Loads);
         }
 
         public void MouseHover(object sender)
@@ -180,6 +185,11 @@ namespace Plate_Visualization
                 Element e = sender as Element;
                 DrawElement(e, false);
             }
+        }
+
+        public void Clear()
+        {
+            g.Clear(Control.DefaultBackColor);
         }
     }
 }

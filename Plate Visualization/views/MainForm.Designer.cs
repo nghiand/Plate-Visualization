@@ -49,11 +49,11 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.selectNodeButton = new System.Windows.Forms.ToolStripButton();
             this.bondButton = new System.Windows.Forms.ToolStripButton();
+            this.loadButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.selectElementButton = new System.Windows.Forms.ToolStripButton();
             this.stiffnessButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.loadButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.view2D = new System.Windows.Forms.ToolStripButton();
             this.view3D = new System.Windows.Forms.ToolStripButton();
@@ -113,6 +113,7 @@
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             this.closeToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.closeToolStripMenuItem.Text = "Закрыть";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
@@ -120,6 +121,7 @@
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.saveToolStripMenuItem.Text = "Сохранить";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsКакToolStripMenuItem
             // 
@@ -135,6 +137,7 @@
             this.exportToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
             this.exportToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.exportToolStripMenuItem.Text = "Экспортировать";
+            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
             // 
@@ -252,6 +255,16 @@
             this.bondButton.Text = "Связи в узлах";
             this.bondButton.Click += new System.EventHandler(this.bondButton_Click);
             // 
+            // loadButton
+            // 
+            this.loadButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.loadButton.Image = ((System.Drawing.Image)(resources.GetObject("loadButton.Image")));
+            this.loadButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(23, 22);
+            this.loadButton.Text = "Добавление нагрузок";
+            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -282,16 +295,6 @@
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
-            // 
-            // loadButton
-            // 
-            this.loadButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.loadButton.Image = ((System.Drawing.Image)(resources.GetObject("loadButton.Image")));
-            this.loadButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.loadButton.Name = "loadButton";
-            this.loadButton.Size = new System.Drawing.Size(23, 22);
-            this.loadButton.Text = "Добавление нагрузок";
-            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
             // 
             // toolStripSeparator3
             // 

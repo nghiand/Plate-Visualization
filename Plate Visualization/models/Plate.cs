@@ -227,7 +227,7 @@ namespace Plate_Visualization
                         maxWidth += Widths[currentWidth].Item1;
                     }
                     Element element = new Element(i * Width + j,
-                        Widths[currentWidth].Item1, Lengths[currentLength].Item1,
+                        Widths[currentWidth].Item2, Lengths[currentLength].Item2,
                         Nodes[nodeId],
                         Nodes[nodeId + 1],
                         Nodes[nodeId + Width + 1],

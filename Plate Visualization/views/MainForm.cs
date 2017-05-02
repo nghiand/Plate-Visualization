@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Plate_Visualization
@@ -15,12 +16,16 @@ namespace Plate_Visualization
             InitializeComponent();
         }
 
+        private void Initial()
+        {
+            status.Text = "";
+            SetToolItemsAvailability(false);
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             graphic = new Graphic(graph.CreateGraphics());
-            status.Text = "";
-            scheme = new Scheme();
-            SetToolItemsAvailability(false);
+            Initial();
         }
 
         private void SetToolItemsAvailability(bool enabled)
@@ -42,10 +47,13 @@ namespace Plate_Visualization
                 // TODO: Add dialog to show message
                 return;
             }
+            scheme = new Scheme();
             scheme.Name = name;
             scheme.Plate = new Plate(inputWidth, inputLength, graph.Width, graph.Height);
             scheme.Loads = new List<Load>();
             scheme.Plate.Subscribe(this);
+            scheme.IsModified = true;
+            scheme.WasSavedToFile = false;
 
             selectElementButton.Enabled = true;
             selectNodeButton.Enabled = true;
@@ -85,7 +93,7 @@ namespace Plate_Visualization
         {
             base.OnMouseWheel(e);
             graph.Focus();
-            if (scheme.Plate == null)
+            if (scheme == null)
                 return;
             if (graph.Focused == true && e.Delta != 0)
             {
@@ -121,7 +129,7 @@ namespace Plate_Visualization
                 startingPoint = new PointF(e.Location.X, e.Location.Y);
                 graphic.DrawScheme(scheme);
             }
-            else if (scheme.Plate != null)
+            else if (scheme != null)
             {
                 scheme.Plate.OnMouseMove(e);
             }
@@ -129,7 +137,7 @@ namespace Plate_Visualization
 
         private void graph_MouseClick(object sender, MouseEventArgs e)
         {
-            if (scheme.Plate != null && e.Button == MouseButtons.Left)
+            if (scheme != null && e.Button == MouseButtons.Left)
             {
                 scheme.Plate.OnMouseClick(e);
             }
@@ -137,7 +145,7 @@ namespace Plate_Visualization
 
         private void graph_SizeChanged(object sender, EventArgs e)
         {
-            if (scheme.Plate != null)
+            if (scheme != null)
             {
                 graphic = new Graphic(graph.CreateGraphics());
                 graphic.DrawScheme(scheme);
@@ -162,6 +170,7 @@ namespace Plate_Visualization
             {
                 Node node = (Node)sender;
                 graphic.DrawNode(node, true);
+                graphic.DrawLoads(scheme.Loads);
                 status.Text = "Связи: (" + node.Bonds[0].ToString()
                     + ", " + node.Bonds[0].ToString()
                     + ", " + node.Bonds[0].ToString() + ")";
@@ -170,6 +179,7 @@ namespace Plate_Visualization
             {
                 Element element = (Element)sender;
                 graphic.DrawElement(element, true);
+                graphic.DrawLoads(scheme.Loads);
                 status.Text = "E = " + element.Stiffness.E
                     + ", H = " + element.Stiffness.H.ToString()
                     + ", V = " + element.Stiffness.V.ToString();
@@ -179,26 +189,44 @@ namespace Plate_Visualization
         public void plateObject_MouseLeave(object sender)
         {
             if (sender is Node)
+            {
                 graphic.DrawNode((Node)sender);
+                graphic.DrawLoads(scheme.Loads);
+            }
             else if (sender is Element)
+            {
                 graphic.DrawElement((Element)sender);
+                graphic.DrawLoads(scheme.Loads);
+            }
             status.Text = "";
         }
 
         public void plateObject_Selected(object sender)
         {
             if (sender is Node)
+            {
                 graphic.DrawNode((Node)sender);
+                graphic.DrawLoads(scheme.Loads);
+            }
             else if (sender is Element)
+            {
                 graphic.DrawElement((Element)sender);
+                graphic.DrawLoads(scheme.Loads);
+            }
         }
 
         public void plateObject_Deselected(object sender)
         {
             if (sender is Node)
+            {
                 graphic.DrawNode((Node)sender);
+                graphic.DrawLoads(scheme.Loads);
+            }
             else if (sender is Element)
+            {
                 graphic.DrawElement((Element)sender);
+                graphic.DrawLoads(scheme.Loads);
+            }
         }
 
         private void selectElementButton_Click(object sender, EventArgs e)
@@ -337,7 +365,21 @@ namespace Plate_Visualization
             foreach (Node n in selectingNodes)
             {
                 Load l = new Load(P, n);
-                scheme.Loads.Add(l);
+                bool found = false;
+                for (int i = 0; i < scheme.Loads.Count; i++)
+                {
+                    if (scheme.Loads[i].Position == n)
+                    {
+                        scheme.Loads[i] = l;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    scheme.Loads.Add(l);
+                }
                 graphic.DrawScheme(scheme);
             }
         }
@@ -349,7 +391,54 @@ namespace Plate_Visualization
             {
                 loadForm.ShowDialog(this);
             }
+        }
 
+        private string DisplaySaveFileDialog(string type)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = type;
+            saveFileDialog.Title = "Сохранить в файл";
+            saveFileDialog.ShowDialog();
+            return saveFileDialog.FileName;
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string filename = DisplaySaveFileDialog("Plate Visualization File|*.pv");
+            Console.WriteLine(filename);
+        }
+
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (scheme == null)
+                return;
+            string filename = DisplaySaveFileDialog("Text File|*.txt");
+            if (filename != "")
+            {
+                using (StreamWriter sw = new StreamWriter(filename))
+                {
+                    sw.WriteLine("{0} {1}", scheme.Plate.Width, scheme.Plate.Length);
+                    foreach (Element element in scheme.Plate.Elements)
+                    {
+                        sw.WriteLine("{0} {1} {2} {3} {4}", element.Width, element.Length, element.Stiffness.E, element.Stiffness.H, element.Stiffness.V);
+                    }
+                    foreach (Node node in scheme.Plate.Nodes)
+                    {
+                        sw.WriteLine("{0} {1} {2}", node.Bonds[0], node.Bonds[1], node.Bonds[2]);
+                    }
+                    sw.WriteLine(scheme.Loads.Count);
+                    foreach (Load load in scheme.Loads)
+                    {
+                        sw.WriteLine("{0} {1}", load.Weight, ((Node)load.Position).Id + 1);
+                    }
+                }
+            }
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            graphic.Clear();
+            scheme = null;
         }
     }
 }

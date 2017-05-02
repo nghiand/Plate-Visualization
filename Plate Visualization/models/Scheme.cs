@@ -9,6 +9,16 @@ namespace Plate_Visualization
             get; set;
         }
 
+        public bool IsModified
+        {
+            get; set;
+        }
+
+        public bool WasSavedToFile
+        {
+            get; set;
+        }
+
         public Plate Plate {
             get; set;
         }
