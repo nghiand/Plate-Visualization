@@ -44,7 +44,7 @@ namespace Plate_Visualization
         {
             if (inputWidth.Count == 0 || inputLength.Count == 0 || name == "")
             {
-                // TODO: Add dialog to show message
+                MessageBox.Show("Некорректный ввод!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             scheme = new Scheme();

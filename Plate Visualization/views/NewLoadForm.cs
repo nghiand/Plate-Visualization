@@ -15,7 +15,7 @@ namespace Plate_Visualization.views
             float P;
             if (!float.TryParse(pInput.Text, out P))
             {
-                // TODO: Add dialog to show error message
+                MessageBox.Show("Некорректный ввод!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             parent.SetLoads(P);

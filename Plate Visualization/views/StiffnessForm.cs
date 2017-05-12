@@ -33,12 +33,12 @@ namespace Plate_Visualization
                 !float.TryParse(hInput.Text, out H) ||
                 !float.TryParse(vInput.Text, out V))
             {
-                // TODO: Add dialog to show error message
+                MessageBox.Show("Некорректный ввод!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (E < 0 || V < 0 || H < 0)
             {
-                // TODO: Add dialog to show error message
+                MessageBox.Show("Некорректный ввод. Все значения должны быть не отрицательными!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             Stiffness s = new Stiffness(E, V, H);
