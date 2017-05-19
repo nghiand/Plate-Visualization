@@ -93,6 +93,16 @@ namespace Plate_Visualization.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bonds {
+            get {
+                object obj = ResourceManager.GetObject("bonds", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap element {
             get {
                 object obj = ResourceManager.GetObject("element", resourceCulture);

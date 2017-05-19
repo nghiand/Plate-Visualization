@@ -106,7 +106,8 @@
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
-            this.openToolStripMenuItem.Text = "Окрыть";
+            this.openToolStripMenuItem.Text = "Открыть";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
@@ -218,6 +219,7 @@
             this.saveStripButton.Name = "saveStripButton";
             this.saveStripButton.Size = new System.Drawing.Size(23, 22);
             this.saveStripButton.Text = "Сохранить";
+            this.saveStripButton.Click += new System.EventHandler(this.saveStripButton_Click);
             // 
             // saveAsStripButton
             // 
@@ -248,7 +250,7 @@
             // bondButton
             // 
             this.bondButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bondButton.Image = ((System.Drawing.Image)(resources.GetObject("bondButton.Image")));
+            this.bondButton.Image = global::Plate_Visualization.Properties.Resources.bonds;
             this.bondButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bondButton.Name = "bondButton";
             this.bondButton.Size = new System.Drawing.Size(23, 22);

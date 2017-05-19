@@ -28,7 +28,11 @@ namespace Plate_Visualization
         {
             get; set;
         }
-        private List<Tuple<int, float>> Widths, Lengths;
+        public bool Mode2D
+        {
+            get; set;
+        }
+        public List<Tuple<int, float>> Widths, Lengths;
 
         public Plate(List<Tuple<int, float>> widths, List<Tuple<int, float>> lengths, int graphicWidth, int graphicLength, bool modified = true)
         {
@@ -41,6 +45,16 @@ namespace Plate_Visualization
             Modified = modified;
         }
 
+        public Plate(List<Tuple<int, float>> widths, List<Tuple<int, float>> lengths)
+        {
+            Widths = widths;
+            Lengths = lengths;
+            Objects = new List<PlateObject>();
+            CreateNodes();
+            GenerateElement();
+            Modified = false;
+        }
+
         private void CreateNodes()
         {
             Nodes = new List<Node>();
@@ -50,6 +64,18 @@ namespace Plate_Visualization
             node = new Node(Nodes.Count);
             Nodes.Add(node);
             Objects.Add(node);
+
+            Width = 0;
+            foreach (Tuple<int, float> elementX in Widths)
+            {
+                Width += elementX.Item1;
+            }
+
+            Length = 0;
+            foreach (Tuple<int, float> elementY in Lengths)
+            {
+                Length += elementY.Item1;
+            }
 
             foreach (Tuple<int, float> elementX in Widths)
             {
@@ -83,22 +109,19 @@ namespace Plate_Visualization
 
         private void GenerateNodePositionIn2D(int graphicWidth, int graphicLength)
         {
+            Mode2D = true;
             float lengthX = 0.8f * graphicWidth;
             float lengthY = 0.8f * graphicLength;
 
             float sumX = 0;
-            Width = 0;
             foreach (Tuple<int, float> elementX in Widths)
             {
                 sumX += elementX.Item2 * elementX.Item1;
-                Width += elementX.Item1;
             }
             float sumY = 0;
-            Length = 0;
             foreach (Tuple<int, float> elementY in Lengths)
             {
                 sumY += elementY.Item2 * elementY.Item1;
-                Length += elementY.Item1;
             }
 
             float unit = Math.Min(lengthX / sumX, lengthY / sumY);
@@ -143,6 +166,7 @@ namespace Plate_Visualization
 
         private void GenerateNodePositionIn3D(int graphicWidth, int graphicLength)
         {
+            Mode2D = false;
             float lengthX = 0.8f * graphicWidth;
             float lengthY = 0.8f * graphicLength;
 

@@ -53,8 +53,14 @@ namespace Plate_Visualization
             scheme.Loads = new List<Load>();
             scheme.Plate.Subscribe(this);
             scheme.IsModified = true;
-            scheme.WasSavedToFile = false;
 
+            InitiateTools();
+
+            graphic.DrawScheme(scheme);
+        }
+
+        private void InitiateTools()
+        {
             selectElementButton.Enabled = true;
             selectNodeButton.Enabled = true;
             saveStripButton.Enabled = true;
@@ -63,8 +69,6 @@ namespace Plate_Visualization
             view3D.Enabled = true;
             view2D.Checked = true;
             view3D.Checked = false;
-
-            graphic.DrawScheme(scheme);
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
@@ -343,6 +347,8 @@ namespace Plate_Visualization
             {
                 view2D.Checked = true;
                 view3D.Checked = false;
+                if (scheme == null)
+                    return;
                 scheme.Plate.TranslateTo2D(graph.Width, graph.Height);
                 graphic.DrawScheme(scheme);
             }
@@ -354,6 +360,8 @@ namespace Plate_Visualization
             {
                 view3D.Checked = true;
                 view2D.Checked = false;
+                if (scheme == null)
+                    return;
                 scheme.Plate.TranslateTo3D(graph.Width, graph.Height);
                 graphic.DrawScheme(scheme);
             }
@@ -402,10 +410,97 @@ namespace Plate_Visualization
             return saveFileDialog.FileName;
         }
 
+        private string DisplayOpenFileDialog(string type)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = type;
+            openFileDialog.Title = "Открыть файл";
+            openFileDialog.ShowDialog();
+            return openFileDialog.FileName;
+        }
+
+        private void SaveSchemeToFile()
+        {
+            if (scheme.Filename == "")
+            {
+                string filename = DisplaySaveFileDialog("Plate Visualization File|*.pv");
+                if (filename != "")
+                {
+                    scheme.SaveToFile(filename);
+                }
+            }
+            else
+            {
+                scheme.SaveFile();
+            }
+        }
+
+        private void OpenScheme()
+        {
+            string filename = DisplayOpenFileDialog("Plate Visualization File|*.pv");
+            if (filename != "")
+            {
+                if (scheme != null && scheme.IsModified)
+                {
+                    // TODO: show dialog to ask save file
+                }
+                Scheme new_scheme = new Scheme();
+                new_scheme.OpenFromFile(filename);
+                scheme = new_scheme;
+                graphic.DrawScheme(scheme);
+                scheme.Plate.Subscribe(this);
+
+                InitiateTools();
+
+                bool check = false;
+                foreach (Element element in scheme.Plate.Elements)
+                {
+                    if (element.State == State.Selecting)
+                    {
+                        check = true;
+                        break;
+                    }
+                }
+                if (check)
+                {
+                    selectElementButton.Checked = true;
+                }
+                else
+                {
+                    foreach (Node node in scheme.Plate.Nodes)
+                    {
+                        if (node.State == State.Selecting)
+                        {
+                            check = true;
+                            break;
+                        }
+                    }
+                    if (check)
+                    {
+                        selectNodeButton.Checked = true;
+                    }
+                }
+                if (scheme.Plate.Mode2D == true)
+                {
+                    view2D.Checked = true;
+                    view3D.Checked = false;
+                }
+                else
+                {
+                    view2D.Checked = false;
+                    view3D.Checked = true;
+                }
+            }
+        }
+
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string filename = DisplaySaveFileDialog("Plate Visualization File|*.pv");
-            Console.WriteLine(filename);
+            SaveSchemeToFile();
+        }
+
+        private void saveStripButton_Click(object sender, EventArgs e)
+        {
+            SaveSchemeToFile();
         }
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -413,25 +508,10 @@ namespace Plate_Visualization
             if (scheme == null)
                 return;
             string filename = DisplaySaveFileDialog("Text File|*.txt");
+
             if (filename != "")
             {
-                using (StreamWriter sw = new StreamWriter(filename))
-                {
-                    sw.WriteLine("{0} {1}", scheme.Plate.Width, scheme.Plate.Length);
-                    foreach (Element element in scheme.Plate.Elements)
-                    {
-                        sw.WriteLine("{0} {1} {2} {3} {4}", element.Width, element.Length, element.Stiffness.E, element.Stiffness.H, element.Stiffness.V);
-                    }
-                    foreach (Node node in scheme.Plate.Nodes)
-                    {
-                        sw.WriteLine("{0} {1} {2}", node.Bonds[0], node.Bonds[1], node.Bonds[2]);
-                    }
-                    sw.WriteLine(scheme.Loads.Count);
-                    foreach (Load load in scheme.Loads)
-                    {
-                        sw.WriteLine("{0} {1}", load.Weight, ((Node)load.Position).Id + 1);
-                    }
-                }
+                scheme.Export(filename);
             }
         }
 
@@ -439,6 +519,11 @@ namespace Plate_Visualization
         {
             graphic.Clear();
             scheme = null;
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenScheme();
         }
     }
 }
