@@ -5,13 +5,21 @@ using System.Windows.Forms;
 
 namespace Plate_Visualization
 {
+    /// <summary>
+    /// Class describes plate node
+    /// </summary>
     class Node : PlateObject
     {
+        /// <summary>
+        /// Identifier
+        /// </summary>
         public int Id
         {
             get; set;
         }
-
+        /// <summary>
+        /// X
+        /// </summary>
         public float X
         {
             get
@@ -19,6 +27,9 @@ namespace Plate_Visualization
                 return Position.X;
             }
         }
+        /// <summary>
+        /// Y
+        /// </summary>
         public float Y
         {
             get
@@ -26,18 +37,26 @@ namespace Plate_Visualization
                 return Position.Y;
             }
         }
-
+        /// <summary>
+        /// Position
+        /// </summary>
         public PointF Position
         {
             get; set;
         }
-
-        // bonds with Z, axis Ox, axis Oy
+        
+        /// <summary>
+        /// Bonds with Z, azis Ox, axis Oy
+        /// </summary>
         public List<int> Bonds
         {
             get; set;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="id">Identifier</param>
         public Node(int id)
         {
             Id = id;
@@ -45,6 +64,12 @@ namespace Plate_Visualization
             State = State.Normal;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="id">Identifier</param>
+        /// <param name="x">X</param>
+        /// <param name="y">Y</param>
         public Node(int id, float x, float y)
         {
             Id = id;
@@ -53,6 +78,11 @@ namespace Plate_Visualization
             State = State.Normal;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="id">Identifier</param>
+        /// <param name="position">Position</param>
         public Node(int id, PointF position)
         {
             Id = id;
@@ -61,6 +91,10 @@ namespace Plate_Visualization
             State = State.Normal;
         }
 
+        /// <summary>
+        /// Check if node is selected
+        /// </summary>
+        /// <returns>true if node is selected</returns>
         public override bool IsSelected()
         {
             foreach (int k in Bonds)
@@ -71,6 +105,11 @@ namespace Plate_Visualization
             return false;
         }
 
+        /// <summary>
+        /// Check if node is on mouse hovering
+        /// </summary>
+        /// <param name="e">Mouse event</param>
+        /// <returns>True if node is on hover</returns>
         public override bool IsOnHover(MouseEventArgs e)
         {
             double dis = MathHelper.Distance(e.Location, Position);

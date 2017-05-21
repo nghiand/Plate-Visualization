@@ -1,33 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 
 namespace Plate_Visualization
 {
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// Form name
+        /// </summary>
+        private const string FORM_NAME = "Plate Visualization";
+        /// <summary>
+        /// Graphic
+        /// </summary>
         private Graphic graphic;
+        /// <summary>
+        /// Scheme
+        /// </summary>
         private Scheme scheme;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Initial
+        /// </summary>
         private void Initial()
         {
             status.Text = "";
             SetToolItemsAvailability(false);
         }
 
+        /// <summary>
+        /// Load form
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void MainForm_Load(object sender, EventArgs e)
         {
             graphic = new Graphic(graph.CreateGraphics());
             Initial();
         }
 
+        /// <summary>
+        /// Set tool items availability
+        /// </summary>
+        /// <param name="enabled">Enabled</param>
         private void SetToolItemsAvailability(bool enabled)
         {
             selectNodeButton.Enabled = enabled;
@@ -40,6 +64,12 @@ namespace Plate_Visualization
             view3D.Enabled = enabled;
         }
 
+        /// <summary>
+        /// Create plate from NewPlateForm's input
+        /// </summary>
+        /// <param name="name">Scheme name</param>
+        /// <param name="inputWidth">Elements along first axis</param>
+        /// <param name="inputLength">Elements along second axis</param>
         public void CreatePlate(string name, List<Tuple<int, float>> inputWidth, List<Tuple<int, float>> inputLength)
         {
             if (inputWidth.Count == 0 || inputLength.Count == 0 || name == "")
@@ -52,13 +82,16 @@ namespace Plate_Visualization
             scheme.Plate = new Plate(inputWidth, inputLength, graph.Width, graph.Height);
             scheme.Loads = new List<Load>();
             scheme.Plate.Subscribe(this);
-            scheme.IsModified = true;
+            ModifyScheme();
 
             InitiateTools();
 
             graphic.DrawScheme(scheme);
         }
 
+        /// <summary>
+        /// Initiate button tools
+        /// </summary>
         private void InitiateTools()
         {
             selectElementButton.Enabled = true;
@@ -71,6 +104,11 @@ namespace Plate_Visualization
             view3D.Checked = false;
         }
 
+        /// <summary>
+        /// Call when new scheme tool button is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (NewPlateForm newForm = new NewPlateForm())
@@ -79,6 +117,11 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Call when new scheme strip button is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void newStripButton_Click(object sender, EventArgs e)
         {
             using (NewPlateForm newForm = new NewPlateForm())
@@ -87,12 +130,20 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Call when exit tool strip is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        // Zoom in/out
+        /// <summary>
+        /// Call when scroll mouse
+        /// </summary>
+        /// <param name="e">Mouse event</param>
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             base.OnMouseWheel(e);
@@ -102,13 +153,25 @@ namespace Plate_Visualization
             if (graph.Focused == true && e.Delta != 0)
             {
                 scheme.Plate.Zoom(e.Location, e.Delta > 0);
+                ModifyScheme();
                 graphic.DrawScheme(scheme);
             }
         }
 
+        /// <summary>
+        /// Starting mouse click point
+        /// </summary>
         private PointF startingPoint = PointF.Empty;
+        /// <summary>
+        /// Check is panning
+        /// </summary>
         private bool panning = false;
 
+        /// <summary>
+        /// Call when mouse down on graph
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Mouse event</param>
         private void graph_MouseDown(object sender, MouseEventArgs e)
         {
             if (ModifierKeys == Keys.Control && e.Button == MouseButtons.Left)
@@ -119,26 +182,43 @@ namespace Plate_Visualization
 
         }
 
+        /// <summary>
+        /// Call when mouse up on graph
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Mouse event</param>
         private void graph_MouseUp(object sender, MouseEventArgs e)
         {
             panning = false;
         }
 
+        /// <summary>
+        /// Call when mouse move on graph
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Mouse event</param>
         private void graph_MouseMove(object sender, MouseEventArgs e)
         {
             if (panning)
             {
                 PointF movingVector = new PointF(e.Location.X - startingPoint.X, e.Location.Y - startingPoint.Y);
                 scheme.Plate.Move(movingVector);
+                ModifyScheme();
                 startingPoint = new PointF(e.Location.X, e.Location.Y);
                 graphic.DrawScheme(scheme);
             }
             else if (scheme != null)
             {
                 scheme.Plate.OnMouseMove(e);
+                ModifyScheme();
             }
         }
 
+        /// <summary>
+        /// Call when mouse click on graph
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Mouse event</param>
         private void graph_MouseClick(object sender, MouseEventArgs e)
         {
             if (scheme != null && e.Button == MouseButtons.Left)
@@ -147,6 +227,11 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Call when windows size is changed
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Mouse event</param>
         private void graph_SizeChanged(object sender, EventArgs e)
         {
             if (scheme != null)
@@ -156,18 +241,28 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Call when mouse click on plateObject
+        /// </summary>
+        /// <param name="sender">Sender</param>
         public void plateObject_MouseClick(object sender)
         {
             if (selectNodeButton.Checked && sender is Node)
             {
                 ((PlateObject)sender).Toggle();
+                ModifyScheme();
             }
             else if (selectElementButton.Checked && sender is Element)
             {
                 ((PlateObject)sender).Toggle();
+                ModifyScheme();
             }
         }
 
+        /// <summary>
+        /// Call when mouse hover on plateObject
+        /// </summary>
+        /// <param name="sender">Sender</param>
         public void plateObject_MouseHover(object sender)
         {
             if (sender is Node)
@@ -190,6 +285,10 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Call when mouse leave plateObject
+        /// </summary>
+        /// <param name="sender">Sender</param>
         public void plateObject_MouseLeave(object sender)
         {
             if (sender is Node)
@@ -205,34 +304,51 @@ namespace Plate_Visualization
             status.Text = "";
         }
 
+        /// <summary>
+        /// Call when an plateObject is selected
+        /// </summary>
+        /// <param name="sender">Sender</param>
         public void plateObject_Selected(object sender)
         {
             if (sender is Node)
             {
                 graphic.DrawNode((Node)sender);
                 graphic.DrawLoads(scheme.Loads);
+                ModifyScheme();
             }
             else if (sender is Element)
             {
                 graphic.DrawElement((Element)sender);
                 graphic.DrawLoads(scheme.Loads);
+                ModifyScheme();
             }
         }
 
+        /// <summary>
+        /// Call when an plateObject is deselected
+        /// </summary>
+        /// <param name="sender"></param>
         public void plateObject_Deselected(object sender)
         {
             if (sender is Node)
             {
                 graphic.DrawNode((Node)sender);
                 graphic.DrawLoads(scheme.Loads);
+                ModifyScheme();
             }
             else if (sender is Element)
             {
                 graphic.DrawElement((Element)sender);
                 graphic.DrawLoads(scheme.Loads);
+                ModifyScheme();
             }
         }
 
+        /// <summary>
+        /// Call when select element button is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void selectElementButton_Click(object sender, EventArgs e)
         {
             if (selectElementButton.Checked)
@@ -249,6 +365,11 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Call when stiffness button is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void stiffnessButton_Click(object sender, EventArgs e)
         {
             List<Element> selectingElements = scheme.Plate.SelectingElements();
@@ -271,6 +392,11 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Call when select node button is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void selectNodeButton_Click(object sender, EventArgs e)
         {
             if (selectNodeButton.Checked)
@@ -287,6 +413,11 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Call when select node button checked is changed
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void selectNodeButton_CheckedChanged(object sender, EventArgs e)
         {
             if (selectNodeButton.Checked)
@@ -295,9 +426,15 @@ namespace Plate_Visualization
             else
             {
                 scheme.Plate.DeselectNodes();
+                ModifyScheme();
             }
         }
 
+        /// <summary>
+        /// Call when bond button is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void bondButton_Click(object sender, EventArgs e)
         {
             List<Node> selectingNodes = scheme.Plate.SelectingNodes();
@@ -320,16 +457,31 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Set bonds to nodes
+        /// </summary>
+        /// <param name="bonds">Bonds</param>
         public void SetBonds(List<int> bonds)
         {
             scheme.Plate.SetBonds(bonds);
+            ModifyScheme();
         }
 
+        /// <summary>
+        /// Set stiffness to elements
+        /// </summary>
+        /// <param name="s">Stiffness</param>
         public void SetStiffness(Stiffness s)
         {
             scheme.Plate.SetStiffness(s);
+            ModifyScheme();
         }
 
+        /// <summary>
+        /// Call when select element button checked is changed
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void selectElementButton_CheckedChanged(object sender, EventArgs e)
         {
             if (selectElementButton.Checked)
@@ -338,9 +490,15 @@ namespace Plate_Visualization
             else
             {
                 scheme.Plate.DeselectElements();
+                ModifyScheme();
             }
         }
 
+        /// <summary>
+        /// Call when view2D button is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void view2D_Click(object sender, EventArgs e)
         {
             if (view2D.Checked == false)
@@ -350,10 +508,16 @@ namespace Plate_Visualization
                 if (scheme == null)
                     return;
                 scheme.Plate.TranslateTo2D(graph.Width, graph.Height);
+                ModifyScheme();
                 graphic.DrawScheme(scheme);
             }
         }
 
+        /// <summary>
+        /// Call when view3D button is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void view3D_Click(object sender, EventArgs e)
         {
             if (view3D.Checked == false)
@@ -363,10 +527,15 @@ namespace Plate_Visualization
                 if (scheme == null)
                     return;
                 scheme.Plate.TranslateTo3D(graph.Width, graph.Height);
+                ModifyScheme();
                 graphic.DrawScheme(scheme);
             }
         }
 
+        /// <summary>
+        /// Set loads on nodes
+        /// </summary>
+        /// <param name="P">Weight</param>
         public void SetLoads(float P)
         {
             List<Node> selectingNodes = scheme.Plate.SelectingNodes();
@@ -388,10 +557,16 @@ namespace Plate_Visualization
                 {
                     scheme.Loads.Add(l);
                 }
+                ModifyScheme();
                 graphic.DrawScheme(scheme);
             }
         }
 
+        /// <summary>
+        /// Call when load button is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void loadButton_Click(object sender, EventArgs e)
         {
             List<Node> selectingNodes = scheme.Plate.SelectingNodes();
@@ -401,6 +576,11 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Display save file dialof
+        /// </summary>
+        /// <param name="type">File type to save</param>
+        /// <returns></returns>
         private string DisplaySaveFileDialog(string type)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -410,6 +590,11 @@ namespace Plate_Visualization
             return saveFileDialog.FileName;
         }
 
+        /// <summary>
+        /// Display open file dialog
+        /// </summary>
+        /// <param name="type">File type to show</param>
+        /// <returns></returns>
         private string DisplayOpenFileDialog(string type)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -419,8 +604,13 @@ namespace Plate_Visualization
             return openFileDialog.FileName;
         }
 
+        /// <summary>
+        /// Save scheme to file
+        /// </summary>
         private void SaveSchemeToFile()
         {
+            if (scheme == null)
+                return;
             if (scheme.Filename == "")
             {
                 string filename = DisplaySaveFileDialog("Plate Visualization File|*.pv");
@@ -435,41 +625,49 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Open scheme from file
+        /// </summary>
         private void OpenScheme()
         {
             string filename = DisplayOpenFileDialog("Plate Visualization File|*.pv");
             if (filename != "")
             {
+                bool open = true;
                 if (scheme != null && scheme.IsModified)
                 {
-                    // TODO: show dialog to ask save file
-                }
-                Scheme new_scheme = new Scheme();
-                new_scheme.OpenFromFile(filename);
-                scheme = new_scheme;
-                graphic.DrawScheme(scheme);
-                scheme.Plate.Subscribe(this);
-
-                InitiateTools();
-
-                bool check = false;
-                foreach (Element element in scheme.Plate.Elements)
-                {
-                    if (element.State == State.Selecting)
+                    DialogResult result = MessageBox.Show("Схема не сохранена! Сохранить?", "Предупреждение",
+                                          MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
                     {
-                        check = true;
-                        break;
+                        SaveSchemeToFile();
+                        graphic.Clear();
+                        scheme = null;
+                    }
+                    else if (result == DialogResult.No)
+                    {
+                        graphic.Clear();
+                        scheme = null;
+                    }
+                    else
+                    {
+                        open = false;
                     }
                 }
-                if (check)
+                if (open)
                 {
-                    selectElementButton.Checked = true;
-                }
-                else
-                {
-                    foreach (Node node in scheme.Plate.Nodes)
+                    Scheme new_scheme = new Scheme();
+                    new_scheme.OpenFromFile(filename);
+                    scheme = new_scheme;
+                    graphic.DrawScheme(scheme);
+                    scheme.Plate.Subscribe(this);
+
+                    InitiateTools();
+
+                    bool check = false;
+                    foreach (Element element in scheme.Plate.Elements)
                     {
-                        if (node.State == State.Selecting)
+                        if (element.State == State.Selecting)
                         {
                             check = true;
                             break;
@@ -477,32 +675,67 @@ namespace Plate_Visualization
                     }
                     if (check)
                     {
-                        selectNodeButton.Checked = true;
+                        selectElementButton.Checked = true;
                     }
-                }
-                if (scheme.Plate.Mode2D == true)
-                {
-                    view2D.Checked = true;
-                    view3D.Checked = false;
-                }
-                else
-                {
-                    view2D.Checked = false;
-                    view3D.Checked = true;
+                    else
+                    {
+                        selectElementButton.Checked = false;
+                        foreach (Node node in scheme.Plate.Nodes)
+                        {
+                            if (node.State == State.Selecting)
+                            {
+                                check = true;
+                                break;
+                            }
+                        }
+                        if (check)
+                        {
+                            selectNodeButton.Checked = true;
+                        }
+                        else
+                        {
+                            selectNodeButton.Checked = false;
+                        }
+                    }
+                    if (scheme.Plate.Mode2D == true)
+                    {
+                        view2D.Checked = true;
+                        view3D.Checked = false;
+                    }
+                    else
+                    {
+                        view2D.Checked = false;
+                        view3D.Checked = true;
+                    }
                 }
             }
         }
 
+        /// <summary>
+        /// Call when save tool strip is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveSchemeToFile();
         }
 
+        /// <summary>
+        /// Call when save strip button is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void saveStripButton_Click(object sender, EventArgs e)
         {
             SaveSchemeToFile();
         }
 
+        /// <summary>
+        /// Call when export tool strip is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (scheme == null)
@@ -515,15 +748,83 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Call when close tool strip is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            graphic.Clear();
-            scheme = null;
+            if (scheme.IsModified == true)
+            {
+                DialogResult result = MessageBox.Show("Схема не сохранена! Сохранить?", "Предупреждение",
+                                      MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    SaveSchemeToFile();
+                    graphic.Clear();
+                    scheme = null;
+                }
+                else if (result == DialogResult.No)
+                {
+                    graphic.Clear();
+                    scheme = null;
+                }
+                else
+                {
+
+                }
+            } 
+
         }
 
+        /// <summary>
+        /// Call when open tool strip is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenScheme();
+        }
+
+        /// <summary>
+        /// Call when save as tool strip is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveSchemeToFile();
+        }
+
+        /// <summary>
+        /// Call when scheme is modified
+        /// </summary>
+        private void ModifyScheme()
+        {
+            scheme.IsModified = true;
+            Name = FORM_NAME + " *";
+        }
+
+        /// <summary>
+        /// Call when open strip button is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
+        private void openStripButton_Click(object sender, EventArgs e)
+        {
+            OpenScheme();
+        }
+
+        /// <summary>
+        /// Call when save as strip button is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
+        private void saveAsStripButton_Click(object sender, EventArgs e)
+        {
+            SaveSchemeToFile();
         }
     }
 }

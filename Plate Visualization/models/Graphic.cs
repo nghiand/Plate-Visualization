@@ -4,20 +4,46 @@ using System.Windows.Forms;
 
 namespace Plate_Visualization
 {
+    /// <summary>
+    /// Class to Draw on graphics
+    /// </summary>
     class Graphic
     {
+        /// <summary>
+        /// Graphics
+        /// </summary>
         private Graphics g;
+        /// <summary>
+        /// Node size
+        /// </summary>
         public const int NODE_SIZE = 8;
+        /// <summary>
+        /// Font size
+        /// </summary>
         private const int FONT_SIZE = 10;
-
+        /// <summary>
+        /// Color list
+        /// </summary>
         private static Color[] FillColor = new Color[] { Color.White, Color.Gray, Color.LightGray };
+        /// <summary>
+        /// Color object while hovering
+        /// </summary>
         private static Color HoveredColor = Color.LightBlue;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="graphic">Graphics</param>
         public Graphic(Graphics graphic)
         {
             g = graphic;
         }
-
+        
+        /// <summary>
+        /// Draw node
+        /// </summary>
+        /// <param name="node">Node</param>
+        /// <param name="OnHover">On hover</param>
         public void DrawNode(Node node, bool OnHover = false)
         {
             Pen pen = new Pen(Brushes.Blue, 2);
@@ -39,11 +65,20 @@ namespace Plate_Visualization
                 NODE_SIZE, NODE_SIZE);
         }
 
+        /// <summary>
+        /// Draw node index
+        /// </summary>
+        /// <param name="node">Node</param>
         private void DrawNodeIndex(Node node)
         {
             g.DrawString((node.Id + 1).ToString(), new Font("Consolas", FONT_SIZE, FontStyle.Regular), Brushes.Blue, node.X + 1, node.Y + 1);
         }
 
+        /// <summary>
+        /// Draw element
+        /// </summary>
+        /// <param name="element">Element</param>
+        /// <param name="OnHover">On hover</param>
         public void DrawElement(Element element, bool OnHover = false)
         {
             SolidBrush brush;
@@ -66,6 +101,10 @@ namespace Plate_Visualization
             DrawElementIndex(element);
         }
 
+        /// <summary>
+        /// Draw element index
+        /// </summary>
+        /// <param name="element">Element</param>
         private void DrawElementIndex(Element element)
         {
             StringFormat sf = new StringFormat();
@@ -81,6 +120,10 @@ namespace Plate_Visualization
             g.DrawString(id.ToString(), new Font("Consolas", FONT_SIZE, FontStyle.Regular), Brushes.Blue, center, sf);
         }
 
+        /// <summary>
+        /// Draw plate
+        /// </summary>
+        /// <param name="plate">Plate</param>
         public void DrawPlate(Plate plate)
         {
             // draw plate
@@ -122,6 +165,10 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Draw load
+        /// </summary>
+        /// <param name="load">Load</param>
         public void DrawLoad(Load load)
         {
             PointF pos = ((Node)load.Position).Position;
@@ -132,12 +179,20 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Draw loads list
+        /// </summary>
+        /// <param name="loads">Loads list</param>
         public void DrawLoads(List<Load> loads)
         {
             foreach (Load l in loads)
                 DrawLoad(l);
         }
 
+        /// <summary>
+        /// Draw scheme
+        /// </summary>
+        /// <param name="scheme">Scheme</param>
         public void DrawScheme(Scheme scheme)
         {
             g.Clear(Color.White);
@@ -145,6 +200,10 @@ namespace Plate_Visualization
             DrawLoads(scheme.Loads);
         }
 
+        /// <summary>
+        /// Call when mouse hovers on an object
+        /// </summary>
+        /// <param name="sender">Object</param>
         public void MouseHover(object sender)
         {
             if (sender is Node)
@@ -159,6 +218,10 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Call when mouse leaves an object
+        /// </summary>
+        /// <param name="sender">Object</param>
         public void MouseLeave(object sender)
         {
             if (sender is Node)
@@ -173,6 +236,10 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Call when mouse clicks on an object
+        /// </summary>
+        /// <param name="sender">Object</param>
         public void MouseClick(object sender)
         {
             if (sender is Node)
@@ -187,6 +254,9 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Clear
+        /// </summary>
         public void Clear()
         {
             g.Clear(Control.DefaultBackColor);

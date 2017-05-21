@@ -35,7 +35,7 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsКакToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,7 +54,6 @@
             this.selectElementButton = new System.Windows.Forms.ToolStripButton();
             this.stiffnessButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.view2D = new System.Windows.Forms.ToolStripButton();
             this.view3D = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
@@ -85,7 +84,7 @@
             this.openToolStripMenuItem,
             this.closeToolStripMenuItem,
             this.saveToolStripMenuItem,
-            this.saveAsКакToolStripMenuItem,
+            this.saveAsToolStripMenuItem,
             this.exportToolStripMenuItem,
             this.importToolStripMenuItem,
             this.exitToolStripMenuItem});
@@ -124,13 +123,14 @@
             this.saveToolStripMenuItem.Text = "Сохранить";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
-            // saveAsКакToolStripMenuItem
+            // saveAsToolStripMenuItem
             // 
-            this.saveAsКакToolStripMenuItem.Name = "saveAsКакToolStripMenuItem";
-            this.saveAsКакToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
-            this.saveAsКакToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
-            this.saveAsКакToolStripMenuItem.Text = "Сохранить как ...";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
+            this.saveAsToolStripMenuItem.Text = "Сохранить как ...";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // exportToolStripMenuItem
             // 
@@ -183,7 +183,6 @@
             this.selectElementButton,
             this.stiffnessButton,
             this.toolStripSeparator4,
-            this.toolStripSeparator3,
             this.view2D,
             this.view3D});
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
@@ -210,6 +209,7 @@
             this.openStripButton.Name = "openStripButton";
             this.openStripButton.Size = new System.Drawing.Size(23, 22);
             this.openStripButton.Text = "Открыть";
+            this.openStripButton.Click += new System.EventHandler(this.openStripButton_Click);
             // 
             // saveStripButton
             // 
@@ -230,6 +230,7 @@
             this.saveAsStripButton.Size = new System.Drawing.Size(23, 22);
             this.saveAsStripButton.Text = "Сохранить как";
             this.saveAsStripButton.ToolTipText = "Сохранить как";
+            this.saveAsStripButton.Click += new System.EventHandler(this.saveAsStripButton_Click);
             // 
             // toolStripSeparator1
             // 
@@ -297,11 +298,6 @@
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
             // view2D
             // 
@@ -393,7 +389,7 @@
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveAsКакToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
@@ -414,7 +410,6 @@
         private System.Windows.Forms.ToolStripStatusLabel statusText;
         private System.Windows.Forms.PictureBox graph;
         private System.Windows.Forms.ToolStripButton bondButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton view2D;
         private System.Windows.Forms.ToolStripButton view3D;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;

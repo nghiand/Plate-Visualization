@@ -5,38 +5,59 @@ using System.Windows.Forms;
 
 namespace Plate_Visualization
 {
+    /// <summary>
+    /// Class describes scheme
+    /// </summary>
     class Scheme
     {
+        /// <summary>
+        /// Name
+        /// </summary>
         public string Name
         {
             get; set;
         }
-
+        /// <summary>
+        /// Check if scheme is modified
+        /// </summary>
         public bool IsModified
         {
             get; set;
         }
-
+        /// <summary>
+        /// Filename
+        /// </summary>
         public string Filename
         {
             get; set;
         }
-
-        public Plate Plate {
+        /// <summary>
+        /// Plate
+        /// </summary>
+        public Plate Plate
+        {
             get; set;
         }
-
-        public List<Load> Loads {
+        /// <summary>
+        /// List of loads
+        /// </summary>
+        public List<Load> Loads
+        {
             get; set;
         }
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Scheme()
         {
             Plate = null;
             Loads = null;
             Filename = "";
         }
-
+        /// <summary>
+        /// Save scheme to file
+        /// </summary>
+        /// <param name="filename">File name</param>
         public void SaveToFile(string filename)
         {
             if (filename != "")
@@ -93,9 +114,13 @@ namespace Plate_Visualization
                     MessageBox.Show(e.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                IsModified = false;
             }
         }
 
+        /// <summary>
+        /// Save scheme
+        /// </summary>
         public void SaveFile()
         {
             if (Filename != "")
@@ -104,6 +129,11 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Load scheme from file
+        /// </summary>
+        /// <param name="filename">File name</param>
+        /// <returns>True if scheme is loaded successfully</returns>
         public bool OpenFromFile(string filename)
         {
             if (filename != "")
@@ -166,6 +196,7 @@ namespace Plate_Visualization
                             l.Position = Plate.Nodes[pos];
                             Loads.Add(l);
                         }
+                        IsModified = false;
                         return true;
                     }
                 }
@@ -178,6 +209,10 @@ namespace Plate_Visualization
             return false;
         }
 
+        /// <summary>
+        /// Export scheme to file
+        /// </summary>
+        /// <param name="filename">File name</param>
         public void Export(string filename)
         {
             if (filename != "")

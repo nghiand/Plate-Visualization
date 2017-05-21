@@ -1,22 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Plate_Visualization
 {
+    /// <summary>
+    /// Stiffness form
+    /// </summary>
     public partial class StiffnessForm : Form
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public StiffnessForm()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="stiffness">Stiffness</param>
         public StiffnessForm(Stiffness stiffness)
         {
             InitializeComponent();
@@ -25,6 +28,11 @@ namespace Plate_Visualization
             vInput.Text = stiffness.V.ToString();
         }
 
+        /// <summary>
+        /// Call when ok button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void okButton_Click(object sender, EventArgs e)
         {
             MainForm parent = (MainForm)this.Owner;

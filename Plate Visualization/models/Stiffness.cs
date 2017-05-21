@@ -6,57 +6,54 @@ using System.Threading.Tasks;
 
 namespace Plate_Visualization
 {
+    /// <summary>
+    /// Stiffness
+    /// </summary>
     public class Stiffness
     {
-        private float e;
+        /// <summary>
+        /// E
+        /// </summary>
         public float E
         {
-            get
-            {
-                return e;
-            }
-            set
-            {
-                e = value;
-            }
+            get; set;
         }
-        private float v;
+        /// <summary>
+        /// V
+        /// </summary>
         public float V
         {
-            get
-            {
-                return v;
-            }
-            set
-            {
-                v = value;
-            }
+            get; set;
         }
-        private float h;
+        /// <summary>
+        /// H
+        /// </summary>
         public float H
         {
-            get
-            {
-                return h;
-            }
-            set
-            {
-                h = value;
-            }
+            get; set;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Stiffness()
         {
-            e = 0;
-            v = 0;
-            h = 0;
+            E = 0;
+            V = 0;
+            H = 0;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="_e">E</param>
+        /// <param name="_v">V</param>
+        /// <param name="_h">H</param>
         public Stiffness(float _e, float _v, float _h)
         {
-            e = _e;
-            v = _v;
-            h = _h;
+            E = _e;
+            V = _v;
+            H = _h;
         }
     }
 }

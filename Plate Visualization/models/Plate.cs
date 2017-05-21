@@ -6,34 +6,73 @@ using System.Windows.Forms;
 
 namespace Plate_Visualization
 {
+    /// <summary>
+    /// Class describes plate
+    /// </summary>
     class Plate
     {
+        /// <summary>
+        /// Elements list
+        /// </summary>
         public List<Element> Elements
         {
             get; set;
         }
+        /// <summary>
+        /// Nodes list
+        /// </summary>
         public List<Node> Nodes
         {
             get; set;
         }
+        /// <summary>
+        /// Objects list
+        /// </summary>
         public List<PlateObject> Objects
         {
             get; set;
         }
+        /// <summary>
+        /// Width
+        /// </summary>
         public int Width
         {
             get; set;
         }
+        /// <summary>
+        /// Length
+        /// </summary>
         public int Length
         {
             get; set;
         }
+        /// <summary>
+        /// Check if current plate is display on 2d mode
+        /// </summary>
         public bool Mode2D
         {
             get; set;
         }
+        /// <summary>
+        /// Input lists
+        /// </summary>
         public List<Tuple<int, float>> Widths, Lengths;
+        /// <summary>
+        /// Modified
+        /// </summary>
+        public bool Modified
+        {
+            get; set;
+        }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="widths">List of elements along the first axis</param>
+        /// <param name="lengths">List of elements along the second axis</param>
+        /// <param name="graphicWidth">Windows width</param>
+        /// <param name="graphicLength">Windows length</param>
+        /// <param name="modified">Modified</param>
         public Plate(List<Tuple<int, float>> widths, List<Tuple<int, float>> lengths, int graphicWidth, int graphicLength, bool modified = true)
         {
             Widths = widths;
@@ -45,6 +84,11 @@ namespace Plate_Visualization
             Modified = modified;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="widths">List of elements along the first axis</param>
+        /// <param name="lengths">List of elements along the second axis</param>
         public Plate(List<Tuple<int, float>> widths, List<Tuple<int, float>> lengths)
         {
             Widths = widths;
@@ -55,6 +99,9 @@ namespace Plate_Visualization
             Modified = false;
         }
 
+        /// <summary>
+        /// Create nodes base on widths and lengths arrays
+        /// </summary>
         private void CreateNodes()
         {
             Nodes = new List<Node>();
@@ -107,6 +154,11 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Generate nodes positions in 2d mode
+        /// </summary>
+        /// <param name="graphicWidth">Windows width</param>
+        /// <param name="graphicLength">Windows length</param>
         private void GenerateNodePositionIn2D(int graphicWidth, int graphicLength)
         {
             Mode2D = true;
@@ -164,6 +216,11 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Generate nodes positions in 3D mode
+        /// </summary>
+        /// <param name="graphicWidth"></param>
+        /// <param name="graphicLength"></param>
         private void GenerateNodePositionIn3D(int graphicWidth, int graphicLength)
         {
             Mode2D = false;
@@ -228,6 +285,9 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Generate elements
+        /// </summary>
         private void GenerateElement()
         {
             Elements = new List<Element>();
@@ -264,16 +324,31 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Translate nodes positions to 3D mode
+        /// </summary>
+        /// <param name="graphicWidth">Windows width</param>
+        /// <param name="graphicLength">Windows length</param>
         public void TranslateTo3D(int graphicWidth, int graphicLength)
         {
             GenerateNodePositionIn3D(graphicWidth, graphicLength);
         }
 
+        /// <summary>
+        /// Translate nodes positions to 2D mode
+        /// </summary>
+        /// <param name="graphicWidth">Windows width</param>
+        /// <param name="graphicLength">Windows length</param>
         public void TranslateTo2D(int graphicWidth, int graphicLength)
         {
             GenerateNodePositionIn2D(graphicWidth, graphicLength);
         }
 
+        /// <summary>
+        /// Zoom
+        /// </summary>
+        /// <param name="location">Pointer location</param>
+        /// <param name="zoomIn">Check if zoom in</param>
         public void Zoom(PointF location, bool zoomIn)
         {
             float factor = 1.0f;
@@ -296,6 +371,10 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Move
+        /// </summary>
+        /// <param name="movingVector">Moving vector</param>
         public void Move(PointF movingVector)
         {
             for (int i = 0; i < Nodes.Count; i++)
@@ -306,11 +385,10 @@ namespace Plate_Visualization
             }
         }
 
-        public bool Modified
-        {
-            get; set;
-        }
-
+        /// <summary>
+        /// Call when mouse move on plate
+        /// </summary>
+        /// <param name="e">Mouse event</param>
         public void OnMouseMove(MouseEventArgs e)
         {
             PlateObject hoveredObj = null;
@@ -336,6 +414,10 @@ namespace Plate_Visualization
                 hoveredObj.OnMouseHover(e);
         }
 
+        /// <summary>
+        /// Call when mouse click on plate
+        /// </summary>
+        /// <param name="e"></param>
         public void OnMouseClick(MouseEventArgs e)
         {
             foreach (PlateObject obj in Objects)
@@ -348,6 +430,10 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Selecting objects
+        /// </summary>
+        /// <returns>List of selecting objects</returns>
         public List<PlateObject> SelectingObjects()
         {
             List<PlateObject> list = new List<PlateObject>();
@@ -361,6 +447,10 @@ namespace Plate_Visualization
             return list;
         }
 
+        /// <summary>
+        /// Selecting nodes
+        /// </summary>
+        /// <returns>List of selecting nodes</returns>
         public List<Node> SelectingNodes()
         {
             List<Node> list = new List<Node>();
@@ -374,6 +464,10 @@ namespace Plate_Visualization
             return list;
         }
 
+        /// <summary>
+        /// Set bonds to nodes
+        /// </summary>
+        /// <param name="bonds">Bonds</param>
         public void SetBonds(List<int> bonds)
         {
             List<Node> selectingNodes = SelectingNodes();
@@ -383,6 +477,9 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Deselect all nodes
+        /// </summary>
         public void DeselectNodes()
         {
             List<Node> selectingNodes = SelectingNodes();
@@ -392,6 +489,10 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Selecting elements
+        /// </summary>
+        /// <returns>List of selecting elements</returns>
         public List<Element> SelectingElements()
         {
             List<Element> list = new List<Element>();
@@ -405,6 +506,9 @@ namespace Plate_Visualization
             return list;
         }
 
+        /// <summary>
+        /// Deselect elements
+        /// </summary>
         public void DeselectElements()
         {
             List<Element> selectingElements = SelectingElements();
@@ -414,6 +518,10 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Set stiffness for elements
+        /// </summary>
+        /// <param name="s"></param>
         public void SetStiffness(Stiffness s)
         {
             List<Element> selectingElements = SelectingElements();
@@ -423,6 +531,10 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Subscribe form to listen events
+        /// </summary>
+        /// <param name="form">Form</param>
         public void Subscribe(MainForm form)
         {
             foreach (PlateObject obj in Objects)

@@ -4,8 +4,14 @@ using System.Windows.Forms;
 
 namespace Plate_Visualization
 {
+    /// <summary>
+    /// New plate form
+    /// </summary>
     public partial class NewPlateForm : Form
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public NewPlateForm()
         {
             InitializeComponent();
@@ -15,11 +21,21 @@ namespace Plate_Visualization
             lengthData.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
         }
 
+        /// <summary>
+        /// Call when cancel button is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void createCancelButton_Click(object sender, EventArgs e)
         {
             Close();
         }
 
+        /// <summary>
+        /// Call when ok button is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event</param>
         private void createOkButton_Click(object sender, EventArgs e)
         {
             string name = problemName.Text;
