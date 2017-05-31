@@ -8,7 +8,7 @@ namespace Plate_Visualization
     /// <summary>
     /// Class describes Plate element
     /// </summary>
-    class Element : PlateObject
+    public class Element : PlateObject
     {
         /// <summary>
         /// Identifier
@@ -34,14 +34,14 @@ namespace Plate_Visualization
         /// <summary>
         /// Width
         /// </summary>
-        public double Width
+        public float Width
         {
             get; set;
         }
         /// <summary>
         /// Length
         /// </summary>
-        public double Length
+        public float Length
         {
             get; set;
         }
@@ -52,7 +52,7 @@ namespace Plate_Visualization
         /// <param name="id">Identifier</param>
         /// <param name="width">Width</param>
         /// <param name="length">Length</param>
-        public Element(int id, double width, double length)
+        public Element(int id, float width, float length)
         {
             Id = id;
             State = State.Normal;
@@ -72,7 +72,7 @@ namespace Plate_Visualization
         /// <param name="n1">Second node</param>
         /// <param name="n2">Third node</param>
         /// <param name="n3">Fouth node</param>
-        public Element(int id, double width, double length, Node n0, Node n1, Node n2, Node n3)
+        public Element(int id, float width, float length, Node n0, Node n1, Node n2, Node n3)
         {
             Id = id;
             Nodes = new List<Node>();

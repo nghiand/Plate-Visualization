@@ -8,7 +8,7 @@ namespace Plate_Visualization
     /// <summary>
     /// Class describes plate node
     /// </summary>
-    class Node : PlateObject
+    public class Node : PlateObject
     {
         /// <summary>
         /// Identifier

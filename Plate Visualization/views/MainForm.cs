@@ -62,6 +62,16 @@ namespace Plate_Visualization
             saveAsStripButton.Enabled = enabled;
             view2D.Enabled = enabled;
             view3D.Enabled = enabled;
+            loadButton.Enabled = enabled;
+            selectNodeButton.Checked = false;
+            bondButton.Checked = false;
+            selectElementButton.Checked = false;
+            stiffnessButton.Checked = false;
+            saveStripButton.Checked = false;
+            saveAsStripButton.Checked = false;
+            view2D.Checked = false;
+            view3D.Checked = false;
+            loadButton.Checked = false;
         }
 
         /// <summary>
@@ -210,7 +220,6 @@ namespace Plate_Visualization
             else if (scheme != null)
             {
                 scheme.Plate.OnMouseMove(e);
-                ModifyScheme();
             }
         }
 
@@ -271,8 +280,8 @@ namespace Plate_Visualization
                 graphic.DrawNode(node, true);
                 graphic.DrawLoads(scheme.Loads);
                 status.Text = "Связи: (" + node.Bonds[0].ToString()
-                    + ", " + node.Bonds[0].ToString()
-                    + ", " + node.Bonds[0].ToString() + ")";
+                    + ", " + node.Bonds[1].ToString()
+                    + ", " + node.Bonds[2].ToString() + ")";
             }
             else if (sender is Element)
             {
@@ -362,6 +371,7 @@ namespace Plate_Visualization
                 stiffnessButton.Enabled = true;
                 selectNodeButton.Checked = false;
                 bondButton.Enabled = false;
+                loadButton.Enabled = false;
             }
         }
 
@@ -403,11 +413,13 @@ namespace Plate_Visualization
             {
                 selectNodeButton.Checked = false;
                 bondButton.Enabled = false;
+                loadButton.Enabled = false;
             }
             else
             {
                 selectNodeButton.Checked = true;
                 bondButton.Enabled = true;
+                loadButton.Enabled = true;
                 selectElementButton.Checked = false;
                 stiffnessButton.Enabled = false;
             }
@@ -420,6 +432,7 @@ namespace Plate_Visualization
         /// <param name="e">Event</param>
         private void selectNodeButton_CheckedChanged(object sender, EventArgs e)
         {
+            if (scheme == null) return;
             if (selectNodeButton.Checked)
             {
             }
@@ -484,6 +497,7 @@ namespace Plate_Visualization
         /// <param name="e">Event</param>
         private void selectElementButton_CheckedChanged(object sender, EventArgs e)
         {
+            if (scheme == null) return;
             if (selectElementButton.Checked)
             {
             }
@@ -764,18 +778,25 @@ namespace Plate_Visualization
                     SaveSchemeToFile();
                     graphic.Clear();
                     scheme = null;
+                    Initial();
                 }
                 else if (result == DialogResult.No)
                 {
                     graphic.Clear();
                     scheme = null;
+                    Initial();
                 }
                 else
                 {
 
                 }
-            } 
-
+            }
+            else
+            {
+                graphic.Clear();
+                scheme = null;
+                Initial();
+            }
         }
 
         /// <summary>

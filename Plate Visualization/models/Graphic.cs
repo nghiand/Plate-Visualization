@@ -7,7 +7,7 @@ namespace Plate_Visualization
     /// <summary>
     /// Class to Draw on graphics
     /// </summary>
-    class Graphic
+    public class Graphic
     {
         /// <summary>
         /// Graphics

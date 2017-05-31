@@ -37,7 +37,7 @@ namespace Plate_Visualization
     /// <summary>
     /// Abstract class describes plate object (node and element)
     /// </summary>
-    abstract class PlateObject
+    public abstract class PlateObject
     {
         /// <summary>
         /// State

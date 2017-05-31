@@ -3,7 +3,7 @@
     /// <summary>
     /// Class describes load
     /// </summary>
-    class Load
+    public class Load
     {
         /// <summary>
         /// 

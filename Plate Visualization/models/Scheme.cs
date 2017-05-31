@@ -8,7 +8,7 @@ namespace Plate_Visualization
     /// <summary>
     /// Class describes scheme
     /// </summary>
-    class Scheme
+    public class Scheme
     {
         /// <summary>
         /// Name
@@ -51,7 +51,7 @@ namespace Plate_Visualization
         public Scheme()
         {
             Plate = null;
-            Loads = null;
+            Loads = new List<Load>();
             Filename = "";
         }
         /// <summary>
@@ -178,8 +178,8 @@ namespace Plate_Visualization
                         }
                         for (int i = 0; i < Plate.Width * Plate.Length; i++)
                         {
-                            Plate.Elements[i].Width = reader.ReadDouble();
-                            Plate.Elements[i].Length = reader.ReadDouble();
+                            Plate.Elements[i].Width = reader.ReadSingle();
+                            Plate.Elements[i].Length = reader.ReadSingle();
                             Plate.Elements[i].Stiffness.E = reader.ReadSingle();
                             Plate.Elements[i].Stiffness.H = reader.ReadSingle();
                             Plate.Elements[i].Stiffness.V = reader.ReadSingle();
@@ -235,6 +235,39 @@ namespace Plate_Visualization
                     }
                 }
             }
+        }
+
+        public List<object> DataToExport()
+        {
+            List<object> ret = new List<object>();
+
+            if (Plate == null)
+                throw new Exception("Plate was not assigned");
+            ret.Add(Plate.Width);
+            ret.Add(Plate.Length);
+
+            foreach (Element element in Plate.Elements)
+            {
+                ret.Add(element.Width);
+                ret.Add(element.Length);
+                ret.Add(element.Stiffness.E);
+                ret.Add(element.Stiffness.H);
+                ret.Add(element.Stiffness.V);
+            }
+            foreach (Node node in Plate.Nodes)
+            {
+                ret.Add(node.Bonds[0]);
+                ret.Add(node.Bonds[1]);
+                ret.Add(node.Bonds[2]);
+            }
+            ret.Add(Loads.Count);
+            foreach (Load load in Loads)
+            {
+                ret.Add(load.Weight);
+                ret.Add(((Node)load.Position).Id + 1);
+            }
+
+            return ret;
         }
     }
 }

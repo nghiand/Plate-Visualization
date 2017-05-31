@@ -9,8 +9,11 @@ namespace Plate_Visualization
     /// <summary>
     /// Class describes plate
     /// </summary>
-    class Plate
+    public class Plate
     {
+        public const float MAX_LENGTH = 1000f;
+        public const float MAX_WIDTH = 1000f;
+        public const float MAX_ELEMENT_CNT = 100;
         /// <summary>
         /// Elements list
         /// </summary>

@@ -93,6 +93,26 @@ namespace Plate_Visualization.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap add_load {
+            get {
+                object obj = ResourceManager.GetObject("add_load", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap axis {
+            get {
+                object obj = ResourceManager.GetObject("axis", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap bonds {
             get {
                 object obj = ResourceManager.GetObject("bonds", resourceCulture);
@@ -146,6 +166,16 @@ namespace Plate_Visualization.Properties {
         internal static System.Drawing.Bitmap save_as {
             get {
                 object obj = ResourceManager.GetObject("save-as", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stiffness {
+            get {
+                object obj = ResourceManager.GetObject("stiffness", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

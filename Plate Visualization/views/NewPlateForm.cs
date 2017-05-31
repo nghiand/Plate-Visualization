@@ -92,6 +92,34 @@ namespace Plate_Visualization
                 inputLength.Add(new Tuple<int, float>(cnt, length));
             }
 
+            float swidth = 0;
+            int cnt_width = 0;
+            for (int i = 0; i < inputWidth.Count; i++)
+            {
+                swidth += inputWidth[i].Item1 * inputWidth[i].Item2;
+                cnt_width += inputWidth[i].Item1;
+            }
+
+            float slength = 0;
+            int cnt_length = 0;
+            for (int i = 0; i < inputLength.Count; i++)
+            {
+                slength += inputLength[i].Item1 * inputLength[i].Item2;
+                cnt_length += inputLength[i].Item1;
+            }
+
+            if (swidth > Plate.MAX_WIDTH || slength > Plate.MAX_LENGTH)
+            {
+                MessageBox.Show("Длина/ширина плиты больше ограничения!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (cnt_width > Plate.MAX_ELEMENT_CNT || cnt_length > Plate.MAX_ELEMENT_CNT)
+            {
+                MessageBox.Show("Количество элементов вдоль оси больше ограничения!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             MainForm parent = (MainForm)this.Owner;
             parent.CreatePlate(name, inputWidth, inputLength);
             Close();
