@@ -17,9 +17,9 @@ namespace Plate_Visualization.Helpers
         /// <param name="p1">First point</param>
         /// <param name="p2">Second point</param>
         /// <returns>Distance</returns>
-        public static double Distance(PointF p1, PointF p2)
+        public static float Distance(PointF p1, PointF p2)
         {
-            return Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
+            return (float)Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
         }
 
         /// <summary>

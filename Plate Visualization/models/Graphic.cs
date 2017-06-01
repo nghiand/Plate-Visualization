@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace Plate_Visualization
@@ -38,7 +40,34 @@ namespace Plate_Visualization
         {
             g = graphic;
         }
-        
+
+        private void DrawArrowhead(Pen pen, PointF p, float nx, float ny, float length)
+        {
+            float ax = length * (-ny - nx);
+            float ay = length * (nx - ny);
+            PointF[] points =
+            {
+                new PointF(p.X + ax, p.Y + ay),
+                p,
+                new PointF(p.X - ay, p.Y + ax)
+            };
+            g.DrawLines(pen, points);
+        }
+
+        private void DrawArrow(Pen pen, PointF p1, PointF p2, float length)
+        {
+            // Draw the shaft.
+            g.DrawLine(pen, p1, p2);
+
+            // Find the arrow shaft unit vector.
+            float vx = p2.X - p1.X;
+            float vy = p2.Y - p1.Y;
+            float dist = (float)Math.Sqrt(vx * vx + vy * vy);
+            vx /= dist;
+            vy /= dist;
+            DrawArrowhead(pen, p2, vx, vy, length);
+        }
+
         /// <summary>
         /// Draw node
         /// </summary>
@@ -69,9 +98,12 @@ namespace Plate_Visualization
         /// Draw node index
         /// </summary>
         /// <param name="node">Node</param>
-        private void DrawNodeIndex(Node node)
+        private void DrawNodeIndex(Node node, bool result = false)
         {
-            g.DrawString((node.Id + 1).ToString(), new Font("Consolas", FONT_SIZE, FontStyle.Regular), Brushes.Blue, node.X + 1, node.Y + 1);
+            if (!result)
+                g.DrawString((node.Id + 1).ToString(), new Font("Consolas", FONT_SIZE, FontStyle.Regular), Brushes.Blue, node.X + 1, node.Y + 1);
+            else
+                g.DrawString((node.Id + 1).ToString(), new Font("Consolas", FONT_SIZE, FontStyle.Regular), Brushes.Blue, node.X + 1, node.Y + node.Delta + 1);
         }
 
         /// <summary>
@@ -260,6 +292,58 @@ namespace Plate_Visualization
         public void Clear()
         {
             g.Clear(Control.DefaultBackColor);
+        }
+
+        public void DrawPlateResult(Plate plate)
+        {
+            // draw plate
+            Pen pen = new Pen(Brushes.Red, 2);
+            Pen bluePen = new Pen(Brushes.Blue);
+            // draw vertical lines
+            for (int i = 0; i <= plate.Width; i++)
+            {
+                List<PointF> points = new List<PointF>();
+                List<PointF> originalPoints = new List<PointF>();
+                for (int j = i; j < plate.Nodes.Count; j += plate.Width + 1)
+                {
+                    points.Add(new PointF(plate.Nodes[j].X, plate.Nodes[j].Y + plate.Nodes[j].Delta * plate.Unit));
+                    originalPoints.Add(plate.Nodes[j].Position);
+                }
+                GraphicsPath gPath = new GraphicsPath();
+                gPath.AddCurve(points.ToArray());
+                g.DrawPath(pen, gPath);
+                g.DrawLines(bluePen, originalPoints.ToArray());
+            }
+
+            // draw horizontal lines
+            for (int i = 0; i < plate.Nodes.Count; i += plate.Width + 1)
+            {
+                List<PointF> points = new List<PointF>();
+                List<PointF> originalPoints = new List<PointF>();
+                for (int j = 0; j <= plate.Width; j++)
+                {
+                    points.Add(new PointF(plate.Nodes[i + j].X, plate.Nodes[i + j].Y + plate.Nodes[i + j].Delta * plate.Unit));
+                    originalPoints.Add(plate.Nodes[i + j].Position);
+                }
+                GraphicsPath gPath = new GraphicsPath();
+                gPath.AddCurve(points.ToArray());
+                g.DrawPath(pen, gPath);
+                g.DrawLines(bluePen, originalPoints.ToArray());
+            }
+
+            for (int i = 0; i < plate.Nodes.Count; i++)
+            {
+                if (plate.Nodes[i].Delta != 0)
+                {
+                    DrawArrow(bluePen, plate.Nodes[i].Position, new PointF(plate.Nodes[i].X, plate.Nodes[i].Y + plate.Nodes[i].Delta * plate.Unit), 5);
+                }
+            }
+        }
+
+        public void DrawSchemeResult(Scheme scheme)
+        {
+            g.Clear(Color.White);
+            DrawPlateResult(scheme.Plate);
         }
     }
 }

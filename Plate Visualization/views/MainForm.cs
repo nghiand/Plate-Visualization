@@ -72,6 +72,8 @@ namespace Plate_Visualization
             view2D.Checked = false;
             view3D.Checked = false;
             loadButton.Checked = false;
+            resultButton.Enabled = enabled;
+            resultButton.Checked = false;
         }
 
         /// <summary>
@@ -112,6 +114,8 @@ namespace Plate_Visualization
             view3D.Enabled = true;
             view2D.Checked = true;
             view3D.Checked = false;
+            resultButton.Enabled = true;
+            resultButton.Checked = false;
         }
 
         /// <summary>
@@ -164,7 +168,14 @@ namespace Plate_Visualization
             {
                 scheme.Plate.Zoom(e.Location, e.Delta > 0);
                 ModifyScheme();
-                graphic.DrawScheme(scheme);
+                if (resultButton.Checked == true)
+                {
+                    graphic.DrawSchemeResult(scheme);
+                }
+                else
+                {
+                    graphic.DrawScheme(scheme);
+                }
             }
         }
 
@@ -209,16 +220,25 @@ namespace Plate_Visualization
         /// <param name="e">Mouse event</param>
         private void graph_MouseMove(object sender, MouseEventArgs e)
         {
+            if (scheme == null) return;          
             if (panning)
             {
                 PointF movingVector = new PointF(e.Location.X - startingPoint.X, e.Location.Y - startingPoint.Y);
                 scheme.Plate.Move(movingVector);
                 ModifyScheme();
                 startingPoint = new PointF(e.Location.X, e.Location.Y);
-                graphic.DrawScheme(scheme);
+                if (resultButton.Checked == true)
+                {
+                    graphic.DrawSchemeResult(scheme);
+                }
+                else
+                {
+                    graphic.DrawScheme(scheme);
+                }
             }
             else if (scheme != null)
             {
+                if (resultButton.Checked == true) return;
                 scheme.Plate.OnMouseMove(e);
             }
         }
@@ -246,7 +266,14 @@ namespace Plate_Visualization
             if (scheme != null)
             {
                 graphic = new Graphic(graph.CreateGraphics());
-                graphic.DrawScheme(scheme);
+                if (resultButton.Checked == true)
+                {
+                    graphic.DrawSchemeResult(scheme);
+                }
+                else
+                {
+                    graphic.DrawScheme(scheme);
+                }
             }
         }
 
@@ -542,7 +569,14 @@ namespace Plate_Visualization
                     return;
                 scheme.Plate.TranslateTo3D(graph.Width, graph.Height);
                 ModifyScheme();
-                graphic.DrawScheme(scheme);
+                if (resultButton.Checked == true)
+                {
+                    graphic.DrawSchemeResult(scheme);
+                }
+                else
+                {
+                    graphic.DrawScheme(scheme);
+                }
             }
         }
 
@@ -846,6 +880,46 @@ namespace Plate_Visualization
         private void saveAsStripButton_Click(object sender, EventArgs e)
         {
             SaveSchemeToFile();
+        }
+
+        /// <summary>
+        /// Call when mouse click on result button
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event arguments</param>
+        private void resultButton_Click(object sender, EventArgs e)
+        {
+            Plate resultPlate = scheme.Plate.Clone();
+            using (views.ResultForm resultForm = new views.ResultForm(resultPlate))
+            {
+                resultForm.ShowDialog(this);
+            }
+        }
+
+        /// <summary>
+        /// Call when import tool strip in menu is clicked
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Event arguments</param>
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (scheme == null) return;
+            string filename = DisplayOpenFileDialog("Text File|*.txt");
+            if (filename != "")
+            {
+                if (!scheme.Import(filename))
+                {
+                    MessageBox.Show("Ошибка! Проверите файл, пожалуйста!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show("Успешно импортирован", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void graph_Paint(object sender, PaintEventArgs e)
+        {
         }
     }
 }
