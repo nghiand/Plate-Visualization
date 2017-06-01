@@ -1,6 +1,8 @@
 ﻿using Plate_Visualization.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Plate_Visualization
@@ -38,6 +40,13 @@ namespace Plate_Visualization
             }
         }
         /// <summary>
+        /// Delta in calculation result
+        /// </summary>
+        public float Delta
+        {
+            get; set;
+        }
+        /// <summary>
         /// Position
         /// </summary>
         public PointF Position
@@ -62,6 +71,14 @@ namespace Plate_Visualization
             Id = id;
             Bonds = new List<int>(3) { 0, 0, 0 };
             State = State.Normal;
+            Delta = 0;
+        }
+
+        int rand()
+        {
+            Random r = new Random();
+            Thread.Sleep(20);
+            return r.Next() % 100 - 50;
         }
 
         /// <summary>
@@ -76,6 +93,7 @@ namespace Plate_Visualization
             Position = new PointF(x, y);
             Bonds = new List<int>(3) { 0, 0, 0 };
             State = State.Normal;
+            Delta = 0;
         }
 
         /// <summary>
@@ -89,6 +107,7 @@ namespace Plate_Visualization
             Position = position;
             Bonds = new List<int>(3) { 0, 0, 0 };
             State = State.Normal;
+            Delta = 0;
         }
 
         /// <summary>
@@ -114,6 +133,18 @@ namespace Plate_Visualization
         {
             double dis = MathHelper.Distance(e.Location, Position);
             return dis <= Graphic.NODE_SIZE / 2;
+        }
+
+        /// <summary>
+        /// Clone node
+        /// </summary>
+        /// <returns>Cloned object</returns>
+        public Node Clone()
+        {
+            Node ret = new Node(Id, X, Y);
+            ret.Delta = Delta;
+            ret.Bonds = Bonds.GetRange(0, Bonds.Count);
+            return ret;
         }
     }
 }

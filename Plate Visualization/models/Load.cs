@@ -37,5 +37,16 @@
             Weight = weight;
             Position = position;
         }
+
+        /// <summary>
+        /// Clone load
+        /// </summary>
+        /// <returns>Cloned load</returns>
+        public Load Clone()
+        {
+            Load ret = new Load();
+            ret.Weight = Weight;
+            return ret;
+        }
     }
 }

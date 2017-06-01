@@ -237,6 +237,33 @@ namespace Plate_Visualization
             }
         }
 
+        public bool Import(string filename)
+        {
+            if (filename != "")
+            {
+                using (StreamReader sr = new StreamReader(filename))
+                {
+                    List<float> delta = new List<float>();
+                    for (int i = 0; i < Plate.Nodes.Count; i++)
+                    {
+                        float k;
+                        if (!float.TryParse(sr.ReadLine(), out k))
+                        {
+                            return false;
+                        }
+                        delta.Add(k);
+                    }
+                    if (delta.Count != Plate.Nodes.Count) return false;
+                    for (int i = 0; i < Plate.Nodes.Count; i++)
+                    {
+                        Plate.Nodes[i].Delta = delta[i];
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public List<object> DataToExport()
         {
             List<object> ret = new List<object>();
@@ -267,6 +294,25 @@ namespace Plate_Visualization
                 ret.Add(((Node)load.Position).Id + 1);
             }
 
+            return ret;
+        }
+        
+        /// <summary>
+        /// Clone scheme
+        /// </summary>
+        /// <returns>Cloned scheme</returns>
+        public Scheme Clone()
+        {
+            Scheme ret = new Scheme();
+            ret.Plate = Plate.Clone();
+            ret.Loads = new List<Load>();
+            for (int i = 0; i < Loads.Count; i++)
+            {
+                Load l = Loads[i].Clone();
+                l.Position = ret.Plate.Nodes[((Node)Loads[i].Position).Id];
+                ret.Loads.Add(l);
+            }
+            ret.Loads = Loads.GetRange(0, Loads.Count);
             return ret;
         }
     }

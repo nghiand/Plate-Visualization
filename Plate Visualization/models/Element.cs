@@ -117,5 +117,16 @@ namespace Plate_Visualization
                 return true;
             return false;
         }
+
+        /// <summary>
+        /// Clone element
+        /// </summary>
+        /// <returns>Cloned element</returns>
+        public Element Clone()
+        {
+            Element ret = new Element(Id, Width, Length);
+            ret.Stiffness = Stiffness.Clone();
+            return ret;
+        }
     }
 }

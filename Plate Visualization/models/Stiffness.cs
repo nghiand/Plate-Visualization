@@ -55,5 +55,14 @@ namespace Plate_Visualization
             V = _v;
             H = _h;
         }
+
+        /// <summary>
+        /// Clone stiffness
+        /// </summary>
+        /// <returns>Cloned stiffness</returns>
+        public Stiffness Clone()
+        {
+            return new Plate_Visualization.Stiffness(E, V, H);
+        }
     }
 }

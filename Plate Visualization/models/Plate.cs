@@ -69,6 +69,18 @@ namespace Plate_Visualization
         }
 
         /// <summary>
+        /// Unit
+        /// </summary>
+        public float Unit
+        {
+            get
+            {
+                if (Elements == null || Elements.Count == 0) return 0;
+                return MathHelper.Distance(Elements[0].Nodes[0].Position, Elements[0].Nodes[1].Position) / Elements[0].Width;
+            }
+        }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="widths">List of elements along the first axis</param>
@@ -100,6 +112,10 @@ namespace Plate_Visualization
             CreateNodes();
             GenerateElement();
             Modified = false;
+        }
+
+        public Plate()
+        {
         }
 
         /// <summary>
@@ -548,6 +564,42 @@ namespace Plate_Visualization
                 obj.Selected += form.plateObject_Selected;
                 obj.Deselected += form.plateObject_Deselected;
             }
+        }
+
+        /// <summary>
+        /// Clone plate
+        /// </summary>
+        /// <returns>Cloned plate</returns>
+        public Plate Clone()
+        {
+            Plate ret = new Plate();
+            ret.Widths = Widths.GetRange(0, Widths.Count);
+            ret.Lengths = Lengths.GetRange(0, Lengths.Count);
+            ret.Width = Width;
+            ret.Length = Length;
+            ret.Nodes = new List<Node>();
+            for (int i = 0; i < Nodes.Count; i++)
+            {
+                ret.Nodes.Add(Nodes[i].Clone());
+            }
+            ret.Elements = new List<Element>();
+            for (int i = 0; i < Elements.Count; i++)
+            {
+                Element e = Elements[i].Clone();
+                for (int j = 0; j < Elements[i].Nodes.Count; j++)
+                {
+                    Node n = ret.Nodes[Elements[i].Nodes[j].Id];
+                    e.Nodes.Add(n);
+                }
+                ret.Elements.Add(e);
+            }
+            ret.Objects = new List<PlateObject>();
+            for (int i = 0; i < ret.Nodes.Count; i++)
+                ret.Objects.Add(ret.Nodes[i]);
+            for (int i = 0; i < ret.Elements.Count; i++)
+                ret.Objects.Add(ret.Elements[i]);
+            //ret.Objects = Objects.GetRange(0, Objects.Count);
+            return ret;
         }
     }
 }
