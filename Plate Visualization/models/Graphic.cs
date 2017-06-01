@@ -73,7 +73,7 @@ namespace Plate_Visualization
         /// </summary>
         /// <param name="node">Node</param>
         /// <param name="OnHover">On hover</param>
-        public void DrawNode(Node node, bool OnHover = false)
+        public void DrawNode(Node node)
         {
             Pen pen = new Pen(Brushes.Blue, 2);
             g.DrawEllipse(
@@ -83,7 +83,7 @@ namespace Plate_Visualization
                 NODE_SIZE, NODE_SIZE);
 
             SolidBrush brush;
-            if (OnHover)
+            if (node.Hovered)
                 brush = new SolidBrush(HoveredColor);
             else
                 brush = new SolidBrush(FillColor[(int)node.State]);
@@ -98,12 +98,9 @@ namespace Plate_Visualization
         /// Draw node index
         /// </summary>
         /// <param name="node">Node</param>
-        private void DrawNodeIndex(Node node, bool result = false)
+        private void DrawNodeIndex(Node node)
         {
-            if (!result)
-                g.DrawString((node.Id + 1).ToString(), new Font("Consolas", FONT_SIZE, FontStyle.Regular), Brushes.Blue, node.X + 1, node.Y + 1);
-            else
-                g.DrawString((node.Id + 1).ToString(), new Font("Consolas", FONT_SIZE, FontStyle.Regular), Brushes.Blue, node.X + 1, node.Y + node.Delta + 1);
+            g.DrawString((node.Id + 1).ToString(), new Font("Consolas", FONT_SIZE, FontStyle.Regular), Brushes.Blue, node.X + 1, node.Y + 1);
         }
 
         /// <summary>
@@ -111,10 +108,10 @@ namespace Plate_Visualization
         /// </summary>
         /// <param name="element">Element</param>
         /// <param name="OnHover">On hover</param>
-        public void DrawElement(Element element, bool OnHover = false)
+        public void DrawElement(Element element)
         {
             SolidBrush brush;
-            if (OnHover)
+            if (element.Hovered)
                 brush = new SolidBrush(HoveredColor);
             else
                 brush = new SolidBrush(FillColor[(int)element.State]);
@@ -241,12 +238,12 @@ namespace Plate_Visualization
             if (sender is Node)
             {
                 Node n = sender as Node;
-                DrawNode(n, true);
+                DrawNode(n);
             }
             else if (sender is Element)
             {
                 Element e = sender as Element;
-                DrawElement(e, true);
+                DrawElement(e);
             }
         }
 
@@ -259,12 +256,12 @@ namespace Plate_Visualization
             if (sender is Node)
             {
                 Node n = sender as Node;
-                DrawNode(n, false);
+                DrawNode(n);
             }
             else if (sender is Element)
             {
                 Element e = sender as Element;
-                DrawElement(e, false);
+                DrawElement(e);
             }
         }
 
@@ -277,12 +274,12 @@ namespace Plate_Visualization
             if (sender is Node)
             {
                 Node n = sender as Node;
-                DrawNode(n, false);
+                DrawNode(n);
             }
             else if (sender is Element)
             {
                 Element e = sender as Element;
-                DrawElement(e, false);
+                DrawElement(e);
             }
         }
 
@@ -294,6 +291,10 @@ namespace Plate_Visualization
             g.Clear(Control.DefaultBackColor);
         }
 
+        /// <summary>
+        /// Draw plate result
+        /// </summary>
+        /// <param name="plate">Plate</param>
         public void DrawPlateResult(Plate plate)
         {
             // draw plate
@@ -340,6 +341,10 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Draw scheme result
+        /// </summary>
+        /// <param name="scheme">Scheme</param>
         public void DrawSchemeResult(Scheme scheme)
         {
             g.Clear(Color.White);

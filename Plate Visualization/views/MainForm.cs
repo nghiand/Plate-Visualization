@@ -98,7 +98,7 @@ namespace Plate_Visualization
 
             InitiateTools();
 
-            graphic.DrawScheme(scheme);
+            graph.Refresh();
         }
 
         /// <summary>
@@ -168,14 +168,7 @@ namespace Plate_Visualization
             {
                 scheme.Plate.Zoom(e.Location, e.Delta > 0);
                 ModifyScheme();
-                if (resultButton.Checked == true)
-                {
-                    graphic.DrawSchemeResult(scheme);
-                }
-                else
-                {
-                    graphic.DrawScheme(scheme);
-                }
+                graph.Refresh();
             }
         }
 
@@ -200,7 +193,6 @@ namespace Plate_Visualization
                 panning = true;
                 startingPoint = new PointF(e.Location.X, e.Location.Y);
             }
-
         }
 
         /// <summary>
@@ -225,16 +217,9 @@ namespace Plate_Visualization
             {
                 PointF movingVector = new PointF(e.Location.X - startingPoint.X, e.Location.Y - startingPoint.Y);
                 scheme.Plate.Move(movingVector);
-                ModifyScheme();
                 startingPoint = new PointF(e.Location.X, e.Location.Y);
-                if (resultButton.Checked == true)
-                {
-                    graphic.DrawSchemeResult(scheme);
-                }
-                else
-                {
-                    graphic.DrawScheme(scheme);
-                }
+                ModifyScheme();
+                graph.Refresh();
             }
             else if (scheme != null)
             {
@@ -266,14 +251,7 @@ namespace Plate_Visualization
             if (scheme != null)
             {
                 graphic = new Graphic(graph.CreateGraphics());
-                if (resultButton.Checked == true)
-                {
-                    graphic.DrawSchemeResult(scheme);
-                }
-                else
-                {
-                    graphic.DrawScheme(scheme);
-                }
+                graph.Refresh();
             }
         }
 
@@ -303,18 +281,20 @@ namespace Plate_Visualization
         {
             if (sender is Node)
             {
+                graph.Refresh();
                 Node node = (Node)sender;
-                graphic.DrawNode(node, true);
-                graphic.DrawLoads(scheme.Loads);
+                //graphic.DrawNode(node, true);
+                //graphic.DrawLoads(scheme.Loads);
                 status.Text = "Связи: (" + node.Bonds[0].ToString()
                     + ", " + node.Bonds[1].ToString()
                     + ", " + node.Bonds[2].ToString() + ")";
             }
             else if (sender is Element)
             {
+                graph.Refresh();
                 Element element = (Element)sender;
-                graphic.DrawElement(element, true);
-                graphic.DrawLoads(scheme.Loads);
+                //graphic.DrawElement(element, true);
+                //graphic.DrawLoads(scheme.Loads);
                 status.Text = "E = " + element.Stiffness.E
                     + ", H = " + element.Stiffness.H.ToString()
                     + ", V = " + element.Stiffness.V.ToString();
@@ -329,13 +309,15 @@ namespace Plate_Visualization
         {
             if (sender is Node)
             {
-                graphic.DrawNode((Node)sender);
-                graphic.DrawLoads(scheme.Loads);
+                graph.Refresh();
+                //graphic.DrawNode((Node)sender);
+                //graphic.DrawLoads(scheme.Loads);
             }
             else if (sender is Element)
             {
-                graphic.DrawElement((Element)sender);
-                graphic.DrawLoads(scheme.Loads);
+                graph.Refresh();
+                //graphic.DrawElement((Element)sender);
+                //graphic.DrawLoads(scheme.Loads);
             }
             status.Text = "";
         }
@@ -348,14 +330,16 @@ namespace Plate_Visualization
         {
             if (sender is Node)
             {
-                graphic.DrawNode((Node)sender);
-                graphic.DrawLoads(scheme.Loads);
+                graph.Refresh();
+                //graphic.DrawNode((Node)sender);
+                //graphic.DrawLoads(scheme.Loads);
                 ModifyScheme();
             }
             else if (sender is Element)
             {
-                graphic.DrawElement((Element)sender);
-                graphic.DrawLoads(scheme.Loads);
+                graph.Refresh();
+                //graphic.DrawElement((Element)sender);
+                //graphic.DrawLoads(scheme.Loads);
                 ModifyScheme();
             }
         }
@@ -368,14 +352,16 @@ namespace Plate_Visualization
         {
             if (sender is Node)
             {
-                graphic.DrawNode((Node)sender);
-                graphic.DrawLoads(scheme.Loads);
+                graph.Refresh();
+                //graphic.DrawNode((Node)sender);
+                //graphic.DrawLoads(scheme.Loads);
                 ModifyScheme();
             }
             else if (sender is Element)
             {
-                graphic.DrawElement((Element)sender);
-                graphic.DrawLoads(scheme.Loads);
+                graph.Refresh();
+                //graphic.DrawElement((Element)sender);
+                //graphic.DrawLoads(scheme.Loads);
                 ModifyScheme();
             }
         }
@@ -550,7 +536,8 @@ namespace Plate_Visualization
                     return;
                 scheme.Plate.TranslateTo2D(graph.Width, graph.Height);
                 ModifyScheme();
-                graphic.DrawScheme(scheme);
+                //graphic.DrawScheme(scheme);
+                graph.Refresh();
             }
         }
 
@@ -569,14 +556,7 @@ namespace Plate_Visualization
                     return;
                 scheme.Plate.TranslateTo3D(graph.Width, graph.Height);
                 ModifyScheme();
-                if (resultButton.Checked == true)
-                {
-                    graphic.DrawSchemeResult(scheme);
-                }
-                else
-                {
-                    graphic.DrawScheme(scheme);
-                }
+                graph.Refresh();
             }
         }
 
@@ -606,7 +586,7 @@ namespace Plate_Visualization
                     scheme.Loads.Add(l);
                 }
                 ModifyScheme();
-                graphic.DrawScheme(scheme);
+                graph.Refresh();
             }
         }
 
@@ -707,7 +687,7 @@ namespace Plate_Visualization
                     Scheme new_scheme = new Scheme();
                     new_scheme.OpenFromFile(filename);
                     scheme = new_scheme;
-                    graphic.DrawScheme(scheme);
+                    graph.Refresh();
                     scheme.Plate.Subscribe(this);
 
                     InitiateTools();
@@ -810,25 +790,24 @@ namespace Plate_Visualization
                 if (result == DialogResult.Yes)
                 {
                     SaveSchemeToFile();
-                    graphic.Clear();
                     scheme = null;
+                    graph.Refresh();
                     Initial();
                 }
                 else if (result == DialogResult.No)
                 {
-                    graphic.Clear();
                     scheme = null;
+                    graph.Refresh();
                     Initial();
                 }
                 else
                 {
-
                 }
             }
             else
             {
-                graphic.Clear();
                 scheme = null;
+                graph.Refresh();
                 Initial();
             }
         }
@@ -918,8 +897,22 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Graph paint event handler
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">Paint event arguments</param>
         private void graph_Paint(object sender, PaintEventArgs e)
         {
+            graphic = new Graphic(e.Graphics);
+            if (scheme != null)
+            {
+                graphic.DrawScheme(scheme);
+            }
+            else
+            {
+                graphic.Clear();
+            }
         }
     }
 }
