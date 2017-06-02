@@ -68,6 +68,7 @@ namespace Plate_Visualization
                     FileStream fs = File.Open(filename, FileMode.Create);
                     using (BinaryWriter writer = new BinaryWriter(fs))
                     {
+                        writer.Write(Name);
                         writer.Write(Plate.Widths.Count);
                         foreach (Tuple<int, float> element in Plate.Widths)
                         {
@@ -89,6 +90,7 @@ namespace Plate_Visualization
                             writer.Write(node.Bonds[0]);
                             writer.Write(node.Bonds[1]);
                             writer.Write(node.Bonds[2]);
+                            writer.Write(node.Delta);
                             writer.Write((int)node.State);
                         }
                         foreach (Element element in Plate.Elements)
@@ -144,6 +146,7 @@ namespace Plate_Visualization
                     FileStream fs = File.Open(filename, FileMode.Open);
                     using (BinaryReader reader = new BinaryReader(fs))
                     {
+                        Name = reader.ReadString();
                         List<Tuple<int, float>> widths = new List<Tuple<int, float>>();
                         int n = reader.ReadInt32();
                         for (int i = 0; i < n; i++)
@@ -174,6 +177,7 @@ namespace Plate_Visualization
                                 int k = reader.ReadInt32();
                                 Plate.Nodes[i].Bonds[j] = k;
                             }
+                            Plate.Nodes[i].Delta = reader.ReadSingle();
                             Plate.Nodes[i].State = (State)reader.ReadInt32();
                         }
                         for (int i = 0; i < Plate.Width * Plate.Length; i++)
@@ -202,7 +206,7 @@ namespace Plate_Visualization
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //MessageBox.Show(e.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
             }
@@ -237,6 +241,11 @@ namespace Plate_Visualization
             }
         }
 
+        /// <summary>
+        /// Import calculation result
+        /// </summary>
+        /// <param name="filename">Filename</param>
+        /// <returns></returns>
         public bool Import(string filename)
         {
             if (filename != "")
@@ -264,6 +273,10 @@ namespace Plate_Visualization
             return false;
         }
 
+        /// <summary>
+        /// Generate data to export
+        /// </summary>
+        /// <returns>Data list to export</returns>
         public List<object> DataToExport()
         {
             List<object> ret = new List<object>();

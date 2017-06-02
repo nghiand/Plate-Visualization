@@ -10,7 +10,7 @@ namespace Plate_Visualization
         /// <summary>
         /// Form name
         /// </summary>
-        private const string FORM_NAME = "Plate Visualization";
+        private const string FORM_NAME = "Виализация плиты";
         /// <summary>
         /// Graphic
         /// </summary>
@@ -33,6 +33,7 @@ namespace Plate_Visualization
         /// </summary>
         private void Initial()
         {
+            Text = FORM_NAME;
             status.Text = "";
             SetToolItemsAvailability(false);
         }
@@ -536,7 +537,6 @@ namespace Plate_Visualization
                     return;
                 scheme.Plate.TranslateTo2D(graph.Width, graph.Height);
                 ModifyScheme();
-                //graphic.DrawScheme(scheme);
                 graph.Refresh();
             }
         }
@@ -651,6 +651,7 @@ namespace Plate_Visualization
             {
                 scheme.SaveFile();
             }
+            Text = FORM_NAME + " - " + scheme.Name;
         }
 
         /// <summary>
@@ -669,13 +670,13 @@ namespace Plate_Visualization
                     if (result == DialogResult.Yes)
                     {
                         SaveSchemeToFile();
-                        graphic.Clear();
                         scheme = null;
+                        graph.Refresh();
                     }
                     else if (result == DialogResult.No)
                     {
-                        graphic.Clear();
                         scheme = null;
+                        graph.Refresh();
                     }
                     else
                     {
@@ -685,7 +686,10 @@ namespace Plate_Visualization
                 if (open)
                 {
                     Scheme new_scheme = new Scheme();
-                    new_scheme.OpenFromFile(filename);
+                    if (!new_scheme.OpenFromFile(filename)){
+                        MessageBox.Show("Ошибка! Неуспешно окрыть файл!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                     scheme = new_scheme;
                     graph.Refresh();
                     scheme.Plate.Subscribe(this);
@@ -735,6 +739,7 @@ namespace Plate_Visualization
                         view2D.Checked = false;
                         view3D.Checked = true;
                     }
+                    Text = FORM_NAME + " - " + scheme.Name;
                 }
             }
         }
@@ -829,7 +834,12 @@ namespace Plate_Visualization
         /// <param name="e">Event</param>
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveSchemeToFile();
+            string filename = DisplaySaveFileDialog("Plate Visualization File|*.pv");
+            if (filename != "")
+            {
+                scheme.SaveToFile(filename);
+            }
+            Text = FORM_NAME + " - " + scheme.Name;
         }
 
         /// <summary>
@@ -837,8 +847,15 @@ namespace Plate_Visualization
         /// </summary>
         private void ModifyScheme()
         {
-            scheme.IsModified = true;
-            Name = FORM_NAME + " *";
+            if (scheme == null)
+            {
+                Text = FORM_NAME;
+            }
+            else
+            {
+                scheme.IsModified = true;
+                Text = FORM_NAME + " - " + scheme.Name + " *";
+            }
         }
 
         /// <summary>
@@ -858,7 +875,12 @@ namespace Plate_Visualization
         /// <param name="e">Event</param>
         private void saveAsStripButton_Click(object sender, EventArgs e)
         {
-            SaveSchemeToFile();
+            string filename = DisplaySaveFileDialog("Plate Visualization File|*.pv");
+            if (filename != "")
+            {
+                scheme.SaveToFile(filename);
+            }
+            Text = FORM_NAME + " - " + scheme.Name;
         }
 
         /// <summary>
@@ -892,7 +914,7 @@ namespace Plate_Visualization
                 }
                 else
                 {
-                    MessageBox.Show("Успешно импортирован", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Успешно импортирован.", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -912,6 +934,27 @@ namespace Plate_Visualization
             else
             {
                 graphic.Clear();
+            }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (scheme != null && scheme.IsModified == true)
+            {
+                DialogResult result = MessageBox.Show("Схема не сохранена! Сохранить?", "Предупреждение",
+                                      MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    SaveSchemeToFile();
+                    scheme = null;
+                }
+                else if (result == DialogResult.No)
+                {
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
             }
         }
     }

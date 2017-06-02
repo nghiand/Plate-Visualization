@@ -41,6 +41,14 @@ namespace Plate_Visualization
             g = graphic;
         }
 
+        /// <summary>
+        /// Draw arrow head
+        /// </summary>
+        /// <param name="pen">Pen</param>
+        /// <param name="p">Head point</param>
+        /// <param name="nx">Nx</param>
+        /// <param name="ny">Ny</param>
+        /// <param name="length">Length</param>
         private void DrawArrowhead(Pen pen, PointF p, float nx, float ny, float length)
         {
             float ax = length * (-ny - nx);
@@ -54,6 +62,13 @@ namespace Plate_Visualization
             g.DrawLines(pen, points);
         }
 
+        /// <summary>
+        /// Draw an arrow
+        /// </summary>
+        /// <param name="pen">Pen</param>
+        /// <param name="p1">Starting point</param>
+        /// <param name="p2">End point</param>
+        /// <param name="length">Length</param>
         private void DrawArrow(Pen pen, PointF p1, PointF p2, float length)
         {
             // Draw the shaft.
@@ -203,7 +218,7 @@ namespace Plate_Visualization
             PointF pos = ((Node)load.Position).Position;
             using (Pen p = new Pen(Brushes.Green, 4f))
             {
-                p.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+                p.EndCap = LineCap.ArrowAnchor;
                 g.DrawLine(p, pos.X, pos.Y - 50, pos.X, pos.Y);
             }
         }
@@ -292,6 +307,29 @@ namespace Plate_Visualization
         }
 
         /// <summary>
+        /// Draw node
+        /// </summary>
+        /// <param name="node">Node</param>
+        /// <param name="OnHover">On hover</param>
+        public void DrawNodeResult(Node node, float unit)
+        {
+            Pen pen = new Pen(Brushes.Red, 2);
+            g.DrawEllipse(
+                pen,
+                node.X - NODE_SIZE / 2,
+                node.Y + node.Delta * unit - NODE_SIZE / 2,
+                NODE_SIZE, NODE_SIZE);
+
+            SolidBrush brush = new SolidBrush(Color.White);
+
+            g.FillEllipse(
+                brush,
+                node.X - NODE_SIZE / 2,
+                node.Y + node.Delta * unit - NODE_SIZE / 2,
+                NODE_SIZE, NODE_SIZE);
+        }
+
+        /// <summary>
         /// Draw plate result
         /// </summary>
         /// <param name="plate">Plate</param>
@@ -332,6 +370,12 @@ namespace Plate_Visualization
                 g.DrawLines(bluePen, originalPoints.ToArray());
             }
 
+            // draw nodes
+            for (int i = 0; i < plate.Nodes.Count; i++)
+            {
+                DrawNodeResult(plate.Nodes[i], plate.Unit);
+            }
+
             for (int i = 0; i < plate.Nodes.Count; i++)
             {
                 if (plate.Nodes[i].Delta != 0)
@@ -339,6 +383,14 @@ namespace Plate_Visualization
                     DrawArrow(bluePen, plate.Nodes[i].Position, new PointF(plate.Nodes[i].X, plate.Nodes[i].Y + plate.Nodes[i].Delta * plate.Unit), 5);
                 }
             }
+
+            // draw nodes
+            for (int i = 0; i < plate.Nodes.Count; i++)
+            {
+                DrawNode(plate.Nodes[i]);
+            }
+
+
         }
 
         /// <summary>
