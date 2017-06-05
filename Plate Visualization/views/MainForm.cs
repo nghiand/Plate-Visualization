@@ -284,8 +284,6 @@ namespace Plate_Visualization
             {
                 graph.Refresh();
                 Node node = (Node)sender;
-                //graphic.DrawNode(node, true);
-                //graphic.DrawLoads(scheme.Loads);
                 status.Text = "Связи: (" + node.Bonds[0].ToString()
                     + ", " + node.Bonds[1].ToString()
                     + ", " + node.Bonds[2].ToString() + ")";
@@ -294,8 +292,6 @@ namespace Plate_Visualization
             {
                 graph.Refresh();
                 Element element = (Element)sender;
-                //graphic.DrawElement(element, true);
-                //graphic.DrawLoads(scheme.Loads);
                 status.Text = "E = " + element.Stiffness.E
                     + ", H = " + element.Stiffness.H.ToString()
                     + ", V = " + element.Stiffness.V.ToString();
@@ -311,14 +307,10 @@ namespace Plate_Visualization
             if (sender is Node)
             {
                 graph.Refresh();
-                //graphic.DrawNode((Node)sender);
-                //graphic.DrawLoads(scheme.Loads);
             }
             else if (sender is Element)
             {
                 graph.Refresh();
-                //graphic.DrawElement((Element)sender);
-                //graphic.DrawLoads(scheme.Loads);
             }
             status.Text = "";
         }
@@ -332,15 +324,11 @@ namespace Plate_Visualization
             if (sender is Node)
             {
                 graph.Refresh();
-                //graphic.DrawNode((Node)sender);
-                //graphic.DrawLoads(scheme.Loads);
                 ModifyScheme();
             }
             else if (sender is Element)
             {
                 graph.Refresh();
-                //graphic.DrawElement((Element)sender);
-                //graphic.DrawLoads(scheme.Loads);
                 ModifyScheme();
             }
         }
@@ -354,15 +342,11 @@ namespace Plate_Visualization
             if (sender is Node)
             {
                 graph.Refresh();
-                //graphic.DrawNode((Node)sender);
-                //graphic.DrawLoads(scheme.Loads);
                 ModifyScheme();
             }
             else if (sender is Element)
             {
                 graph.Refresh();
-                //graphic.DrawElement((Element)sender);
-                //graphic.DrawLoads(scheme.Loads);
                 ModifyScheme();
             }
         }
@@ -583,7 +567,15 @@ namespace Plate_Visualization
 
                 if (!found)
                 {
-                    scheme.Loads.Add(l);
+                    if (P > 0)
+                        scheme.Loads.Add(l);
+                }
+                else
+                {
+                    if (Math.Abs(P) < 1e-6)
+                    {
+                        scheme.Loads.Remove(l);
+                    }
                 }
                 ModifyScheme();
                 graph.Refresh();
@@ -891,6 +883,7 @@ namespace Plate_Visualization
         private void resultButton_Click(object sender, EventArgs e)
         {
             Plate resultPlate = scheme.Plate.Clone();
+            resultPlate.TranslateTo3D(graph.Width, graph.Height);
             using (views.ResultForm resultForm = new views.ResultForm(resultPlate))
             {
                 resultForm.ShowDialog(this);

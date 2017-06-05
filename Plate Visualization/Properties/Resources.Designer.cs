@@ -123,6 +123,16 @@ namespace Plate_Visualization.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap deformation {
+            get {
+                object obj = ResourceManager.GetObject("deformation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap element {
             get {
                 object obj = ResourceManager.GetObject("element", resourceCulture);
@@ -177,6 +187,16 @@ namespace Plate_Visualization.Properties {
             get {
                 object obj = ResourceManager.GetObject("stiffness", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon visualization {
+            get {
+                object obj = ResourceManager.GetObject("visualization", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

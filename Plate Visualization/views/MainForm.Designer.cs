@@ -332,7 +332,7 @@
             // resultButton
             // 
             this.resultButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.resultButton.Image = ((System.Drawing.Image)(resources.GetObject("resultButton.Image")));
+            this.resultButton.Image = global::Plate_Visualization.Properties.Resources.deformation;
             this.resultButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.resultButton.Name = "resultButton";
             this.resultButton.Size = new System.Drawing.Size(23, 22);
