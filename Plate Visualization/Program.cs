@@ -16,6 +16,7 @@ namespace Plate_Visualization
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Application.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("ru-RU");
             Application.Run(new MainForm());
         }
     }
