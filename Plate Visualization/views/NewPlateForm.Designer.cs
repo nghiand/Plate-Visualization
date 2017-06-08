@@ -70,7 +70,7 @@
             this.groupBox1.Size = new System.Drawing.Size(173, 234);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Шаг вдоль первой оси";
+            this.groupBox1.Text = "Шаг вдоль первой оси (OX)";
             // 
             // label3
             // 
@@ -125,7 +125,7 @@
             this.groupBox2.Size = new System.Drawing.Size(177, 234);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Шаг вдоль второй оси";
+            this.groupBox2.Text = "Шаг вдоль второй оси (OY)";
             // 
             // label4
             // 

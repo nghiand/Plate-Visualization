@@ -44,35 +44,35 @@
             this.groupBox1.Controls.Add(this.bondWithZ);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(157, 106);
+            this.groupBox1.Size = new System.Drawing.Size(157, 116);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Назначить связи";
+            this.groupBox1.Text = "Исключить перемещения и моменты";
             // 
             // bondWithOy
             // 
             this.bondWithOy.AutoSize = true;
-            this.bondWithOy.Location = new System.Drawing.Point(58, 73);
+            this.bondWithOy.Location = new System.Drawing.Point(58, 86);
             this.bondWithOy.Name = "bondWithOy";
-            this.bondWithOy.Size = new System.Drawing.Size(41, 17);
+            this.bondWithOy.Size = new System.Drawing.Size(40, 17);
             this.bondWithOy.TabIndex = 2;
-            this.bondWithOy.Text = "UY";
+            this.bondWithOy.Text = "My";
             this.bondWithOy.UseVisualStyleBackColor = true;
             // 
             // bondWithOx
             // 
             this.bondWithOx.AutoSize = true;
-            this.bondWithOx.Location = new System.Drawing.Point(58, 50);
+            this.bondWithOx.Location = new System.Drawing.Point(58, 63);
             this.bondWithOx.Name = "bondWithOx";
-            this.bondWithOx.Size = new System.Drawing.Size(41, 17);
+            this.bondWithOx.Size = new System.Drawing.Size(40, 17);
             this.bondWithOx.TabIndex = 1;
-            this.bondWithOx.Text = "UX";
+            this.bondWithOx.Text = "Mx";
             this.bondWithOx.UseVisualStyleBackColor = true;
             // 
             // bondWithZ
             // 
             this.bondWithZ.AutoSize = true;
-            this.bondWithZ.Location = new System.Drawing.Point(58, 27);
+            this.bondWithZ.Location = new System.Drawing.Point(58, 40);
             this.bondWithZ.Name = "bondWithZ";
             this.bondWithZ.Size = new System.Drawing.Size(33, 17);
             this.bondWithZ.TabIndex = 0;
@@ -81,7 +81,7 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(13, 126);
+            this.okButton.Location = new System.Drawing.Point(13, 140);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 1;
@@ -92,7 +92,7 @@
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(95, 125);
+            this.cancelButton.Location = new System.Drawing.Point(95, 139);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 2;
@@ -105,7 +105,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(182, 162);
+            this.ClientSize = new System.Drawing.Size(183, 173);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.groupBox1);
