@@ -216,10 +216,21 @@ namespace Plate_Visualization
         public void DrawLoad(Load load)
         {
             PointF pos = ((Node)load.Position).Position;
-            using (Pen p = new Pen(Brushes.Green, 4f))
+            if (load.Weight > 0)
             {
-                p.EndCap = LineCap.ArrowAnchor;
-                g.DrawLine(p, pos.X, pos.Y - 50, pos.X, pos.Y);
+                using (Pen p = new Pen(Brushes.Green, 4f))
+                {
+                    p.EndCap = LineCap.ArrowAnchor;
+                    g.DrawLine(p, pos.X, pos.Y - 50, pos.X, pos.Y);
+                }
+            }
+            else
+            {
+                using (Pen p = new Pen(Brushes.Red, 4f))
+                {
+                    p.EndCap = LineCap.ArrowAnchor;
+                    g.DrawLine(p, pos.X, pos.Y + 50, pos.X, pos.Y);
+                }
             }
         }
 
