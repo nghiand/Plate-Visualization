@@ -567,8 +567,7 @@ namespace Plate_Visualization
 
                 if (!found)
                 {
-                    if (P > 0)
-                        scheme.Loads.Add(l);
+                    scheme.Loads.Add(l);
                 }
                 else
                 {
@@ -949,6 +948,11 @@ namespace Plate_Visualization
                     e.Cancel = true;
                 }
             }
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Графический интерфейс для программного комплекса расчета тонких плит по смешанной форме МКЭ - ВолгГТУ 2017", "О программе", MessageBoxButtons.OK, MessageBoxIcon.None);
         }
     }
 }

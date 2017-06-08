@@ -168,8 +168,9 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "О программе";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // toolStrip
             // 
@@ -321,7 +322,7 @@
             this.view3D.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.view3D.Name = "view3D";
             this.view3D.Size = new System.Drawing.Size(23, 22);
-            this.view3D.Text = "3D";
+            this.view3D.Text = "2.5D";
             this.view3D.Click += new System.EventHandler(this.view3D_Click);
             // 
             // toolStripSeparator3
