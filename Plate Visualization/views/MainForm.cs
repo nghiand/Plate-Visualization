@@ -10,7 +10,7 @@ namespace Plate_Visualization
         /// <summary>
         /// Form name
         /// </summary>
-        private const string FORM_NAME = "Виализация плиты";
+        private const string FORM_NAME = "Визуализация плиты";
         /// <summary>
         /// Graphic
         /// </summary>

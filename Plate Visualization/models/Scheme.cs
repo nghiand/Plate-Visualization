@@ -227,7 +227,7 @@ namespace Plate_Visualization
                     sw.WriteLine("{0} {1}", Plate.Width, Plate.Length);
                     foreach (Element element in Plate.Elements)
                     {
-                        sw.WriteLine("{0} {1} {2} {3} {4}", element.Width, element.Length, element.Stiffness.E, element.Stiffness.H, element.Stiffness.V);
+                        sw.WriteLine("{0} {1} {2} {3} {4}", element.Width, element.Length, element.Stiffness.E, element.Stiffness.H.ToString("F"), element.Stiffness.V.ToString("F"));
                     }
                     sw.WriteLine(Plate.Nodes.Count);
                     foreach (Node node in Plate.Nodes)
@@ -242,7 +242,7 @@ namespace Plate_Visualization
                         loads[((Node)load.Position).Id] = load.Weight;
                     }
                     for (int i = 0; i < loads.Count; i++)
-                        sw.WriteLine(loads[i]);
+                        sw.WriteLine(loads[i].ToString("F"));
                     foreach (Element element in Plate.Elements)
                     {
                         sw.WriteLine("{0} {1} {2} {3}", element.Nodes[0].Id + 1, element.Nodes[1].Id + 1,
