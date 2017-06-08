@@ -206,6 +206,7 @@ namespace Plate_Visualization
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.Message);
                     //MessageBox.Show(e.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
@@ -228,14 +229,24 @@ namespace Plate_Visualization
                     {
                         sw.WriteLine("{0} {1} {2} {3} {4}", element.Width, element.Length, element.Stiffness.E, element.Stiffness.H, element.Stiffness.V);
                     }
+                    sw.WriteLine(Plate.Nodes.Count);
                     foreach (Node node in Plate.Nodes)
                     {
                         sw.WriteLine("{0} {1} {2}", node.Bonds[0], node.Bonds[1], node.Bonds[2]);
                     }
-                    sw.WriteLine(Loads.Count);
+                    List<float> loads = new List<float>();
+                    for (int i = 0; i < Plate.Nodes.Count; i++)
+                        loads.Add(0);
                     foreach (Load load in Loads)
                     {
-                        sw.WriteLine("{0} {1}", load.Weight, ((Node)load.Position).Id + 1);
+                        loads[((Node)load.Position).Id] = load.Weight;
+                    }
+                    for (int i = 0; i < loads.Count; i++)
+                        sw.WriteLine(loads[i]);
+                    foreach (Element element in Plate.Elements)
+                    {
+                        sw.WriteLine("{0} {1} {2} {3}", element.Nodes[0].Id + 1, element.Nodes[1].Id + 1,
+                            element.Nodes[3].Id + 1, element.Nodes[2].Id + 1);
                     }
                 }
             }
@@ -294,17 +305,28 @@ namespace Plate_Visualization
                 ret.Add(element.Stiffness.H);
                 ret.Add(element.Stiffness.V);
             }
+            ret.Add(Plate.Nodes.Count);
             foreach (Node node in Plate.Nodes)
             {
                 ret.Add(node.Bonds[0]);
                 ret.Add(node.Bonds[1]);
                 ret.Add(node.Bonds[2]);
             }
-            ret.Add(Loads.Count);
+            List<float> loads = new List<float>();
+            for (int i = 0; i < Plate.Nodes.Count; i++)
+                loads.Add(0);
             foreach (Load load in Loads)
             {
-                ret.Add(load.Weight);
-                ret.Add(((Node)load.Position).Id + 1);
+                loads[((Node)load.Position).Id] = load.Weight;
+            }
+            for (int i = 0; i < loads.Count; i++)
+                ret.Add(loads[i]);
+            foreach (Element element in Plate.Elements)
+            {
+                ret.Add(element.Nodes[0].Id + 1);
+                ret.Add(element.Nodes[1].Id + 1);
+                ret.Add(element.Nodes[3].Id + 1);
+                ret.Add(element.Nodes[2].Id + 1);
             }
 
             return ret;
