@@ -699,6 +699,7 @@ namespace Plate_Visualization
                     if (check)
                     {
                         selectElementButton.Checked = true;
+                        stiffnessButton.Enabled = true;
                     }
                     else
                     {
@@ -714,6 +715,8 @@ namespace Plate_Visualization
                         if (check)
                         {
                             selectNodeButton.Checked = true;
+                            bondButton.Enabled = true;
+                            loadButton.Enabled = true;
                         }
                         else
                         {
@@ -896,13 +899,17 @@ namespace Plate_Visualization
         /// <param name="e">Event arguments</param>
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (scheme == null) return;
+            if (scheme == null)
+            {
+                MessageBox.Show("Задача не создана. Создайте задачу!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             string filename = DisplayOpenFileDialog("Text File|*.txt");
             if (filename != "")
             {
                 if (!scheme.Import(filename))
                 {
-                    MessageBox.Show("Ошибка! Проверите файл, пожалуйста!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Импортированный файл не соответствует с текущей задачей!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
